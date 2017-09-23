@@ -4,17 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.roland_illig.android.phantomgo.WhiteActivity">
+    tools:context="de.roland_illig.android.phantomgo.WhiteActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <Button
-        android:id="@+id/button5"
+    <de.roland_illig.phantomgo.PlayerBoardView
+        android:id="@+id/playerBoardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="onHandOverClick"
-        android:text="@string/hand_over_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/referee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/buttonBar"
+        app:layout_constraintStart_toStartOf="@id/buttonBar"/>
+
+    <LinearLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/playButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/play_button"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/blackButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/black_button"/>
+
+            <RadioButton
+                android:id="@+id/whiteButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/white_button"/>
+
+            <RadioButton
+                android:id="@+id/eraserButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/eraser_button"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/handOverButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onHandOverClick"
+            android:text="@string/hand_over_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

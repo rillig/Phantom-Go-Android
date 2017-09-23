@@ -43,7 +43,8 @@
                 android:id="@+id/playButton"
                 android:layout_width="@android:dimen/app_icon_size"
                 android:layout_height="@android:dimen/app_icon_size"
-                android:text="@string/play_button"/>
+                android:text="@string/play_button"
+                android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/blackButton"
