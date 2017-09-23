@@ -11,6 +11,9 @@ import android.view.View;
 
 public abstract class AbstractBoardView extends View {
 
+    private float lastX;
+    private float lastY;
+
     protected abstract Cell getBoard(int x, int y);
 
     protected abstract int getBoardSize();
@@ -43,13 +46,19 @@ public abstract class AbstractBoardView extends View {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent e) {
-                int x = screenToBoard(e.getX());
-                int y = screenToBoard(e.getY());
+                lastX = e.getX();
+                lastY = e.getY();
+                return false;
+            }
+        });
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int x = screenToBoard(lastX);
+                int y = screenToBoard(lastY);
                 if (0 <= x && x < getBoardSize() && 0 <= y && y < getBoardSize()) {
                     boardMouseClicked(x, y);
-                    return true;
                 }
-                return false;
             }
         });
         /*
