@@ -6,15 +6,27 @@
     android:layout_height="match_parent"
     tools:context="de.roland_illig.android.phantomgo.HandOverActivity">
 
-    <Button
-        android:id="@+id/button6"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="onContinueClick"
-        android:text="@string/continue_button"
+        android:text="@string/hand_over_text"
+        android:textSize="20sp"
+        android:maxLines="10"
+        android:lineSpacingMultiplier="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onContinueClick"
+        android:enabled="false"
+        android:text="@string/continue_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

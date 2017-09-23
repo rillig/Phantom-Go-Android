@@ -80,28 +80,30 @@ public class PlayerBoardView extends AbstractBoardView {
             ((TextView) findParentView(R.id.referee)).setText(R.string.not_your_turn);
             return;
         }
-        Board playerBoard = board;
+
         RefereeResult result = refereeBoard.play(x, y);
+        ((TextView) findParentView(R.id.referee)).setText(GermanReferee.comment(result, player));
+
         if (result.invalidReason != null) {
             switch (result.invalidReason) {
                 case OTHER_STONE:
-                    playerBoard.set(x, y, player.other());
+                    board.set(x, y, player.other());
                     break;
                 case OWN_STONE:
-                    playerBoard.set(x, y, player);
+                    board.set(x, y, player);
                     break;
                 case SUICIDE:
                 case KO:
-                    playerBoard.set(x, y, null);
+                    board.set(x, y, null);
                     break;
             }
         } else {
-            RefereeResult playerResult = playerBoard.copy().play(x, y);
+            RefereeResult playerResult = board.copy().play(x, y);
             if (playerResult.toString().equals(result.toString())) {
-                playerBoard.setTurn(player);
-                playerBoard.play(x, y);
+                board.setTurn(player);
+                board.play(x, y);
             } else {
-                playerBoard.set(x, y, player);
+                board.set(x, y, player);
             }
         }
     }

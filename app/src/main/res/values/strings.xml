@@ -90,4 +90,6 @@
     <string name="black_button">⚫</string>
     <string name="white_button">⚪</string>
     <string name="eraser_button">×</string>
+    <string name="under_construction">"Diese App ist eine Baustelle.\nKinder haften für ihre Eltern."</string>
+    <string name="hand_over_text">Handy, Handy, du musst wandern,\nvon der einen Hand zur andern.\nDas ist schön, das ist schön,\nlass das Brett nur niemand sehn.</string>
 </resources>

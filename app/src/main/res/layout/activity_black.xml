@@ -4,16 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.roland_illig.android.phantomgo.BlackActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context="de.roland_illig.android.phantomgo.BlackActivity">
 
     <de.roland_illig.phantomgo.PlayerBoardView
         android:id="@+id/playerBoardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/referee"
@@ -23,16 +19,14 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/buttonBar"
-        app:layout_constraintStart_toStartOf="@id/buttonBar"/>
+        app:layout_constraintBottom_toTopOf="@+id/buttonBar"/>
 
     <LinearLayout
         android:id="@+id/buttonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -66,13 +60,15 @@
 
         </RadioGroup>
 
-        <Button
-            android:id="@+id/handOverButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onHandOverClick"
-            android:text="@string/hand_over_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/handOverButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onHandOverClick"
+        android:text="@string/hand_over_title"
+        app:layout_constraintBottom_toBottomOf="@id/buttonBar"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
