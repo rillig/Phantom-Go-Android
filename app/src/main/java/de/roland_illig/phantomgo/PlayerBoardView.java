@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import de.roland_illig.android.phantomgo.R;
 
 public class PlayerBoardView extends AbstractBoardView {
@@ -53,59 +53,61 @@ public class PlayerBoardView extends AbstractBoardView {
 
     @Override
     protected void boardMouseClicked(int x, int y) {
-        if (isToggleButtonChecked(R.id.playButton)) {
-            if (player != refereeBoard.getTurn()) {
-                ((TextView) findParentView(R.id.referee)).setText(R.string.not_your_turn);
-                return;
-            }
-            Board playerBoard = board;
-            RefereeResult result = refereeBoard.play(x, y);
-            if (result.invalidReason != null) {
-                switch (result.invalidReason) {
-                    case OTHER_STONE:
-                        playerBoard.set(x, y, player.other());
-                        break;
-                    case OWN_STONE:
-                        playerBoard.set(x, y, player);
-                        break;
-                    case SUICIDE:
-                    case KO:
-                        playerBoard.set(x, y, null);
-                        break;
-                }
-            } else {
-                RefereeResult playerResult = playerBoard.copy().play(x, y);
-                if (playerResult.toString().equals(result.toString())) {
-                    playerBoard.setTurn(player);
-                    playerBoard.play(x, y);
-                } else {
-                    playerBoard.set(x, y, player);
-                }
-                //getBoard(player.other()).setTurn(player.other());
-            }
-        } else if (isToggleButtonChecked(R.id.blackButton)) {
+        if (isChecked(R.id.playButton)) {
+            onPlayModeClick(x, y);
+        } else if (isChecked(R.id.blackButton)) {
             board.setTurn(Player.BLACK);
             if (board.play(x, y).invalidReason != null) {
                 board.set(x, y, Player.BLACK);
             }
-        } else if (isToggleButtonChecked(R.id.whiteButton)) {
+        } else if (isChecked(R.id.whiteButton)) {
             board.setTurn(Player.WHITE);
             if (board.play(x, y).invalidReason != null) {
                 board.set(x, y, Player.WHITE);
             }
-        } else if (isToggleButtonChecked(R.id.eraserButton)) {
+        } else if (isChecked(R.id.eraserButton)) {
             board.set(x, y, null);
         }
         invalidate();
     }
 
-    private <T extends View> T findParentView(int resourceId) {
-        return ((View) getParent()).findViewById(resourceId);
+    private boolean isChecked(int resourceId) {
+        return ((RadioButton) ((View) getParent()).findViewById(resourceId)).isChecked();
     }
 
-    private boolean isToggleButtonChecked(int resourceId) {
-        ToggleButton button = findParentView(resourceId);
-        return button.isChecked();
+    private void onPlayModeClick(int x, int y) {
+        if (player != refereeBoard.getTurn()) {
+            ((TextView) findParentView(R.id.referee)).setText(R.string.not_your_turn);
+            return;
+        }
+        Board playerBoard = board;
+        RefereeResult result = refereeBoard.play(x, y);
+        if (result.invalidReason != null) {
+            switch (result.invalidReason) {
+                case OTHER_STONE:
+                    playerBoard.set(x, y, player.other());
+                    break;
+                case OWN_STONE:
+                    playerBoard.set(x, y, player);
+                    break;
+                case SUICIDE:
+                case KO:
+                    playerBoard.set(x, y, null);
+                    break;
+            }
+        } else {
+            RefereeResult playerResult = playerBoard.copy().play(x, y);
+            if (playerResult.toString().equals(result.toString())) {
+                playerBoard.setTurn(player);
+                playerBoard.play(x, y);
+            } else {
+                playerBoard.set(x, y, player);
+            }
+        }
+    }
+
+    private <T extends View> T findParentView(int resourceId) {
+        return ((View) getParent()).findViewById(resourceId);
     }
 
     @Override

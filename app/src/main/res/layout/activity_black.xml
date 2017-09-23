@@ -23,63 +23,47 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@id/linearLayout"/>
+        app:layout_constraintBottom_toTopOf="@+id/buttonBar"
+        app:layout_constraintStart_toStartOf="@id/buttonBar"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/buttonBar"
         android:layout_width="match_parent"
-        android:layout_height="@android:dimen/app_icon_size"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:gravity="bottom"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ToggleButton
-            android:id="@+id/playButton"
+        <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="@android:dimen/app_icon_size"
-            android:text="@string/play_button"
-            android:textOff="@string/play_button"
-            android:textOn="@string/play_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <ToggleButton
-            android:id="@+id/blackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/black_button"
-            android:textOff="@string/black_button"
-            android:textOn="@string/black_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="244dp"/>
+            <RadioButton
+                android:id="@+id/playButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/play_button"/>
 
-        <ToggleButton
-            android:id="@+id/whiteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/white_button"
-            android:textOff="@string/white_button"
-            android:textOn="@string/white_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="295dp"/>
+            <RadioButton
+                android:id="@+id/blackButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/black_button"/>
 
-        <ToggleButton
-            android:id="@+id/eraserButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="@android:dimen/app_icon_size"
-            android:text="@string/eraser_button"
-            android:textOff="@string/eraser_button"
-            android:textOn="@string/eraser_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="295dp"/>
+            <RadioButton
+                android:id="@+id/whiteButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/white_button"/>
+
+            <RadioButton
+                android:id="@+id/eraserButton"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:text="@string/eraser_button"/>
+
+        </RadioGroup>
 
         <Button
             android:id="@+id/handOverButton"
@@ -88,7 +72,6 @@
             android:onClick="onHandOverClick"
             android:text="@string/hand_over_title"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
