@@ -1,0 +1,174 @@
+package de.roland_illig.phantomgo;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.EnumSet;
+import java.util.Random;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
+
+public enum TwoPlayerGame {
+    ;
+
+    public static void main(String[] args) {
+        Manager manager = new Manager();
+
+        JFrame frame = new JFrame("Phantom-Go");
+        frame.setLayout(new FlowLayout());
+        frame.getContentPane().add(createPlayerPanel(manager, Player.BLACK));
+        frame.getContentPane().add(createRefereePanel(manager));
+        frame.getContentPane().add(createPlayerPanel(manager, Player.WHITE));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        frame.setVisible(true);
+    }
+
+    private static JPanel createRefereePanel(Manager manager) {
+        Random rnd = new Random(0);
+
+        JButton oneMove = new JButton("1 random move");
+        oneMove.addActionListener(event -> {
+            int x = rnd.nextInt(manager.refereeBoard.getSize());
+            int y = rnd.nextInt(manager.refereeBoard.getSize());
+            manager.onClick(manager.refereeBoard.getTurn(), x, y);
+        });
+
+        JButton tenMoves = new JButton("10 random moves");
+        tenMoves.addActionListener(event -> {
+            for (int i = 0; i < 10; i++) {
+                int x = rnd.nextInt(manager.refereeBoard.getSize());
+                int y = rnd.nextInt(manager.refereeBoard.getSize());
+                manager.onClick(manager.refereeBoard.getTurn(), x, y);
+            }
+        });
+
+        JButton fiftyMoves = new JButton("50 random moves");
+        fiftyMoves.addActionListener(event -> {
+            for (int i = 0; i < 50; i++) {
+                int x = rnd.nextInt(manager.refereeBoard.getSize());
+                int y = rnd.nextInt(manager.refereeBoard.getSize());
+                manager.onClick(manager.refereeBoard.getTurn(), x, y);
+            }
+        });
+
+        JPanel buttonBar = new JPanel();
+        buttonBar.setLayout(new FlowLayout());
+        buttonBar.add(oneMove);
+        buttonBar.add(tenMoves);
+        buttonBar.add(fiftyMoves);
+
+        BoardUi boardUi = new BoardUi(manager.refereeBoard, manager.refereeBoard, EnumSet.noneOf(Player.class)) {
+            @Override
+            protected void boardMouseClicked(int x, int y) {
+                /* Clicking on the referee board does nothing. */
+            }
+        };
+        boardUi.setPreferredSize(new Dimension(30 * manager.refereeBoard.getSize(), 30 * manager.refereeBoard.getSize()));
+
+        JPanel sep = new JPanel();
+        sep.setLayout(new BorderLayout());
+        sep.add(buttonBar, BorderLayout.PAGE_START);
+        sep.add(boardUi);
+
+        manager.refereeBoard.setUpdateListener(boardUi::repaint);
+
+        return sep;
+    }
+
+    private static JPanel createPlayerPanel(Manager manager, Player player) {
+        JButton newButton = new JButton("Neu");
+        newButton.addActionListener(event -> {
+            manager.refereeBoard.reset();
+            manager.blackBoard.reset();
+            manager.whiteBoard.reset();
+        });
+        JButton passButton = new JButton("Passen");
+        passButton.addActionListener(event -> {
+            manager.refereeBoard.pass(); // XXX
+        });
+        JButton resignButton = new JButton("Aufgeben");
+
+        Board board = manager.getBoard(player);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(playButton);
+        group.add(blackButton);
+        group.add(whiteButton);
+        group.add(eraserButton);
+        group.setSelected(playButton.getModel(), true);
+
+        JPanel upper = new JPanel();
+        upper.setLayout(new FlowLayout());
+        upper.add(playButton);
+        upper.add(blackButton);
+        upper.add(whiteButton);
+        upper.add(eraserButton);
+        upper.add(newButton);
+        upper.add(passButton);
+        upper.add(resignButton);
+
+        JLabel referee = manager.getReferee(player);
+        BoardUi boardUi = new BoardUi(manager.refereeBoard, board, EnumSet.of(player)) {
+            @Override
+            protected void boardMouseClicked(int x, int y) {
+            }
+        };
+        boardUi.setPreferredSize(new Dimension(60 * board.getSize(), 60 * board.getSize()));
+        board.setUpdateListener(boardUi::repaint);
+
+        JPanel lower = new JPanel();
+        lower.setLayout(new BorderLayout());
+        lower.add(boardUi);
+        lower.add(referee, BorderLayout.PAGE_END);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(upper, BorderLayout.PAGE_START);
+        panel.add(lower);
+        return panel;
+    }
+
+    private static JPanel createCountingPanel(Manager manager) {
+        CountingBoardView boardUi = new CountingBoardView(manager.refereeBoard);
+        boardUi.setPreferredSize(new Dimension(30 * manager.refereeBoard.getSize(), 30 * manager.refereeBoard.getSize()));
+
+        JPanel sep = new JPanel();
+        sep.setLayout(new BorderLayout());
+        sep.add(boardUi);
+
+        return sep;
+    }
+
+    private static class Manager {
+
+        Manager() {
+            refereeBoard.setRefereeListener(this::onReferee);
+        }
+
+        private void onReferee(RefereeResult result) {
+            Player color = result.invalidReason != null ? refereeBoard.getTurn() : refereeBoard.getTurn().other();
+            String comment = GermanReferee.comment(result, color);
+            blackReferee.setText(comment);
+            whiteReferee.setText(comment);
+        }
+
+        private void onClick(Player player, int x, int y) {
+        }
+
+        private Board getBoard(Player player) {
+            return player == Player.BLACK ? blackBoard : whiteBoard;
+        }
+
+        private JLabel getReferee(Player player) {
+            return player == Player.BLACK ? blackReferee : whiteReferee;
+        }
+    }
+}

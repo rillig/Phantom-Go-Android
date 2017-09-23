@@ -1,5 +1,7 @@
 package de.roland_illig.android.phantomgo;
 
+import de.roland_illig.phantomgo.Board;
+import de.roland_illig.phantomgo.CountingBoard;
 import java.io.Serializable;
 
 public class GameState implements Serializable {
@@ -8,15 +10,10 @@ public class GameState implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String blackName;
-    public String whiteName;
-    public int[][] board;
-    public int counter;
-
-    public GameState() {
-        counter = 5;
-        blackName = "Black";
-        whiteName = "White";
-        board = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    }
+    public final Board refereeBoard = new Board(9);
+    public final Board blackBoard = new Board(9);
+    public final Board whiteBoard = new Board(9);
+    public String blackRefereeText = "\u00A0";
+    public String whiteReferee = "\u00A0";
+    public CountingBoard countingBoard;
 }

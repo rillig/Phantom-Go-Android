@@ -85,4 +85,9 @@
     <string name="play_title">Spielen</string>
     <string name="settings_title">Einstellungen</string>
     <string name="continue_button">Weiter geht\'s</string>
+    <string name="not_your_turn">Du bist nicht dran.</string>
+    <string name="play_button">▶</string>
+    <string name="black_button">⚫</string>
+    <string name="white_button">⚪</string>
+    <string name="eraser_button">×</string>
 </resources>
