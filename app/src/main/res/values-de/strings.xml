@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Phantom Go</string>
+    <string name="app_name">Phantom-Go</string>
 
     <string name="title_activity_settings">Settings</string>
 
@@ -75,21 +75,21 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
 
-    <string name="black_to_play">Black to play</string>
-    <string name="white_to_play">White to play</string>
-    <string name="hand_over">Hand over</string>
-    <string name="counting">Counting</string>
-    <string name="hand_over_title">Hand over</string>
-    <string name="play_title">Play</string>
-    <string name="settings_title">Settings</string>
-    <string name="continue_button">Continue</string>
-    <string name="not_your_turn">It’s not your turn.</string>
+    <string name="black_to_play">Schwarz am Zug</string>
+    <string name="white_to_play">Weiß am Zug</string>
+    <string name="hand_over">Überreichen</string>
+    <string name="counting">Auszählen</string>
+    <string name="hand_over_title">Überreichen</string>
+    <string name="play_title">Spielen</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="continue_button">Weiter</string>
+    <string name="not_your_turn">Du bist nicht dran.</string>
     <string name="play_button">▶</string>
     <string name="black_button">⚫</string>
     <string name="white_button">⚪</string>
     <string name="eraser_button">×</string>
-    <string name="under_construction">This app is under construction.</string>
-    <string name="hand_over_text">Two boards of Go on the screen,\ntake one down, pass it around.\nOne less board of Go on the screen.</string>
-    <string name="pass_button">Pass</string>
-    <string name="finish_button">Done</string>
+    <string name="under_construction">Diese App ist eine Baustelle.\nKinder haften für ihre Eltern.</string>
+    <string name="hand_over_text">Handy, Handy, du musst wandern,\nvon der einen Hand zur andern.\nDas ist schön, das ist schön,\nlass das Brett nur niemand sehn.</string>
+    <string name="pass_button">Passen</string>
+    <string name="finish_button">Fertig</string>
 </resources>
