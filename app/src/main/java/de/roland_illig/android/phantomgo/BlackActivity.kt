@@ -22,7 +22,8 @@ class BlackActivity : AppCompatActivity() {
 
     fun onHandOverClick(view: View) {
         val intent = Intent(this, HandOverActivity::class.java)
-        intent.putExtra("phantomGo.handOverTo", Player.WHITE)
+        val refereeResults = findViewById<PlayerBoardView>(R.id.playerBoardView).refereeResults
+        intent.putExtra("phantomGo.extra", HandOverActivity.IntentExtra(Player.WHITE, refereeResults))
         startActivity(intent)
         finish()
     }

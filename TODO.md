@@ -1,20 +1,19 @@
-* Crash bei wildem Rumtippen.
+# Prio 1
 
-* Überreichen-Button ist immer aktiviert, sollte nur aktiviert sein, wenn der andere dran ist.
+* Crash bei wildem Rumtippen.
 
 * Auszählen
 
 * Passen
 
-* Schiedsrichtersprüche dem Gegner anzeigen
-
 * Statistik: versteckte Steine, Gefangene
-
-* Spiel fortsetzen (nicht immer mit BlackActivity anfangen)
 
 * RadioButtons mit nur Icon
 
-----
+# Prio 2
 
 * Undo
 
+# Prio 3
+
+* Keine Animationen zwischen den Aktivitäten

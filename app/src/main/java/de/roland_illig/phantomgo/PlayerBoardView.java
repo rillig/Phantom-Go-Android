@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import de.roland_illig.android.phantomgo.R;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerBoardView extends AbstractBoardView {
 
@@ -15,6 +17,7 @@ public class PlayerBoardView extends AbstractBoardView {
     private Player player = Player.BLACK;
     private int hoverX = -1;
     private int hoverY = -1;
+    private List<RefereeResult> refereeResults = new ArrayList<>();
 
     public PlayerBoardView(Context context) {
         super(context);
@@ -82,6 +85,7 @@ public class PlayerBoardView extends AbstractBoardView {
         }
 
         RefereeResult result = refereeBoard.play(x, y);
+        refereeResults.add(result);
         ((TextView) findParentView(R.id.referee)).setText(GermanReferee.comment(result, player));
 
         if (result.invalidReason != null) {
@@ -105,6 +109,7 @@ public class PlayerBoardView extends AbstractBoardView {
             } else {
                 board.set(x, y, player);
             }
+            findParentView(R.id.handOverButton).setEnabled(true);
         }
     }
 
@@ -126,5 +131,9 @@ public class PlayerBoardView extends AbstractBoardView {
         hoverX = -1;
         hoverY = -1;
         invalidate();
+    }
+
+    public List<RefereeResult> getRefereeResults() {
+        return refereeResults;
     }
 }

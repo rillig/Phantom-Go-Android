@@ -1,9 +1,10 @@
 package de.roland_illig.phantomgo;
 
-import java.util.Locale;
-import java.util.StringJoiner;
+import java.io.Serializable;
 
-public class RefereeResult {
+public class RefereeResult implements Serializable {
+
+    private static final long serialVersionUID = 20170924L;
 
     public final InvalidReason invalidReason;
     public final boolean atari;
@@ -42,25 +43,39 @@ public class RefereeResult {
     @Override
     public String toString() {
         if (invalidReason != null) {
-            return invalidReason.toString().toLowerCase(Locale.ROOT);
+            switch (invalidReason) {
+                case OWN_STONE:
+                    return "own";
+                case OTHER_STONE:
+                    return "other";
+                case SUICIDE:
+                    return "suicide";
+                case KO:
+                    return "ko";
+            }
         }
+
         if (pass) {
             return "pass";
         }
         if (!atari && !selfAtari && capturedStones == 0) {
             return "ok";
         }
-        StringJoiner joiner = new StringJoiner(", ");
+
+        String str = "";
+        String sep = "";
         if (atari) {
-            joiner.add("atari");
+            str = "atari";
+            sep = ", ";
         }
         if (selfAtari) {
-            joiner.add("selfAtari");
+            str += sep + "selfAtari";
+            sep = ", ";
         }
         if (capturedStones > 0) {
-            joiner.add("captured " + capturedStones);
+            str += sep + "captured " + capturedStones;
         }
-        return joiner.toString();
+        return str;
     }
 
     public static RefereeResult pass() {

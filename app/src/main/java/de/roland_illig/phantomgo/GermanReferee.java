@@ -3,7 +3,7 @@ package de.roland_illig.phantomgo;
 public enum GermanReferee {
     ;
 
-    static String comment(RefereeResult res, Player color) {
+    public static String comment(RefereeResult res, Player color) {
         if (res.invalidReason != null) {
             switch (res.invalidReason) {
                 case OTHER_STONE:
