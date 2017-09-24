@@ -17,11 +17,15 @@ public enum GermanReferee {
             }
         }
 
+        String playerName = color == Player.BLACK ? "Schwarz" : "Weiß";
+        if (res.pass) {
+            return playerName + " passt.";
+        }
+
         boolean atari = res.atari;
         boolean selfAtari = res.selfAtari;
         int capturedStones = res.capturedStones;
 
-        String playerName = color == Player.BLACK ? "Schwarz" : "Weiß";
         String opponentName = color == Player.BLACK ? "Weiß" : "Schwarz";
         String opponentColor = color == Player.BLACK ? "weiß" : "schwarz";
 

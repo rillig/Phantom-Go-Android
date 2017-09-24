@@ -136,4 +136,15 @@ public class PlayerBoardView extends AbstractBoardView {
     public List<RefereeResult> getRefereeResults() {
         return refereeResults;
     }
+
+    public void pass() {
+        if (player != refereeBoard.getTurn()) {
+            ((TextView) findParentView(R.id.referee)).setText(R.string.not_your_turn);
+            return;
+        }
+
+        RefereeResult result = refereeBoard.pass();
+        refereeResults.add(result);
+        ((TextView) findParentView(R.id.referee)).setText(GermanReferee.comment(result, player));
+    }
 }

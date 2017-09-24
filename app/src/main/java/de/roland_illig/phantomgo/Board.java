@@ -185,6 +185,9 @@ public class Board {
     }
 
     private RefereeResult playInternal(int x, int y) {
+        if (gameOver) {
+            throw new IllegalStateException("GameOver");
+        }
         Player other = turn.other();
 
         if (get(x, y) == turn) {
@@ -252,6 +255,9 @@ public class Board {
     }
 
     public RefereeResult pass() {
+        if (gameOver) {
+            throw new IllegalStateException("GameOver");
+        }
         gameOver = passed;
         passed = true;
         turn = turn.other();

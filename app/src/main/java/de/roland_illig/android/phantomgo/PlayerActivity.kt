@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.PlayerBoardView
 
@@ -18,9 +19,13 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val board = if (player == Player.BLACK) GameState.GLOBAL.blackBoard else GameState.GLOBAL.whiteBoard
         findViewById<PlayerBoardView>(R.id.playerBoardView)
                 .configure(GameState.GLOBAL.refereeBoard, board, player)
+    }
+
+    fun onPassClick(view: View) {
+        (findViewById<PlayerBoardView>(R.id.playerBoardView)).pass()
+        onHandOverClick(view)
     }
 
     fun onHandOverClick(view: View) {
@@ -29,6 +34,8 @@ class PlayerActivity : AppCompatActivity() {
         finish()
     }
 
+    private val board: Board
+        get() = if (player == Player.BLACK) GameState.GLOBAL.blackBoard else GameState.GLOBAL.whiteBoard
     private val player: Player
         get() = intent.getSerializableExtra("phantomGo.player") as Player
 

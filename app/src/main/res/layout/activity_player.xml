@@ -63,9 +63,22 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/passButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="onPassClick"
+        android:text="@string/pass_button"
+        app:layout_constraintBottom_toTopOf="@+id/handOverButton"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
         android:id="@+id/handOverButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:enabled="false"
         android:onClick="onHandOverClick"
         android:text="@string/hand_over_title"
