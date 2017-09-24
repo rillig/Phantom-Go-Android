@@ -12,6 +12,7 @@ import android.widget.ListView
 import de.roland_illig.phantomgo.GermanReferee
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.RefereeResult
+import java.io.Serializable
 
 class HandOverActivity : AppCompatActivity() {
 
@@ -19,34 +20,29 @@ class HandOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hand_over)
 
-        val (target, refereeComments) = getExtra()
-        val refereeResults = findViewById<ListView>(R.id.refereeResults)
-        val refereeStrings = refereeComments.map { res -> GermanReferee.comment(res, target.other()) }
-        refereeResults.adapter = ArrayAdapter(this, R.layout.string_list_item, refereeStrings)
+        val refereeStrings = refereeResults.map { res -> GermanReferee.comment(res, target.other()) }
+        val refereeResultsView = findViewById<ListView>(R.id.refereeResults)
+        refereeResultsView.adapter = ArrayAdapter(this, R.layout.string_list_item, refereeStrings)
 
         // To prevent accidental double-clicks.
         Handler().postDelayed({ findViewById<Button>(R.id.continueButton).isEnabled = true }, 1200)
     }
 
     fun onContinueClick(view: View) {
-        val activity = (if (getExtra().target == Player.BLACK) BlackActivity::class else WhiteActivity::class).java
-        startActivity(Intent(this, activity))
+        PlayerActivity.start(this, target)
         finish()
     }
 
-    private fun getExtra(): IntentExtra {
-        return intent.getSerializableExtra("phantomGo.extra") as IntentExtra
-    }
-
-    private data class IntentExtra(
-            val target: Player,
-            val refereeResults: List<RefereeResult>)
-        : java.io.Serializable
+    private val target: Player
+        get() = intent.getSerializableExtra("phantomGo.target") as Player
+    private val refereeResults: List<RefereeResult>
+        get() = intent.getSerializableExtra("phantomGo.refereeResults") as List<RefereeResult>
 
     companion object {
-        fun start(ctx: Context, player: Player, refereeResults: List<RefereeResult>) {
+        fun start(ctx: Context, target: Player, refereeResults: List<RefereeResult>) {
             val intent = Intent(ctx, HandOverActivity::class.java)
-            intent.putExtra("phantomGo.extra", HandOverActivity.IntentExtra(player, refereeResults))
+            intent.putExtra("phantomGo.target", target)
+            intent.putExtra("phantomGo.refereeResults", refereeResults as Serializable)
             ctx.startActivity(intent)
         }
     }

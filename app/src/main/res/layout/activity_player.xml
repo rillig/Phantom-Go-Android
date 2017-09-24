@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.roland_illig.android.phantomgo.WhiteActivity">
+    tools:context="de.roland_illig.android.phantomgo.PlayerActivity">
 
     <de.roland_illig.phantomgo.PlayerBoardView
         android:id="@+id/playerBoardView"

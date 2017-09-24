@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import de.roland_illig.phantomgo.Player
 
 class CentralActivity : AppCompatActivity() {
 
@@ -14,11 +13,7 @@ class CentralActivity : AppCompatActivity() {
     }
 
     fun onPlayClick(view: View) {
-        val activity = if (GameState.GLOBAL.refereeBoard.turn == Player.BLACK)
-            BlackActivity::class.java
-        else
-            WhiteActivity::class.java
-        startActivity(Intent(this, activity))
+        PlayerActivity.start(this, GameState.GLOBAL.refereeBoard.turn)
     }
 
     fun onSettingsClick(view: View) {

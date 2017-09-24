@@ -17,10 +17,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"/>
-        <activity android:name=".BlackActivity" android:label="@string/black_to_play" />
-        <activity android:name=".WhiteActivity" android:label="@string/white_to_play"/>
-        <activity android:name=".HandOverActivity" android:label="@string/hand_over"/>
-        <activity android:name=".CountingActivity" android:label="@string/counting"/>
+        <activity
+            android:name=".PlayerActivity"/>
+        <activity
+            android:name=".HandOverActivity"
+            android:label="@string/hand_over"/>
+        <activity
+            android:name=".CountingActivity"
+            android:label="@string/counting"/>
     </application>
 
 </manifest>
