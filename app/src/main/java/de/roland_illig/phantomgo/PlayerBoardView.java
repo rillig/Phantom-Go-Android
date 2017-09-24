@@ -35,6 +35,8 @@ public class PlayerBoardView extends AbstractBoardView {
         this.refereeBoard = refereeBoard;
         this.board = board;
         this.player = player;
+
+        updateViews(null);
     }
 
     @Override
@@ -86,7 +88,6 @@ public class PlayerBoardView extends AbstractBoardView {
 
         RefereeResult result = refereeBoard.play(x, y);
         refereeResults.add(result);
-        ((TextView) findParentView(R.id.referee)).setText(GermanReferee.comment(result, player));
 
         if (result.invalidReason != null) {
             switch (result.invalidReason) {
@@ -109,8 +110,15 @@ public class PlayerBoardView extends AbstractBoardView {
             } else {
                 board.set(x, y, player);
             }
-            findParentView(R.id.handOverButton).setEnabled(true);
         }
+
+        updateViews(result);
+    }
+
+    private void updateViews(RefereeResult result) {
+        ((TextView) findParentView(R.id.referee)).setText(result != null ? GermanReferee.comment(result, player) : "");
+        findParentView(R.id.passButton).setEnabled(refereeBoard.getTurn() == player);
+        findParentView(R.id.handOverButton).setEnabled(refereeBoard.getTurn() != player);
     }
 
     private <T extends View> T findParentView(int resourceId) {
