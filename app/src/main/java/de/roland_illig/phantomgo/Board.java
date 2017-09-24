@@ -4,7 +4,6 @@ import de.roland_illig.phantomgo.util.VisibleForTesting;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 
 public class Board {
@@ -128,7 +127,8 @@ public class Board {
         final Set<Point> liberties = new HashSet<>();
 
         LibertiesCounter(Player color) {
-            this.color = Objects.requireNonNull(color);
+            color.getClass();
+            this.color = color;
         }
 
         void count(int x, int y) {
@@ -251,13 +251,14 @@ public class Board {
         }
     }
 
-    public void pass() {
+    public RefereeResult pass() {
         gameOver = passed;
         passed = true;
         turn = turn.other();
         if (updateListener != null) {
             updateListener.onUpdate();
         }
+        return RefereeResult.pass();
     }
 
     public boolean isGameOver() {
@@ -316,7 +317,7 @@ public class Board {
 
         @Override
         public int hashCode() {
-            return Objects.hash(x, y);
+            return 31 * x + y;
         }
     }
 }
