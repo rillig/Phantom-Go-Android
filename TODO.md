@@ -1,16 +1,12 @@
 # Prio 1
 
-* Crash bei wildem Rumtippen.
-
-* Auszählen
-
-* Passen
-
 * Statistik: versteckte Steine, Gefangene
 
 * RadioButtons mit nur Icon
 
 * Liste der Schiedsrichersprüche ist nicht scrollbar
+
+* updateSummary: i18n
 
 # Prio 2
 

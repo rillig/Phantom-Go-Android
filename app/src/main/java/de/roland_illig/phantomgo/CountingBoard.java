@@ -8,6 +8,8 @@ public class CountingBoard {
     private final int[][] region;
     private final boolean[][] dead;
     private final Player[][] territory;
+    private final int blackCaptured;
+    private final int whiteCaptured;
 
     public CountingBoard(Board board) {
         this.size = board.getSize();
@@ -15,6 +17,8 @@ public class CountingBoard {
         this.region = initRegion(color);
         this.dead = new boolean[size][size];
         this.territory = new Player[size][size];
+        this.blackCaptured = board.getCaptured(Player.BLACK);
+        this.whiteCaptured = board.getCaptured(Player.WHITE);
 
         count();
     }
@@ -32,8 +36,6 @@ public class CountingBoard {
                 }
             }
         }
-
-        count();
     }
 
     private static Player[][] initPieces(Board board) {
@@ -153,7 +155,10 @@ public class CountingBoard {
                         }
                     }
                 }
-                return new CountResult(blackTerritory, whiteTerritory, blackDead, whiteDead);
+
+                return new CountResult(
+                        blackTerritory, whiteTerritory,
+                        blackCaptured + whiteDead, whiteCaptured + blackDead);
             }
         }
     }

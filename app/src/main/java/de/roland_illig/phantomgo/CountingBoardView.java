@@ -3,6 +3,9 @@ package de.roland_illig.phantomgo;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.TextView;
+import de.roland_illig.android.phantomgo.R;
 
 public class CountingBoardView extends AbstractBoardView {
 
@@ -24,6 +27,7 @@ public class CountingBoardView extends AbstractBoardView {
     public void configure(Board board, CountingBoard countingBoard) {
         this.board = board;
         this.countingBoard = countingBoard;
+        updateSummary();
     }
 
     @Override
@@ -43,7 +47,16 @@ public class CountingBoardView extends AbstractBoardView {
     protected void boardMouseClicked(int x, int y) {
         if (board.get(x, y) != null) {
             countingBoard.toggleDead(x, y);
+            updateSummary();
             invalidate();
         }
+    }
+
+    private void updateSummary() {
+        CountResult result = countingBoard.count();
+        String summary = ""
+                + "Schwarz: " + result.blackTerritory + " + " + (result.blackCaptured) + " = " + result.blackScore + "\n"
+                + "Weiß: " + result.whiteTerritory + " + " + (result.whiteCaptured) + " = " + result.whiteScore + "\n";
+        ((TextView) ((View) getParent()).findViewById(R.id.countingSummary)).setText(summary);
     }
 }
