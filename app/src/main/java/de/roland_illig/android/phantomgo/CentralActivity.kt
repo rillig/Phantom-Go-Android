@@ -1,6 +1,5 @@
 package de.roland_illig.android.phantomgo
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -18,9 +17,5 @@ class CentralActivity : AppCompatActivity() {
         } else {
             PlayerActivity.start(this, GameState.GLOBAL.refereeBoard.turn)
         }
-    }
-
-    fun onSettingsClick(view: View) {
-        startActivity(Intent(this, SettingsActivity::class.java))
     }
 }

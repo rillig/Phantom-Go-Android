@@ -34,13 +34,6 @@
             android:onClick="onPlayClick"
             android:text="@string/play_title"/>
 
-        <Button
-            android:id="@+id/settingsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onSettingsClick"
-            android:text="@string/settings_title"/>
-
     </LinearLayout>
 
 
