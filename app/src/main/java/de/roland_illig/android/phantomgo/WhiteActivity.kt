@@ -1,6 +1,5 @@
 package de.roland_illig.android.phantomgo
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -21,10 +20,8 @@ class WhiteActivity : AppCompatActivity() {
     }
 
     fun onHandOverClick(view: View) {
-        val intent = Intent(this, HandOverActivity::class.java)
         val refereeResults = findViewById<PlayerBoardView>(R.id.playerBoardView).refereeResults
-        intent.putExtra("phantomGo.extra", HandOverActivity.IntentExtra(Player.BLACK, refereeResults))
-        startActivity(intent)
+        HandOverActivity.start(this, Player.BLACK, refereeResults)
         finish()
     }
 }

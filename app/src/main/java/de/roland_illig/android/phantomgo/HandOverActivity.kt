@@ -1,5 +1,6 @@
 package de.roland_illig.android.phantomgo
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -37,8 +38,16 @@ class HandOverActivity : AppCompatActivity() {
         return intent.getSerializableExtra("phantomGo.extra") as IntentExtra
     }
 
-    data class IntentExtra(
+    private data class IntentExtra(
             val target: Player,
             val refereeResults: List<RefereeResult>)
         : java.io.Serializable
+
+    companion object {
+        fun start(ctx: Context, player: Player, refereeResults: List<RefereeResult>) {
+            val intent = Intent(ctx, HandOverActivity::class.java)
+            intent.putExtra("phantomGo.extra", HandOverActivity.IntentExtra(player, refereeResults))
+            ctx.startActivity(intent)
+        }
+    }
 }
