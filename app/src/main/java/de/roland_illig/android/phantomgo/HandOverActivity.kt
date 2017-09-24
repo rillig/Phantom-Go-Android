@@ -15,7 +15,7 @@ class HandOverActivity : AppCompatActivity() {
         setContentView(R.layout.activity_hand_over)
 
         // To prevent accidental double-clicks.
-        Handler().postDelayed({ findViewById<Button>(R.id.continueButton).isEnabled = true }, 2000)
+        Handler().postDelayed({ findViewById<Button>(R.id.continueButton).isEnabled = true }, 1200)
     }
 
     fun onContinueClick(view: View) {
