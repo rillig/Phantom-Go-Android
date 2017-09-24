@@ -17,7 +17,7 @@ public class PlayerBoardView extends AbstractBoardView {
     private Player player = Player.BLACK;
     private int hoverX = -1;
     private int hoverY = -1;
-    private List<RefereeResult> refereeResults = new ArrayList<>();
+    private final List<RefereeResult> refereeResults = new ArrayList<>();
 
     public PlayerBoardView(Context context) {
         super(context);
