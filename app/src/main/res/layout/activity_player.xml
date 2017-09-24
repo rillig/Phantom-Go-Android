@@ -21,46 +21,39 @@
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/buttonBar"/>
 
-    <LinearLayout
+    <RadioGroup
         android:id="@+id/buttonBar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/playButton"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:checked="true"
+            android:text="@string/play_button"/>
 
-            <RadioButton
-                android:id="@+id/playButton"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:checked="true"
-                android:text="@string/play_button"/>
+        <RadioButton
+            android:id="@+id/blackButton"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:text="@string/black_button"/>
 
-            <RadioButton
-                android:id="@+id/blackButton"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:text="@string/black_button"/>
+        <RadioButton
+            android:id="@+id/whiteButton"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:text="@string/white_button"/>
 
-            <RadioButton
-                android:id="@+id/whiteButton"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:text="@string/white_button"/>
+        <RadioButton
+            android:id="@+id/eraserButton"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:text="@string/eraser_button"/>
 
-            <RadioButton
-                android:id="@+id/eraserButton"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:text="@string/eraser_button"/>
-
-        </RadioGroup>
-
-    </LinearLayout>
+    </RadioGroup>
 
     <Button
         android:id="@+id/passButton"
