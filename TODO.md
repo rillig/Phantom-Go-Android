@@ -10,6 +10,8 @@
 
 * RadioButtons mit nur Icon
 
+* Liste der Schiedsrichersprüche ist nicht scrollbar
+
 # Prio 2
 
 * Undo
