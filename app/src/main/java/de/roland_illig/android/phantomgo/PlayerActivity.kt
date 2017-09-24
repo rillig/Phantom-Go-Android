@@ -30,7 +30,11 @@ class PlayerActivity : AppCompatActivity() {
 
     fun onHandOverClick(view: View) {
         val refereeResults = findViewById<PlayerBoardView>(R.id.playerBoardView).refereeResults
-        HandOverActivity.start(this, player.other(), refereeResults)
+        if (GameState.GLOBAL.refereeBoard.isGameOver) {
+            CountingActivity.start(this)
+        } else {
+            HandOverActivity.start(this, player.other(), refereeResults)
+        }
         finish()
     }
 
