@@ -8,6 +8,7 @@ public class CountingBoard {
     private final int[][] region;
     private final boolean[][] dead;
     private final Player[][] territory;
+    private CountResult countResult;
     private final int blackCaptured;
     private final int whiteCaptured;
 
@@ -19,8 +20,6 @@ public class CountingBoard {
         this.territory = new Player[size][size];
         this.blackCaptured = board.getCaptured(Player.BLACK);
         this.whiteCaptured = board.getCaptured(Player.WHITE);
-
-        count();
     }
 
     public void toggleDead(int x, int y) {
@@ -28,14 +27,20 @@ public class CountingBoard {
             throw new IllegalStateException(x + "," + y);
         }
 
-        int regionId = region[x][y];
+        boolean toToggle[][] = new boolean[size][size];
+        floodFillStep(color, toToggle, new boolean[size][size], color[x][y], x, y);
+        floodFillStep(color, toToggle, new boolean[size][size], null, x, y);
+        floodFillStep(color, toToggle, new boolean[size][size], color[x][y], x, y);
+
         for (int j = 0; j < size; j++) {
             for (int i = 0; i < size; i++) {
-                if (region[i][j] == regionId) {
+                if (toToggle[i][j] && color[i][j] != null) {
                     dead[i][j] = !dead[i][j];
                 }
             }
         }
+
+        countResult = null;
     }
 
     private static Player[][] initPieces(Board board) {
@@ -56,7 +61,7 @@ public class CountingBoard {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 if (chain[x][y] == 0) {
-                    floodFill(chain, pieces, pieces[x][y], id, x, y);
+                    floodFill(pieces, chain, pieces[x][y], id, x, y);
                     id++;
                 }
             }
@@ -64,14 +69,27 @@ public class CountingBoard {
         return chain;
     }
 
-    private static void floodFill(int[][] chain, Player[][] pieces, Player player, int id, int x, int y) {
-        if (0 <= x && x < chain.length && 0 <= y && y < chain.length) {
-            if (chain[x][y] == 0 && pieces[x][y] == player) {
-                chain[x][y] = id;
-                floodFill(chain, pieces, player, id, x - 1, y);
-                floodFill(chain, pieces, player, id, x + 1, y);
-                floodFill(chain, pieces, player, id, x, y - 1);
-                floodFill(chain, pieces, player, id, x, y + 1);
+    private static void floodFill(Player[][] in, int[][] out, Player from, int to, int x, int y) {
+        if (0 <= x && x < out.length && 0 <= y && y < out.length) {
+            if (out[x][y] == 0 && in[x][y] == from) {
+                out[x][y] = to;
+                floodFill(in, out, from, to, x - 1, y);
+                floodFill(in, out, from, to, x + 1, y);
+                floodFill(in, out, from, to, x, y - 1);
+                floodFill(in, out, from, to, x, y + 1);
+            }
+        }
+    }
+
+    private static void floodFillStep(Player[][] in, boolean[][] out, boolean[][] done, Player from, int x, int y) {
+        if (0 <= x && x < out.length && 0 <= y && y < out.length) {
+            if (!done[x][y] && (out[x][y] || in[x][y] == from)) {
+                done[x][y] = true;
+                out[x][y] = true;
+                floodFillStep(in, out, done, from, x - 1, y);
+                floodFillStep(in, out, done, from, x + 1, y);
+                floodFillStep(in, out, done, from, x, y - 1);
+                floodFillStep(in, out, done, from, x, y + 1);
             }
         }
     }
@@ -90,6 +108,10 @@ public class CountingBoard {
     }
 
     public CountResult count() {
+        if (countResult != null) {
+            return countResult;
+        }
+
         int blackDead = 0;
         int whiteDead = 0;
 
@@ -156,9 +178,10 @@ public class CountingBoard {
                     }
                 }
 
-                return new CountResult(
+                countResult = new CountResult(
                         blackTerritory, whiteTerritory,
                         blackCaptured + whiteDead, whiteCaptured + blackDead);
+                return countResult;
             }
         }
     }
@@ -175,11 +198,13 @@ public class CountingBoard {
     }
 
     public Player getTerritory(int x, int y) {
+        count();
         return territory[x][y];
     }
 
     @Override
     public String toString() {
+        count();
         StringBuilder sb = new StringBuilder();
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {

@@ -126,4 +126,46 @@ public class CountingBoardTest {
         CountResult result = countingBoard.count();
         assertThat(result.toString(), is("black=19+2, white=13+3"));
     }
+
+    @Test
+    public void testToggleDead() {
+        Board board = new Board(9);
+        board.setup(
+                "W . . B . . . . W",
+                ". . B . . . . W .",
+                ". B . . . . W . .",
+                "B . . . . W . . .",
+                ". . . . W . . . .",
+                ". . . W . . . . B",
+                ". . W . . . . B .",
+                ". W . . . . B . .",
+                "W . . . . B . . W");
+        CountingBoard countingBoard = new CountingBoard(board);
+
+        countingBoard.toggleDead(0, 8);
+
+        assertThat(countingBoard.toString(), is(""
+                + "W . . B b b b b #\n"
+                + ". . B b b b b # b\n"
+                + ". B b b b b # b b\n"
+                + "B b b b b # b b b\n"
+                + "b b b b # b b b b\n"
+                + "b b b # b b b b B\n"
+                + "b b # b b b b B .\n"
+                + "b # b b b b B . .\n"
+                + "# b b b b B . . W\n"));
+
+        countingBoard.toggleDead(0, 8);
+
+        assertThat(countingBoard.toString(), is(""
+                + "W . . B . . . . W\n"
+                + ". . B . . . . W .\n"
+                + ". B . . . . W . .\n"
+                + "B . . . . W . . .\n"
+                + ". . . . W . . . .\n"
+                + ". . . W . . . . B\n"
+                + ". . W . . . . B .\n"
+                + ". W . . . . B . .\n"
+                + "W . . . . B . . W\n"));
+    }
 }
