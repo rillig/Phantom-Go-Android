@@ -111,8 +111,13 @@ public abstract class AbstractBoardView extends View {
                 Cell cell = getBoard(x, y);
                 if (cell.hovering) {
                     fillCircle(g, x, y, 0.48, cell.color == Player.BLACK ? blackHoverPaint : whiteHoverPaint);
-                } else if (cell.territory) {
-                    fillCircle(g, x, y, 0.16, cell.color == Player.BLACK ? blackPaint : whitePaint);
+                } else if (cell.dead || cell.territory != null) {
+                    if (cell.dead) {
+                        fillCircle(g, x, y, 0.48, cell.color == Player.BLACK ? blackHoverPaint : whiteHoverPaint);
+                    }
+                    if (cell.territory != null) {
+                        fillCircle(g, x, y, 0.16, cell.territory == Player.BLACK ? blackPaint : whitePaint);
+                    }
                 } else if (cell.color != null) {
                     fillCircle(g, x, y, 0.48, cell.color == Player.BLACK ? blackPaint : whitePaint);
                 }
@@ -148,14 +153,16 @@ public abstract class AbstractBoardView extends View {
     protected static class Cell {
         protected final Player color;
         protected final boolean lastMove;
-        protected final boolean territory;
+        protected final Player territory;
         protected final boolean hovering;
+        protected final boolean dead;
 
-        public Cell(Player color, boolean lastMove, boolean territory, boolean hovering) {
+        protected Cell(Player color, boolean lastMove, Player territory, boolean hovering, boolean dead) {
             this.color = color;
             this.lastMove = lastMove;
             this.territory = territory;
             this.hovering = hovering;
+            this.dead = dead;
         }
     }
 }

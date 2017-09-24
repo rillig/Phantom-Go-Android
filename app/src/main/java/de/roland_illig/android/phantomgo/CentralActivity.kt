@@ -13,7 +13,11 @@ class CentralActivity : AppCompatActivity() {
     }
 
     fun onPlayClick(view: View) {
-        PlayerActivity.start(this, GameState.GLOBAL.refereeBoard.turn)
+        if (GameState.GLOBAL.refereeBoard.isGameOver) {
+            CountingActivity.start(this)
+        } else {
+            PlayerActivity.start(this, GameState.GLOBAL.refereeBoard.turn)
+        }
     }
 
     fun onSettingsClick(view: View) {

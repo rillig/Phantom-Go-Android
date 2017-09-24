@@ -13,7 +13,12 @@ public class GameState implements Serializable {
     public final Board refereeBoard = new Board(9);
     public final Board blackBoard = new Board(9);
     public final Board whiteBoard = new Board(9);
-    public String blackRefereeText = "\u00A0";
-    public String whiteReferee = "\u00A0";
     public CountingBoard countingBoard;
+
+    public void reset() {
+        refereeBoard.reset();
+        blackBoard.reset();
+        whiteBoard.reset();
+        countingBoard = null;
+    }
 }

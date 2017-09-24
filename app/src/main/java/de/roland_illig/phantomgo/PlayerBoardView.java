@@ -47,11 +47,11 @@ public class PlayerBoardView extends AbstractBoardView {
         if (player == refereeBoard.getTurn()) {
             if (x == hoverX && y == hoverY) {
                 if (board.get(hoverX, hoverY) == null) {
-                    return new Cell(refereeBoard.getTurn(), false, false, true);
+                    return new Cell(refereeBoard.getTurn(), false, null, true, false);
                 }
             }
         }
-        return new Cell(board.get(x, y), false, false, false);
+        return new Cell(board.get(x, y), false, null, false, false);
     }
 
     @Override

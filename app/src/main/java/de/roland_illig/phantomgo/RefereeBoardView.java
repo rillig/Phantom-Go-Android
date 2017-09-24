@@ -31,6 +31,6 @@ public class RefereeBoardView extends AbstractBoardView {
 
     @Override
     protected Cell getBoard(int x, int y) {
-        return new Cell(board.get(x, y), false, false, false);
+        return new Cell(board.get(x, y), false, null, false, false);
     }
 }

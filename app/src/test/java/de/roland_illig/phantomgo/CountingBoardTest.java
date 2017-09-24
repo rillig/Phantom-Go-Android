@@ -1,9 +1,9 @@
 package de.roland_illig.phantomgo;
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class CountingBoardTest {
 
@@ -45,15 +45,15 @@ public class CountingBoardTest {
     public void testCountBeforeMarkingDeadStones() {
         Board board = new Board(9);
         board.setup(
-                "B . . . W W B . . ",
-                "B W . W W B B . . ",
-                "B W . W B B B . . ",
-                "W W W W W B . . . ",
-                "B B W B B B . . . ",
-                ". B B W W B B B B ",
-                "B B W . W W B W W ",
-                ". B W W . W W B . ",
-                ". B W . . . W B . ");
+                "B . . . W W B . .",
+                "B W . W W B B . .",
+                "B W . W B B B . .",
+                "W W W W W B . . .",
+                "B B W B B B . . .",
+                ". B B W W B B B B",
+                "B B W . W W B W W",
+                ". B W W . W W B .",
+                ". B W . . . W B .");
 
         CountingBoard countingBoard = new CountingBoard(board);
 
@@ -76,15 +76,48 @@ public class CountingBoardTest {
     public void testCountAfterMarkingDeadStones() {
         Board board = new Board(9);
         board.setup(
-                "B . . . W W B . . ",
-                "B W . W W B B . . ",
-                "B W . W B B B . . ",
-                "W W W W W B . . . ",
-                "B B W B B B . . . ",
-                ". B B W W B B B B ",
-                "B B W . W W B W W ",
-                ". B W W . W W B . ",
-                ". B W . . . W B . ");
+                "B . . . W W B . .",
+                "B W . W W B B . .",
+                "B W . W B B B . .",
+                "W W W W W B . . .",
+                "B B W B B B . . .",
+                ". B B W W B B B B",
+                "B B W . W W B W W",
+                ". B W W . W W B .",
+                ". B W . . . W B .");
+
+        CountingBoard countingBoard = new CountingBoard(board);
+        countingBoard.toggleDead(0, 0);
+        countingBoard.toggleDead(8, 6);
+
+        CountResult result = countingBoard.count();
+        assertThat(result.toString(), is("black=19+2, white=13+3"));
+
+        assertThat(countingBoard.toString(), is(""
+                + "# w w w W W B b b\n"
+                + "# W w W W B B b b\n"
+                + "# W w W B B B b b\n"
+                + "W W W W W B b b b\n"
+                + "B B W B B B b b b\n"
+                + "b B B W W B B B B\n"
+                + "B B W w W W B # #\n"
+                + "b B W W w W W B b\n"
+                + "b B W w w w W B b\n"));
+    }
+
+    @Test
+    public void testBoardViewAfterMarkingDeadStones() {
+        Board board = new Board(9);
+        board.setup(
+                "B . . . W W B . .",
+                "B W . W W B B . .",
+                "B W . W B B B . .",
+                "W W W W W B . . .",
+                "B B W B B B . . .",
+                ". B B W W B B B B",
+                "B B W . W W B W W",
+                ". B W W . W W B .",
+                ". B W . . . W B .");
 
         CountingBoard countingBoard = new CountingBoard(board);
         countingBoard.toggleDead(0, 0);

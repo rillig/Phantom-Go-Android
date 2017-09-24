@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import de.roland_illig.phantomgo.CountingBoard
 import de.roland_illig.phantomgo.CountingBoardView
 
 class CountingActivity : AppCompatActivity() {
@@ -15,7 +17,18 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        findViewById<CountingBoardView>(R.id.countingBoard).configure(GameState.GLOBAL.refereeBoard)
+        if (GameState.GLOBAL.countingBoard == null) {
+            GameState.GLOBAL.countingBoard = CountingBoard(GameState.GLOBAL.refereeBoard)
+        }
+        findViewById<CountingBoardView>(R.id.countingBoard).configure(
+                GameState.GLOBAL.refereeBoard,
+                GameState.GLOBAL.countingBoard)
+    }
+
+    fun onFinishClick(view: View) {
+        GameState.GLOBAL.reset()
+        startActivity(Intent(this, CentralActivity::class.java))
+        finish()
     }
 
     companion object {

@@ -1,23 +1,29 @@
 package de.roland_illig.phantomgo;
 
-import de.roland_illig.phantomgo.util.VisibleForTesting;
-import java.util.Objects;
+import android.support.annotation.VisibleForTesting;
 
 public class CountingBoard {
     private final int size;
     private final Player[][] color;
     private final int[][] region;
     private final boolean[][] dead;
+    private final Player[][] territory;
 
     public CountingBoard(Board board) {
         this.size = board.getSize();
         this.color = initPieces(board);
         this.region = initRegion(color);
         this.dead = new boolean[size][size];
+        this.territory = new Player[size][size];
+
+        count();
     }
 
     public void toggleDead(int x, int y) {
-        Objects.requireNonNull(color[x][y]);
+        if (color[x][y] == null) {
+            throw new IllegalStateException(x + "," + y);
+        }
+
         int regionId = region[x][y];
         for (int j = 0; j < size; j++) {
             for (int i = 0; i < size; i++) {
@@ -26,6 +32,8 @@ public class CountingBoard {
                 }
             }
         }
+
+        count();
     }
 
     private static Player[][] initPieces(Board board) {
@@ -132,11 +140,14 @@ public class CountingBoard {
                 int whiteTerritory = 0;
                 for (int y = 0; y < size; y++) {
                     for (int x = 0; x < size; x++) {
+                        territory[x][y] = null;
                         if (color[x][y] == null || dead[x][y]) {
                             if (black[x][y] && !white[x][y]) {
+                                territory[x][y] = Player.BLACK;
                                 blackTerritory++;
                             }
                             if (white[x][y] && !black[x][y]) {
+                                territory[x][y] = Player.WHITE;
                                 whiteTerritory++;
                             }
                         }
@@ -156,5 +167,27 @@ public class CountingBoard {
 
     public boolean isDead(int x, int y) {
         return dead[x][y];
+    }
+
+    public Player getTerritory(int x, int y) {
+        return territory[x][y];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                if (territory[x][y] == Player.WHITE) {
+                    sb.append(dead[x][y] ? '#' : 'w');
+                } else if (territory[x][y] == Player.BLACK) {
+                    sb.append(dead[x][y] ? '#' : 'b');
+                } else {
+                    sb.append(color[x][y] == Player.BLACK ? 'B' : color[x][y] == Player.WHITE ? 'W' : '.');
+                }
+                sb.append(x == size - 1 ? "\n" : " ");
+            }
+        }
+        return sb.toString();
     }
 }

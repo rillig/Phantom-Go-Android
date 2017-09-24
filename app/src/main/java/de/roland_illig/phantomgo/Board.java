@@ -1,6 +1,6 @@
 package de.roland_illig.phantomgo;
 
-import de.roland_illig.phantomgo.util.VisibleForTesting;
+import android.support.annotation.VisibleForTesting;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -275,6 +275,7 @@ public class Board {
         return turn;
     }
 
+    @VisibleForTesting
     public void setup(String... rows) {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {

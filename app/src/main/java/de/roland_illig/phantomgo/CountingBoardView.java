@@ -21,17 +21,17 @@ public class CountingBoardView extends AbstractBoardView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void configure(Board board) {
+    public void configure(Board board, CountingBoard countingBoard) {
         this.board = board;
-        this.countingBoard = new CountingBoard(board);
+        this.countingBoard = countingBoard;
     }
 
     @Override
     protected Cell getBoard(int x, int y) {
-        Player color = board.get(x, y);
-        boolean territory = color == null || countingBoard.isDead(x, y);
-        boolean hovering = false;
-        return new Cell(color, false, territory, hovering);
+        Player stone = board.get(x, y);
+        Player territory = countingBoard.getTerritory(x, y);
+        boolean dead = countingBoard.isDead(x, y);
+        return new Cell(stone, false, territory, false, dead);
     }
 
     @Override
@@ -41,7 +41,9 @@ public class CountingBoardView extends AbstractBoardView {
 
     @Override
     protected void boardMouseClicked(int x, int y) {
-        countingBoard.toggleDead(x, y);
-        invalidate();
+        if (board.get(x, y) != null) {
+            countingBoard.toggleDead(x, y);
+            invalidate();
+        }
     }
 }
