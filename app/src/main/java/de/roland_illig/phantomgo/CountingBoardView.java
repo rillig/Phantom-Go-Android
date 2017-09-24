@@ -54,9 +54,9 @@ public class CountingBoardView extends AbstractBoardView {
 
     private void updateSummary() {
         CountResult result = countingBoard.count();
-        String summary = ""
-                + "Schwarz: " + result.blackTerritory + " + " + (result.blackCaptured) + " = " + result.blackScore + "\n"
-                + "Weiß: " + result.whiteTerritory + " + " + (result.whiteCaptured) + " = " + result.whiteScore + "\n";
+        String summary = getResources().getString(R.string.result_summary,
+                result.blackTerritory, result.blackCaptured, result.blackScore,
+                result.whiteTerritory, result.whiteCaptured, result.whiteScore);
         ((TextView) ((View) getParent()).findViewById(R.id.countingSummary)).setText(summary);
     }
 }

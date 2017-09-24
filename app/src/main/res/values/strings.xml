@@ -91,6 +91,7 @@
     <string name="under_construction">This app is under construction.</string>
     <string name="hand_over_text">Two boards of Go on the screen,\ntake one down, pass it around.\nOne less board of Go on the screen.</string>
     <string name="pass_button">Pass</string>
+    <string name="result_summary">Black: %d + %d = %d\nWhite: %d + %d = %d</string>
     <string name="finish_button">Done</string>
 
     <string name="referee_black">Black</string>

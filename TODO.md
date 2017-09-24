@@ -6,8 +6,6 @@
 
 * Liste der Schiedsrichersprüche ist nicht scrollbar
 
-* updateSummary: i18n
-
 # Prio 2
 
 * Undo

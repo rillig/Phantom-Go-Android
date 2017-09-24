@@ -90,6 +90,7 @@
     <string name="eraser_button">×</string>
     <string name="under_construction">Ese app esta en construcción.</string>
     <string name="pass_button">Pasar</string>
+    <string name="result_summary">Negro: %d + %d = %d\nBlanco: %d + %d = %d</string>
     <string name="finish_button">Terminar</string>
 
     <string name="referee_black">Negro</string>
