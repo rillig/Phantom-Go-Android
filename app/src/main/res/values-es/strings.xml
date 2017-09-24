@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Phantom-Go</string>
+    <string name="app_name">Go fantasma</string>
 
     <string name="title_activity_settings">Settings</string>
 
@@ -89,7 +89,34 @@
     <string name="white_button">⚪</string>
     <string name="eraser_button">×</string>
     <string name="under_construction">Ese app esta en construcción.</string>
-    <string name="hand_over_text">Handy, Handy, du musst wandern,\nvon der einen Hand zur andern.\nDas ist schön, das ist schön,\nlass das Brett nur niemand sehn.</string>
     <string name="pass_button">Pasar</string>
     <string name="finish_button">Terminar</string>
+
+    <string name="referee_black">Negro</string>
+    <string name="referee_white">Blanco</string>
+    <string name="referee_other_stone">Aquí ya esta un piedro opuesto.</string>
+    <string name="referee_own_stone">Aquí ya esta un piedro de tú.</string>
+    <string name="referee_suicide">Suicida.</string>
+    <string name="referee_ko">No puedes recapturar el ko inmediatamente.</string>
+    <string name="referee_passes">%s pasa.</string>
+    <string name="referee_to_play">%s juega.</string>
+    <string name="referee_atari">%s da atari a %s.</string>
+    <string name="referee_selfatari">%s da atari a su mismo.</string>
+    <string name="referee_atari_selfatari">%s da atari a %s y a su mismo.</string>
+    <plurals name="referee_capture">
+        <item quantity="one">%s captura un piedro.</item>
+        <item quantity="other">%s captura %d piedros.</item>
+    </plurals>
+    <plurals name="referee_capture_atari">
+        <item quantity="one">%s captura un piedro y da atari a %s.</item>
+        <item quantity="other">%s captura %d piedros y da atari a %s.</item>
+    </plurals>
+    <plurals name="referee_capture_selfatari">
+        <item quantity="one">%s captura un piedro y da atari a su mismo.</item>
+        <item quantity="other">%s captura %d piedros y da atari a su mismo.</item>
+    </plurals>
+    <plurals name="referee_capture_atari_selfatari">
+        <item quantity="one">%s captura un piedro y da atari a %s y a su mismo.</item>
+        <item quantity="other">%s captura %d piedros y da atari a %s y a su mismo.</item>
+    </plurals>
 </resources>

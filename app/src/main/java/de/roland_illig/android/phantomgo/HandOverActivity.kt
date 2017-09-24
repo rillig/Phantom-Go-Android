@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
-import de.roland_illig.phantomgo.GermanReferee
 import de.roland_illig.phantomgo.Player
+import de.roland_illig.phantomgo.Referee
 import de.roland_illig.phantomgo.RefereeResult
 import java.io.Serializable
 
@@ -20,7 +20,7 @@ class HandOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hand_over)
 
-        val refereeStrings = refereeResults.map { res -> GermanReferee.comment(res, target.other()) }
+        val refereeStrings = refereeResults.map { result -> Referee.comment(result, target.other(), resources) }
         val refereeResultsView = findViewById<ListView>(R.id.refereeResults)
         refereeResultsView.adapter = ArrayAdapter(this, R.layout.string_list_item, refereeStrings)
 

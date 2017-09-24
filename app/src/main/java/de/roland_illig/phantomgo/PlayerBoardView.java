@@ -116,7 +116,7 @@ public class PlayerBoardView extends AbstractBoardView {
     }
 
     private void updateViews(RefereeResult result) {
-        ((TextView) findParentView(R.id.referee)).setText(result != null ? GermanReferee.comment(result, player) : "");
+        ((TextView) findParentView(R.id.referee)).setText(result != null ? Referee.comment(result, player, getResources()) : "");
         findParentView(R.id.passButton).setEnabled(refereeBoard.getTurn() == player);
         findParentView(R.id.handOverButton).setEnabled(refereeBoard.getTurn() != player);
     }
@@ -153,6 +153,6 @@ public class PlayerBoardView extends AbstractBoardView {
 
         RefereeResult result = refereeBoard.pass();
         refereeResults.add(result);
-        ((TextView) findParentView(R.id.referee)).setText(GermanReferee.comment(result, player));
+        ((TextView) findParentView(R.id.referee)).setText(Referee.comment(result, player, getResources()));
     }
 }

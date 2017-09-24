@@ -92,4 +92,32 @@
     <string name="hand_over_text">Handy, Handy, du musst wandern,\nvon der einen Hand zur andern.\nDas ist schön, das ist schön,\nlass das Brett nur niemand sehn.</string>
     <string name="pass_button">Passen</string>
     <string name="finish_button">Fertig</string>
+
+    <string name="referee_black">Schwarz</string>
+    <string name="referee_white">Weiß</string>
+    <string name="referee_other_stone">Da steht schon ein gegnerischer Stein.</string>
+    <string name="referee_own_stone">Da steht schon ein eigener Stein.</string>
+    <string name="referee_suicide">Selbstmord.</string>
+    <string name="referee_ko">Das Ko darf nicht sofort zurückgeschlagen werden.</string>
+    <string name="referee_passes">%s passt.</string>
+    <string name="referee_to_play">%s ist dran.</string>
+    <string name="referee_atari">%s setzt %s ins Atari.</string>
+    <string name="referee_selfatari">%s setzt sich selbst ins Atari.</string>
+    <string name="referee_atari_selfatari">%s setzt %s und sich selbst ins Atari.</string>
+    <plurals name="referee_capture">
+        <item quantity="one">%s fängt einen Stein.</item>
+        <item quantity="other">%s fängt %d Steine.</item>
+    </plurals>
+    <plurals name="referee_capture_atari">
+        <item quantity="one">%s fängt einen Stein und setzt %s ins Atari.</item>
+        <item quantity="other">%s fängt %d Steine und setzt %s ins Atari.</item>
+    </plurals>
+    <plurals name="referee_capture_selfatari">
+        <item quantity="one">%s fängt einen Stein und setzt sich selbst ins Atari.</item>
+        <item quantity="other">%s fängt %d Steine und setzt sich selbst ins Atari.</item>
+    </plurals>
+    <plurals name="referee_capture_atari_selfatari">
+        <item quantity="one">%s fängt einen Stein und setzt %s und sich selbst ins Atari.</item>
+        <item quantity="other">%s fängt %d Steine und setzt %s und sich selbst ins Atari.</item>
+    </plurals>
 </resources>

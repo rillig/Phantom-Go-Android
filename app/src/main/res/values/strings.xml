@@ -92,4 +92,32 @@
     <string name="hand_over_text">Two boards of Go on the screen,\ntake one down, pass it around.\nOne less board of Go on the screen.</string>
     <string name="pass_button">Pass</string>
     <string name="finish_button">Done</string>
+
+    <string name="referee_black">Black</string>
+    <string name="referee_white">White</string>
+    <string name="referee_other_stone">There is already an opponent’s stone.</string>
+    <string name="referee_own_stone">There is already an own stone.</string>
+    <string name="referee_suicide">Suicide.</string>
+    <string name="referee_ko">The ko cannot be captured back immediately.</string>
+    <string name="referee_passes">%s passes.</string>
+    <string name="referee_to_play">%s to move.</string>
+    <string name="referee_atari">%s puts %s in atari.</string>
+    <string name="referee_selfatari">%s puts himself in atari.</string>
+    <string name="referee_atari_selfatari">%s puts %s and himself in atari.</string>
+    <plurals name="referee_capture">
+        <item quantity="one">%s captures one stone.</item>
+        <item quantity="other">%s captures %d stones.</item>
+    </plurals>
+    <plurals name="referee_capture_atari">
+        <item quantity="one">%s captures one stone and puts %3$s in atari.</item>
+        <item quantity="other">%s captures %d stones and puts %s in atari.</item>
+    </plurals>
+    <plurals name="referee_capture_selfatari">
+        <item quantity="one">%s captures one stone and puts himself in atari.</item>
+        <item quantity="other">%s captures %d stones and puts himself in atari.</item>
+    </plurals>
+    <plurals name="referee_capture_atari_selfatari">
+        <item quantity="one">%s captures one stone and puts %3$s and himself in atari.</item>
+        <item quantity="other">%s captures %d stones and puts %s and himself in atari.</item>
+    </plurals>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Go Fantôme</string>
+    <string name="app_name">Go fantôme</string>
 
     <string name="title_activity_settings">Settings</string>
 
@@ -89,7 +89,34 @@
     <string name="white_button">⚪</string>
     <string name="eraser_button">×</string>
     <string name="under_construction">Cette app est en construction.</string>
-    <string name="hand_over_text">Handy, Handy, du musst wandern,\nvon der einen Hand zur andern.\nDas ist schön, das ist schön,\nlass das Brett nur niemand sehn.</string>
     <string name="pass_button">Passer</string>
     <string name="finish_button">Terminer</string>
+
+    <string name="referee_black">Noir</string>
+    <string name="referee_white">Blanc</string>
+    <string name="referee_other_stone">Ici, il y’a déjà un pierre adversaire.</string>
+    <string name="referee_own_stone">Ici, il y’a déjà un pierre de toi.</string>
+    <string name="referee_suicide">Suicide.</string>
+    <string name="referee_ko">Tu ne peux pas reprendre le ko tout de suite.</string>
+    <string name="referee_passes">%s passe.</string>
+    <string name="referee_to_play">%s à jouer.</string>
+    <string name="referee_atari">%s fais atari à %s.</string>
+    <string name="referee_selfatari">%s fais atari à lui-même.</string>
+    <string name="referee_atari_selfatari">%s fais atari à %s et lui-même.</string>
+    <plurals name="referee_capture">
+        <item quantity="one">%s capture un pierre.</item>
+        <item quantity="other">%s capture %d pierres.</item>
+    </plurals>
+    <plurals name="referee_capture_atari">
+        <item quantity="one">%s capture un pierre et fais atari à %s.</item>
+        <item quantity="other">%s capture %d pierres et fais atari à %s.</item>
+    </plurals>
+    <plurals name="referee_capture_selfatari">
+        <item quantity="one">%s capture un pierre et fais atari à lui-même.</item>
+        <item quantity="other">%s capture %d pierres et fais atari à lui-même.</item>
+    </plurals>
+    <plurals name="referee_capture_atari_selfatari">
+        <item quantity="one">%s capture un pierre et fais atari à %s et lui-même.</item>
+        <item quantity="other">%s capture %d pierres et fais atari à %s et lui-même.</item>
+    </plurals>
 </resources>
