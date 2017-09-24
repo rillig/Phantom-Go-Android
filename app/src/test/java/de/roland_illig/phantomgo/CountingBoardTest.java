@@ -37,8 +37,8 @@ public class CountingBoardTest {
         CountResult result = countingBoard.count();
         assertThat(result.blackTerritory, is(18));
         assertThat(result.whiteTerritory, is(27));
-        assertThat(result.blackDead, is(0));
-        assertThat(result.whiteDead, is(0));
+        assertThat(result.blackCaptured, is(0));
+        assertThat(result.whiteCaptured, is(0));
     }
 
     @Test
