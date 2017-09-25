@@ -1,41 +1,52 @@
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="200"
-   height="200"
-   viewBox="0 0 200 200"
-   version="1.1">
-  <rect
-       id="background"
-       width="200"
-       height="200"
-       x="0"
-       y="0"
-       style="fill:#d48e00;fill-opacity:1;stroke-width:0"
-       rx="20"
-       ry="20" />
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    version="1.1">
+    <rect
+        id="background"
+        width="48"
+        height="48"
+        x="0"
+        y="0"
+        style="fill:#d48e00;fill-opacity:1;stroke-width:0"
+        rx="5"
+        ry="5" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 20,20 V 180 M 40,20 V 180 M 60,20 V 180 M 80,20 V 180 M 100,20 V 180 M 120,20 V 180 M 140,20 V 180 M 160,20 V 180 M 180,20 V 180 M 20,20 H 180 M 20,40 H 180 M 20,60 H 180 M 20,80 H 180 M 20,100 H 180 M 20,120 H 180 M 20,140 H 180 M 20,160 H 180 M 20,180 h 160"
-       id="lines"
-       inkscape:connector-curvature="0" />
-    <circle id="B1"  cx="100" cy="100" r="9.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
-    <circle id="W2"  cx="140" cy=" 60" r="9.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
-    <circle id="B3"  cx="100" cy="120" r="9.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
-    <circle id="W4"  cx="140" cy="100" r="9.3" style="fill:#ffffff;fill-opacity:0.5;stroke-width:0" />
-    <circle id="B5"  cx="100" cy="140" r="9.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
-    <circle id="W6"  cx="140" cy="140" r="9.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
-    <circle id="B7"  cx="100" cy="160" r="9.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
-    <circle id="W8"  cx="100" cy=" 60" r="9.3" style="fill:#ffffff;fill-opacity:0.5;stroke-width:0" />
-    <circle id="B9"  cx="100" cy="100" r="9.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
-    <circle id="W10" cx=" 60" cy=" 80" r="9.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
-    <circle id="B11" cx=" 40" cy=" 60" r="9.5" style="fill:#000000;fill-opacity:0.5;stroke-width:0" />
-    <circle id="W12" cx=" 60" cy="140" r="9.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
-    <circle id="B11" cx=" 60" cy=" 60" r="9.5" style="fill:#000000;fill-opacity:0.5;stroke-width:0" />
-    <circle id="W12" cx=" 80" cy="160" r="9.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
+        id="lines"
+        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+        d="
+            M  4.5, 4.25 v 40.5
+            M  9.5, 4.25 v 40.5
+            M 14.5, 4.25 v 40.5
+            M 19.5, 4.25 v 40.5
+            M 24.5, 4.25 v 40.5
+            M 29.5, 4.25 v 40.5
+            M 34.5, 4.25 v 40.5
+            M 39.5, 4.25 v 40.5
+            M 44.5, 4.25 v 40.5
+            M  4.25, 4.5 h 40.5
+            M  4.25, 9.5 h 40.5
+            M  4.25,14.5 h 40.5
+            M  4.25,19.5 h 40.5
+            M  4.25,24.5 h 40.5
+            M  4.25,29.5 h 40.5
+            M  4.25,34.5 h 40.5
+            M  4.25,39.5 h 40.5
+            M  4.25,44.5 h 40.5" />
+    <circle id="B1"  cx="24.5" cy="24.5" r="2.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
+    <circle id="W2"  cx="34.5" cy="14.5" r="2.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
+    <circle id="B3"  cx="24.5" cy="29.5" r="2.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
+    <circle id="W4"  cx="34.5" cy="24.5" r="2.3" style="fill:#ffffff;fill-opacity:0.5;stroke-width:0" />
+    <circle id="B5"  cx="24.5" cy="34.5" r="2.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
+    <circle id="W6"  cx="34.5" cy="34.5" r="2.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
+    <circle id="B7"  cx="24.5" cy="39.5" r="2.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
+    <circle id="W8"  cx="24.5" cy="14.5" r="2.3" style="fill:#ffffff;fill-opacity:0.5;stroke-width:0" />
+    <circle id="B9"  cx="24.5" cy="24.5" r="2.5" style="fill:#000000;fill-opacity:1.0;stroke-width:0" />
+    <circle id="W10" cx="14.5" cy="19.5" r="2.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
+    <circle id="B11" cx=" 9.5" cy="14.5" r="2.5" style="fill:#000000;fill-opacity:0.5;stroke-width:0" />
+    <circle id="W12" cx="14.5" cy="34.5" r="2.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
+    <circle id="B11" cx="14.5" cy="14.5" r="2.5" style="fill:#000000;fill-opacity:0.5;stroke-width:0" />
+    <circle id="W12" cx="19.5" cy="39.5" r="2.3" style="fill:#ffffff;fill-opacity:1.0;stroke-width:0" />
 </svg>
