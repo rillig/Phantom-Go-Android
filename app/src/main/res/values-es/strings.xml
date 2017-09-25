@@ -38,7 +38,7 @@
         <item quantity="other">%s captura %d piedros.</item>
     </plurals>
     <plurals name="referee_capture_atari">
-        <item quantity="one">%s captura un piedro y da atari a %s.</item>
+        <item quantity="one">%s captura un piedro y da atari a %3$s.</item>
         <item quantity="other">%s captura %d piedros y da atari a %s.</item>
     </plurals>
     <plurals name="referee_capture_selfatari">
@@ -46,7 +46,7 @@
         <item quantity="other">%s captura %d piedros y da atari a su mismo.</item>
     </plurals>
     <plurals name="referee_capture_atari_selfatari">
-        <item quantity="one">%s captura un piedro y da atari a %s y a su mismo.</item>
+        <item quantity="one">%s captura un piedro y da atari a %3$s y a su mismo.</item>
         <item quantity="other">%s captura %d piedros y da atari a %s y a su mismo.</item>
     </plurals>
 </resources>

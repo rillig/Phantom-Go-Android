@@ -38,7 +38,7 @@
         <item quantity="other">%s capture %d pierres.</item>
     </plurals>
     <plurals name="referee_capture_atari">
-        <item quantity="one">%s capture un pierre et fais atari à %s.</item>
+        <item quantity="one">%s capture un pierre et fais atari à %3$s.</item>
         <item quantity="other">%s capture %d pierres et fais atari à %s.</item>
     </plurals>
     <plurals name="referee_capture_selfatari">
@@ -46,7 +46,7 @@
         <item quantity="other">%s capture %d pierres et fais atari à lui-même.</item>
     </plurals>
     <plurals name="referee_capture_atari_selfatari">
-        <item quantity="one">%s capture un pierre et fais atari à %s et lui-même.</item>
+        <item quantity="one">%s capture un pierre et fais atari à %3$s et lui-même.</item>
         <item quantity="other">%s capture %d pierres et fais atari à %s et lui-même.</item>
     </plurals>
 </resources>
