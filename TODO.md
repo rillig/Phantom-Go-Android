@@ -1,15 +1,13 @@
 # Prio 1
 
-* Statistik: versteckte Steine, Gefangene
+* Change RadioButtons to have only icons
 
-* RadioButtons mit nur Icon
+* Make list of the referee results have the correct size
 
-* Liste der Schiedsrichersprüche ist nicht scrollbar
+* Switching between portrait and landscape must not hide any text from the screen
 
 # Prio 2
 
-* Undo
+* Remove animations between activities
 
-# Prio 3
-
-* Keine Animationen zwischen den Aktivitäten
+* Add Bluetooth support
