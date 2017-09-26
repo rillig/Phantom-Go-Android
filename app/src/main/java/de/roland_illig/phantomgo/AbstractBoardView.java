@@ -103,6 +103,7 @@ public abstract class AbstractBoardView extends View {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
         return paint;
     }
 
