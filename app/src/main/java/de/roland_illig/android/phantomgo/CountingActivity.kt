@@ -27,7 +27,6 @@ class CountingActivity : AppCompatActivity() {
 
     fun onFinishClick(view: View) {
         GameState.GLOBAL.reset()
-        startActivity(Intent(this, CentralActivity::class.java))
         finish()
     }
 
