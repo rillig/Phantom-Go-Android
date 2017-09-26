@@ -16,9 +16,6 @@ public class Board {
     private boolean passed;
     private boolean gameOver;
 
-    private RefereeListener refereeListener;
-    private UpdateListener updateListener;
-
     public Board(int size) {
         this.size = size;
         pieces = new Player[size][size];
@@ -34,10 +31,6 @@ public class Board {
         Arrays.fill(captured, 0);
         passed = false;
         gameOver = false;
-
-        if (updateListener != null) {
-            updateListener.onUpdate();
-        }
     }
 
     public Board copy() {
@@ -93,31 +86,12 @@ public class Board {
         return captured;
     }
 
-    public void setRefereeListener(RefereeListener refereeListener) {
-        this.refereeListener = refereeListener;
-    }
-
-    public void setUpdateListener(UpdateListener updateListener) {
-        this.updateListener = updateListener;
-    }
-
     public void set(int x, int y, Player color) {
         pieces[x][y] = color;
-        if (updateListener != null) {
-            updateListener.onUpdate();
-        }
     }
 
     public void setTurn(Player turn) {
         this.turn = turn;
-    }
-
-    public interface RefereeListener {
-        void onReferee(RefereeResult result);
-    }
-
-    public interface UpdateListener {
-        void onUpdate();
     }
 
     private class LibertiesCounter {
@@ -175,12 +149,6 @@ public class Board {
 
     public RefereeResult play(int x, int y) {
         RefereeResult result = playInternal(x, y);
-        if (refereeListener != null) {
-            refereeListener.onReferee(result);
-        }
-        if (result.invalidReason == null && updateListener != null) {
-            updateListener.onUpdate();
-        }
         return result;
     }
 
@@ -261,9 +229,6 @@ public class Board {
         gameOver = passed;
         passed = true;
         turn = turn.other();
-        if (updateListener != null) {
-            updateListener.onUpdate();
-        }
         return RefereeResult.pass();
     }
 
