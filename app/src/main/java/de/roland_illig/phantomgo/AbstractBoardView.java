@@ -18,13 +18,7 @@ public abstract class AbstractBoardView extends View {
 
     protected abstract int getBoardSize();
 
-    protected void boardMouseMoved(int x, int y) {
-    }
-
     protected void boardMouseClicked(int x, int y) {
-    }
-
-    protected void boardMouseExited() {
     }
 
     public AbstractBoardView(Context context) {
@@ -61,26 +55,6 @@ public abstract class AbstractBoardView extends View {
                 }
             }
         });
-        /*
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                int x = screenToBoard(e.getX());
-                int y = screenToBoard(e.getY());
-                boardMouseMoved(x, y);
-            }
-        });
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                boardMouseExited();
-            }
-        });
-        */
     }
 
     @Override
@@ -92,8 +66,8 @@ public abstract class AbstractBoardView extends View {
         Paint boardPaint = solidPaint(0xFFD48E00);
         Paint blackPaint = solidPaint(0xFF000000);
         Paint whitePaint = solidPaint(0xFFFFFFFF);
-        Paint blackHoverPaint = solidPaint(0x55000000);
-        Paint whiteHoverPaint = solidPaint(0x55FFFFFF);
+        Paint blackTransparentPaint = solidPaint(0x55000000);
+        Paint whiteTransparentPaint = solidPaint(0x55FFFFFF);
 
         g.drawPaint(boardPaint);
 
@@ -109,11 +83,9 @@ public abstract class AbstractBoardView extends View {
             for (int x = 0; x < bsize; x++) {
 
                 Cell cell = getBoard(x, y);
-                if (cell.hovering) {
-                    fillCircle(g, x, y, 0.48, cell.color == Player.BLACK ? blackHoverPaint : whiteHoverPaint);
-                } else if (cell.dead || cell.territory != null) {
+                if (cell.dead || cell.territory != null) {
                     if (cell.dead) {
-                        fillCircle(g, x, y, 0.48, cell.color == Player.BLACK ? blackHoverPaint : whiteHoverPaint);
+                        fillCircle(g, x, y, 0.48, cell.color == Player.BLACK ? blackTransparentPaint : whiteTransparentPaint);
                     }
                     if (cell.territory != null) {
                         fillCircle(g, x, y, 0.16, cell.territory == Player.BLACK ? blackPaint : whitePaint);
@@ -154,14 +126,12 @@ public abstract class AbstractBoardView extends View {
         protected final Player color;
         protected final boolean lastMove;
         protected final Player territory;
-        protected final boolean hovering;
         protected final boolean dead;
 
-        protected Cell(Player color, boolean lastMove, Player territory, boolean hovering, boolean dead) {
+        protected Cell(Player color, boolean lastMove, Player territory, boolean dead) {
             this.color = color;
             this.lastMove = lastMove;
             this.territory = territory;
-            this.hovering = hovering;
             this.dead = dead;
         }
     }

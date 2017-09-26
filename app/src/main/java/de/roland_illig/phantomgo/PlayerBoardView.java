@@ -15,8 +15,6 @@ public class PlayerBoardView extends AbstractBoardView {
     private Board refereeBoard = new Board(9);
     private Board board = new Board(9);
     private Player player = Player.BLACK;
-    private int hoverX = -1;
-    private int hoverY = -1;
     private final List<RefereeResult> refereeResults = new ArrayList<>();
 
     public PlayerBoardView(Context context) {
@@ -46,14 +44,7 @@ public class PlayerBoardView extends AbstractBoardView {
 
     @Override
     protected Cell getBoard(int x, int y) {
-        if (player == refereeBoard.getTurn()) {
-            if (x == hoverX && y == hoverY) {
-                if (board.get(hoverX, hoverY) == null) {
-                    return new Cell(refereeBoard.getTurn(), false, null, true, false);
-                }
-            }
-        }
-        return new Cell(board.get(x, y), false, null, false, false);
+        return new Cell(board.get(x, y), false, null, false);
     }
 
     @Override
@@ -123,22 +114,6 @@ public class PlayerBoardView extends AbstractBoardView {
 
     private <T extends View> T findParentView(int resourceId) {
         return ((View) getParent()).findViewById(resourceId);
-    }
-
-    @Override
-    protected void boardMouseMoved(int x, int y) {
-        if (x != hoverX || y != hoverY) {
-            hoverX = x;
-            hoverY = y;
-            invalidate();
-        }
-    }
-
-    @Override
-    protected void boardMouseExited() {
-        hoverX = -1;
-        hoverY = -1;
-        invalidate();
     }
 
     public List<RefereeResult> getRefereeResults() {

@@ -35,7 +35,7 @@ public class CountingBoardView extends AbstractBoardView {
         Player stone = board.get(x, y);
         Player territory = countingBoard.getTerritory(x, y);
         boolean dead = countingBoard.isDead(x, y);
-        return new Cell(stone, false, territory, false, dead);
+        return new Cell(stone, false, territory, dead);
     }
 
     @Override
