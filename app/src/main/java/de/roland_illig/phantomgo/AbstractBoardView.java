@@ -63,6 +63,8 @@ public abstract class AbstractBoardView extends View {
 
         int bsize = getBoardSize();
 
+        Paint linePaint = solidPaint(0xFF000000);
+        linePaint.setStrokeWidth(lineWidth());
         Paint boardPaint = solidPaint(0xFFD48E00);
         Paint blackPaint = solidPaint(0xFF000000);
         Paint whitePaint = solidPaint(0xFFFFFFFF);
@@ -75,8 +77,8 @@ public abstract class AbstractBoardView extends View {
             int start = boardToScreen(0);
             int end = boardToScreen(bsize - 1);
             int fixed = boardToScreen(i);
-            g.drawLine(start, fixed, end, fixed, blackPaint);
-            g.drawLine(fixed, start, fixed, end, blackPaint);
+            g.drawLine(start, fixed, end, fixed, linePaint);
+            g.drawLine(fixed, start, fixed, end, linePaint);
         }
 
         for (int y = 0; y < bsize; y++) {
@@ -110,6 +112,10 @@ public abstract class AbstractBoardView extends View {
         int bottom = boardToScreen(y + radius);
         int right = boardToScreen(x + radius);
         g.drawOval(new RectF(left, top, right, bottom), paint);
+    }
+
+    private int lineWidth() {
+        return Math.max(1, (int) ((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0));
     }
 
     private int boardToScreen(double bc) {
