@@ -35,10 +35,10 @@ public class CountingBoardTest {
                 + "1 1 2 3 3 4 5 5 5\n"));
 
         CountResult result = countingBoard.count();
-        assertThat(result.blackTerritory, is(18));
-        assertThat(result.whiteTerritory, is(27));
-        assertThat(result.blackCaptured, is(0));
-        assertThat(result.whiteCaptured, is(0));
+        assertThat(result.getBlackTerritory(), is(18));
+        assertThat(result.getWhiteTerritory(), is(27));
+        assertThat(result.getBlackCaptured(), is(0));
+        assertThat(result.getWhiteCaptured(), is(0));
     }
 
     @Test

@@ -22,7 +22,7 @@ class CountingActivity : AppCompatActivity() {
         }
         findViewById<CountingBoardView>(R.id.countingBoard).configure(
                 GameState.GLOBAL.refereeBoard,
-                GameState.GLOBAL.countingBoard)
+                GameState.GLOBAL.countingBoard!!)
     }
 
     fun onFinishClick(view: View) {
