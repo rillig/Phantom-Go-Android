@@ -22,6 +22,7 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(5, 3);
+
         assertThat(result.toString(), is("atari"));
     }
 
@@ -40,11 +41,12 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(4, 3);
+
         assertThat(result.toString(), is("suicide"));
     }
 
     @Test
-    public void testLiberties() {
+    public void testGetLiberties() {
         Board board = new Board(9);
         board.setup(
                 "B . . B . . . . .",
@@ -80,9 +82,20 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(5, 4);
+
         assertThat(result.toString(), is("captured 1"));
         assertThat(board.getCaptured(Player.BLACK), is(1));
         assertThat(board.getCaptured(Player.WHITE), is(0));
+        assertThat(board.toString(), is(""
+                + ". . . . . . . . .\n"
+                + ". . . . . . . . .\n"
+                + ". . . . . . . . .\n"
+                + ". . . . B . . . .\n"
+                + ". . . B . B . . .\n"
+                + ". . . . B . . . .\n"
+                + ". . . . . . . . .\n"
+                + ". . . . . . . . .\n"
+                + ". . . . . . . . .\n"));
     }
 
     @Test
@@ -100,6 +113,7 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(5, 4);
+
         assertThat(result.toString(), is("atari, selfAtari, captured 1"));
     }
 
@@ -118,6 +132,7 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(8, 0);
+
         assertThat(result.toString(), is("atari, selfAtari, captured 1"));
     }
 
@@ -136,12 +151,15 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(3, 4);
+
         assertThat(result.toString(), is("selfAtari"));
 
         RefereeResult capture = board.play(4, 4);
+
         assertThat(capture.toString(), is("selfAtari, captured 1"));
 
         RefereeResult ko = board.play(3, 4);
+
         assertThat(ko.toString(), is("ko"));
     }
 
@@ -160,6 +178,7 @@ public class BoardTest {
                 ". . . . . . . . .");
 
         RefereeResult result = board.play(8, 1);
+
         assertThat(result.toString(), is("ok"));
     }
 }

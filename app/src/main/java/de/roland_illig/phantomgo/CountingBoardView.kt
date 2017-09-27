@@ -30,7 +30,7 @@ class CountingBoardView : AbstractBoardView {
         val stone = board!![x, y]
         val territory = countingBoard!!.getTerritory(x, y)
         val dead = countingBoard!!.isDead(x, y)
-        return AbstractBoardView.Cell(stone, false, territory, dead)
+        return AbstractBoardView.Cell(stone, territory, dead)
     }
 
     override fun boardMouseClicked(x: Int, y: Int) {

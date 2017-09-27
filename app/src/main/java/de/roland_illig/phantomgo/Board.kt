@@ -19,12 +19,12 @@ class Board(val size: Int) {
     }
 
     fun reset() {
-        turn = Player.BLACK
         for (row in pieces) {
             Arrays.fill(row, null)
         }
-        prevMove = Point(-1, -1)
         Arrays.fill(captured, 0)
+        turn = Player.BLACK
+        prevMove = Point(-1, -1)
         passed = false
         isGameOver = false
     }
@@ -37,6 +37,8 @@ class Board(val size: Int) {
         System.arraycopy(captured, 0, copy.captured, 0, captured.size)
         copy.turn = turn
         copy.prevMove = prevMove
+        copy.passed = passed
+        copy.isGameOver = isGameOver
         return copy
     }
 
@@ -48,17 +50,17 @@ class Board(val size: Int) {
         return captured[player.ordinal]
     }
 
-    private fun tryCapture(x: Int, y: Int, turn: Player): Int {
+    private fun getLiberties(x: Int, y: Int, color: Player?): Int {
+        return if (get(x, y) == color) getLiberties(x, y) else -1
+    }
+
+    private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0.until(size) && y in 0.until(size)) {
             if (getLiberties(x, y, turn) == 0) {
                 return capture(x, y, turn)
             }
         }
         return 0
-    }
-
-    private fun getLiberties(x: Int, y: Int, color: Player?): Int {
-        return if (get(x, y) == color) getLiberties(x, y) else -1
     }
 
     @VisibleForTesting
@@ -86,58 +88,7 @@ class Board(val size: Int) {
         pieces[x][y] = color
     }
 
-    private inner class LibertiesCounter internal constructor(internal val color: Player) {
-        internal val todo: MutableSet<Point> = HashSet()
-        internal val done: MutableSet<Point> = HashSet()
-        internal val liberties: MutableSet<Point> = HashSet()
-
-        init {
-            color.javaClass
-        }
-
-        internal fun count(x: Int, y: Int) {
-            todo.add(Point(x, y))
-
-            while (!todo.isEmpty()) {
-                val it = todo.iterator()
-                val point = it.next()
-                it.remove()
-                done.add(point)
-
-                val px = point.x
-                val py = point.y
-                if (px > 0) {
-                    countInternal(px - 1, py)
-                }
-                if (py > 0) {
-                    countInternal(px, py - 1)
-                }
-                if (px < size - 1) {
-                    countInternal(px + 1, py)
-                }
-                if (py < size - 1) {
-                    countInternal(px, py + 1)
-                }
-            }
-        }
-
-        private fun countInternal(nx: Int, ny: Int) {
-            val np = Point(nx, ny)
-            val neighbor = get(nx, ny)
-            if (neighbor == color && !done.contains(np)) {
-                todo.add(np)
-            }
-            if (neighbor == null) {
-                liberties.add(np)
-            }
-        }
-    }
-
     fun play(x: Int, y: Int): RefereeResult {
-        return playInternal(x, y)
-    }
-
-    private fun playInternal(x: Int, y: Int): RefereeResult {
         if (isGameOver) {
             throw IllegalStateException("GameOver")
         }
@@ -187,10 +138,10 @@ class Board(val size: Int) {
                     || rightBefore > 1 && right == 1
                     || belowBefore > 1 && below == 1)
 
-            val capturedStones = (tryCapture(x - 1, y, other)
-                    + tryCapture(x, y - 1, other)
-                    + tryCapture(x + 1, y, other)
-                    + tryCapture(x, y + 1, other))
+            val capturedStones = (captureCount(x - 1, y, other)
+                    + captureCount(x, y - 1, other)
+                    + captureCount(x + 1, y, other)
+                    + captureCount(x, y + 1, other))
 
             val selfAtari = getLiberties(x, y, turn) == 1 && !selfAtariBefore
 
@@ -244,6 +195,53 @@ class Board(val size: Int) {
             }
         }
         return sb.toString()
+    }
+
+    private inner class LibertiesCounter internal constructor(internal val color: Player) {
+        internal val todo: MutableSet<Point> = HashSet()
+        internal val done: MutableSet<Point> = HashSet()
+        internal val liberties: MutableSet<Point> = HashSet()
+
+        init {
+            color.javaClass
+        }
+
+        internal fun count(x: Int, y: Int) {
+            todo.add(Point(x, y))
+
+            while (!todo.isEmpty()) {
+                val it = todo.iterator()
+                val point = it.next()
+                it.remove()
+                done.add(point)
+
+                val px = point.x
+                val py = point.y
+                if (px > 0) { // TODO: == floodfill?
+                    countInternal(px - 1, py)
+                }
+                if (py > 0) {
+                    countInternal(px, py - 1)
+                }
+                if (px < size - 1) {
+                    countInternal(px + 1, py)
+                }
+                if (py < size - 1) {
+                    countInternal(px, py + 1)
+                }
+            }
+        }
+
+        private fun countInternal(nx: Int, ny: Int) {
+            val np = Point(nx, ny)
+            val neighbor = get(nx, ny)
+            if (neighbor == color && !done.contains(np)) {
+                todo.add(np)
+            }
+            if (neighbor == null) {
+                liberties.add(np)
+            }
+        }
     }
 
     internal data class Point(val x: Int, val y: Int)

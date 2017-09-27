@@ -81,7 +81,7 @@ class CountingBoard(board: Board) {
     }
 
     private fun floodFillStep(`in`: Array<Array<Player?>>, out: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
-        if (0 <= x && x < out.size && 0 <= y && y < out.size) {
+        if (x in 0.until(out.size) && y in 0.until(out.size)) {
             if (!done[x][y] && (out[x][y] || `in`[x][y] == from)) {
                 done[x][y] = true
                 out[x][y] = true
@@ -99,7 +99,7 @@ class CountingBoard(board: Board) {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                sb.append(alphabet[region[x][y]])
+                sb.append(alphabet[region[x][y] % alphabet.length])
                 sb.append(if (x == size - 1) "\n" else " ")
             }
         }
@@ -131,12 +131,13 @@ class CountingBoard(board: Board) {
 
         for (y in 0 until size) {
             for (x in 0 until size) {
-                val color = if (dead[x][y]) null else this.color[x][y]
-                if (color == Player.BLACK) {
-                    black[x][y] = true
-                }
-                if (color == Player.WHITE) {
-                    white[x][y] = true
+                if (!dead[x][y]) {
+                    if (this.color[x][y] == Player.BLACK) {
+                        black[x][y] = true
+                    }
+                    if (this.color[x][y] == Player.WHITE) {
+                        white[x][y] = true
+                    }
                 }
             }
         }
@@ -158,31 +159,32 @@ class CountingBoard(board: Board) {
                 }
             }
 
-            if (!changed) {
-                var blackTerritory = 0
-                var whiteTerritory = 0
-                for (y in 0 until size) {
-                    for (x in 0 until size) {
-                        territory[x][y] = null
-                        if (color[x][y] == null || dead[x][y]) {
-                            if (black[x][y] && !white[x][y]) {
-                                territory[x][y] = Player.BLACK
-                                blackTerritory++
-                            }
-                            if (white[x][y] && !black[x][y]) {
-                                territory[x][y] = Player.WHITE
-                                whiteTerritory++
-                            }
-                        }
+            if (changed)
+                break
+        }
+
+        var blackTerritory = 0
+        var whiteTerritory = 0
+        for (y in 0 until size) {
+            for (x in 0 until size) {
+                territory[x][y] = null
+                if (color[x][y] == null || dead[x][y]) {
+                    if (black[x][y] && !white[x][y]) {
+                        territory[x][y] = Player.BLACK
+                        blackTerritory++
+                    }
+                    if (white[x][y] && !black[x][y]) {
+                        territory[x][y] = Player.WHITE
+                        whiteTerritory++
                     }
                 }
-
-                countResult = CountResult(
-                        blackTerritory, whiteTerritory,
-                        blackCaptured + whiteDead, whiteCaptured + blackDead)
-                return countResult!!
             }
         }
+
+        countResult = CountResult(
+                blackTerritory, whiteTerritory,
+                blackCaptured + whiteDead, whiteCaptured + blackDead)
+        return countResult!!
     }
 
     private fun hasNeighbor(x: Int, y: Int, color: Array<BooleanArray>): Boolean {
@@ -211,7 +213,7 @@ class CountingBoard(board: Board) {
                 } else if (territory[x][y] == Player.BLACK) {
                     sb.append(if (dead[x][y]) '#' else 'b')
                 } else {
-                    sb.append(if (color[x][y] == Player.BLACK) 'B' else if (color[x][y] == Player.WHITE) 'W' else '.')
+                    sb.append(if (color[x][y] != null) "BW"[color[x][y]!!.ordinal] else '.')
                 }
                 sb.append(if (x == size - 1) "\n" else " ")
             }

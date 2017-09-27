@@ -55,8 +55,8 @@ abstract class AbstractBoardView : View {
         val boardPaint = solidPaint(0xFFD48E00.toInt())
         val blackPaint = solidPaint(0xFF000000.toInt())
         val whitePaint = solidPaint(0xFFFFFFFF.toInt())
-        val blackTransparentPaint = solidPaint(0x55000000)
-        val whiteTransparentPaint = solidPaint(0x55FFFFFF)
+        val blackTranslucentPaint = solidPaint(0x55000000)
+        val whiteTranslucentPaint = solidPaint(0x55FFFFFF)
 
         g.drawPaint(boardPaint)
 
@@ -74,7 +74,7 @@ abstract class AbstractBoardView : View {
                 val cell = getBoard(x, y)
                 if (cell.dead || cell.territory != null) {
                     if (cell.dead) {
-                        fillCircle(g, x, y, 0.48, if (cell.color == Player.BLACK) blackTransparentPaint else whiteTransparentPaint)
+                        fillCircle(g, x, y, 0.48, if (cell.color == Player.BLACK) blackTranslucentPaint else whiteTranslucentPaint)
                     }
                     if (cell.territory != null) {
                         fillCircle(g, x, y, 0.16, if (cell.territory == Player.BLACK) blackPaint else whitePaint)
@@ -84,14 +84,6 @@ abstract class AbstractBoardView : View {
                 }
             }
         }
-    }
-
-    private fun solidPaint(color: Int): Paint {
-        val paint = Paint()
-        paint.color = color
-        paint.style = Paint.Style.FILL
-        paint.isAntiAlias = true
-        return paint
     }
 
     private fun fillCircle(g: Canvas, x: Int, y: Int, radius: Double, paint: Paint) {
@@ -116,5 +108,15 @@ abstract class AbstractBoardView : View {
         return Math.round((sc * (boardSize + 1)).toDouble() / size - 1).toInt()
     }
 
-    protected class Cell(val color: Player?, protected val lastMove: Boolean, val territory: Player?, val dead: Boolean)
+    protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
+
+    companion object {
+        private fun solidPaint(color: Int): Paint {
+            val paint = Paint()
+            paint.color = color
+            paint.style = Paint.Style.FILL
+            paint.isAntiAlias = true
+            return paint
+        }
+    }
 }
