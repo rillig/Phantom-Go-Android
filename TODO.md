@@ -17,3 +17,27 @@
 * Remove animations between activities
 
 * Add Bluetooth support
+
+# Prio 3
+
+Klick auf Titelzeile: Name ändern
+
+Kein separater Bildschirm für Übergabe, sondern Brett übermalen
+
+Beim Drücken auf das Brett aktuelle Zeile und Spalte fetter malen
+
+"Weiter" statt "Überreichen"
+
+Schiedsrichter in scrollbarer Liste permanent aufbewahren. Zu eigenen Zügen könnten auch nachträglich die Koordinaten angezeigt werden
+
+Feedback auf Brett bei "Du bist nicht dran"
+
+Partieprotokoll per Mail verschicken
+
+Antialias prüfen
+
+Aufgeben
+
+Fehler melden mit Partieprotokoll
+
+Nocaps auf Buttons
