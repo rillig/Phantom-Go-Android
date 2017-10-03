@@ -55,7 +55,7 @@ class Board(val size: Int) {
     }
 
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
-        if (x in 0.until(size) && y in 0.until(size)) {
+        if (x in 0 until size && y in 0 until size) {
             if (getLiberties(x, y, turn) == 0) {
                 return capture(x, y, turn)
             }

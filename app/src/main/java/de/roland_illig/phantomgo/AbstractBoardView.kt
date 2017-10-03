@@ -39,7 +39,7 @@ abstract class AbstractBoardView : View {
         setOnClickListener {
             val x = screenToBoard(lastX)
             val y = screenToBoard(lastY)
-            if (x in 0.until(boardSize) && y in 0.until(boardSize)) {
+            if (x in 0 until boardSize && y in 0 until boardSize) {
                 boardMouseClicked(x, y)
             }
         }

@@ -81,7 +81,7 @@ class CountingBoard(board: Board) {
     }
 
     private fun floodFillStep(`in`: Array<Array<Player?>>, out: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
-        if (x in 0.until(out.size) && y in 0.until(out.size)) {
+        if (x in 0 until out.size && y in 0 until out.size) {
             if (!done[x][y] && (out[x][y] || `in`[x][y] == from)) {
                 done[x][y] = true
                 out[x][y] = true
