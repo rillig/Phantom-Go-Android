@@ -18,10 +18,6 @@ abstract class AbstractBoardView : View {
 
     protected open fun boardMouseClicked(x: Int, y: Int) {}
 
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init()
     }

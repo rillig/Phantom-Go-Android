@@ -23,7 +23,7 @@ class CountingBoard(board: Board) {
 
     fun toggleDead(x: Int, y: Int) {
         if (color[x][y] == null) {
-            throw IllegalStateException(x.toString() + "," + y)
+            throw IllegalArgumentException("$x,$y")
         }
 
         val toToggle = Array(size) { BooleanArray(size) }
@@ -191,9 +191,7 @@ class CountingBoard(board: Board) {
                 || y + 1 < size && color[x][y + 1])
     }
 
-    fun isDead(x: Int, y: Int): Boolean {
-        return dead[x][y]
-    }
+    fun isDead(x: Int, y: Int): Boolean = dead[x][y]
 
     fun getTerritory(x: Int, y: Int): Player? {
         count()

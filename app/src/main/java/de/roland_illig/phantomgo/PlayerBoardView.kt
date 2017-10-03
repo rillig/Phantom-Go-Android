@@ -18,11 +18,9 @@ class PlayerBoardView : AbstractBoardView {
     override val boardSize: Int
         get() = board.size
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     fun configure(refereeBoard: Board, board: Board, player: Player) {
         this.refereeBoard = refereeBoard
@@ -32,9 +30,7 @@ class PlayerBoardView : AbstractBoardView {
         updateViews(null)
     }
 
-    override fun getBoard(x: Int, y: Int): AbstractBoardView.Cell {
-        return AbstractBoardView.Cell(board[x, y], null, false)
-    }
+    override fun getBoard(x: Int, y: Int) = AbstractBoardView.Cell(board[x, y], null, false)
 
     override fun boardMouseClicked(x: Int, y: Int) {
         if (isChecked(R.id.playButton)) {
@@ -55,13 +51,11 @@ class PlayerBoardView : AbstractBoardView {
         invalidate()
     }
 
-    private fun isChecked(resourceId: Int): Boolean {
-        return ((parent as View).findViewById<View>(resourceId) as RadioButton).isChecked
-    }
+    private fun isChecked(resourceId: Int) = findParentView<RadioButton>(resourceId).isChecked
 
     private fun onPlayModeClick(x: Int, y: Int) {
         if (player != refereeBoard.turn) {
-            (findParentView<View>(R.id.referee) as TextView).setText(R.string.not_your_turn)
+            findParentView<TextView>(R.id.referee).setText(R.string.not_your_turn)
             return
         }
 
@@ -72,7 +66,7 @@ class PlayerBoardView : AbstractBoardView {
             when (result.invalidReason) {
                 RefereeResult.InvalidReason.OTHER_STONE -> board[x, y] = player.other()
                 RefereeResult.InvalidReason.OWN_STONE -> board[x, y] = player
-                RefereeResult.InvalidReason.SUICIDE, RefereeResult.InvalidReason.KO -> board[x, y] = null!!
+                RefereeResult.InvalidReason.SUICIDE, RefereeResult.InvalidReason.KO -> board[x, y] = null
             }
         } else {
             val playerResult = board.copy().play(x, y)
@@ -88,27 +82,21 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     private fun updateViews(result: RefereeResult?) {
-        (findParentView<View>(R.id.referee) as TextView).text = if (result != null) Referee.comment(result, player, resources) else ""
+        findParentView<TextView>(R.id.referee).text = if (result != null) Referee.comment(result, player, resources) else ""
         findParentView<View>(R.id.passButton).isEnabled = refereeBoard.turn == player
         findParentView<View>(R.id.handOverButton).isEnabled = refereeBoard.turn != player
     }
 
-    private fun <T : View> findParentView(resourceId: Int): T {
-        return (parent as View).findViewById(resourceId)
-    }
-
-    fun getRefereeResults(): List<RefereeResult> {
-        return refereeResults
-    }
+    private fun <T : View> findParentView(resourceId: Int): T = (parent as View).findViewById(resourceId)
 
     fun pass() {
         if (player != refereeBoard.turn) {
-            (findParentView<View>(R.id.referee) as TextView).setText(R.string.not_your_turn)
+            findParentView<TextView>(R.id.referee).setText(R.string.not_your_turn)
             return
         }
 
         val result = refereeBoard.pass()
         refereeResults.add(result)
-        (findParentView<View>(R.id.referee) as TextView).text = Referee.comment(result, player, resources)
+        findParentView<TextView>(R.id.referee).text = Referee.comment(result, player, resources)
     }
 }

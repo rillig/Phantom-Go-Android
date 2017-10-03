@@ -42,17 +42,11 @@ class Board(val size: Int) {
         return copy
     }
 
-    operator fun get(x: Int, y: Int): Player? {
-        return pieces[x][y]
-    }
+    operator fun get(x: Int, y: Int) = pieces[x][y]
 
-    fun getCaptured(player: Player): Int {
-        return captured[player.ordinal]
-    }
+    fun getCaptured(player: Player) = captured[player.ordinal]
 
-    private fun getLiberties(x: Int, y: Int, color: Player?): Int {
-        return if (get(x, y) == color) getLiberties(x, y) else -1
-    }
+    private fun getLiberties(x: Int, y: Int, color: Player?) = if (get(x, y) == color) getLiberties(x, y) else -1
 
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0 until size && y in 0 until size) {
@@ -182,7 +176,7 @@ class Board(val size: Int) {
         if (ch == 'W') return Player.WHITE
         if (ch == 'B') return Player.BLACK
         if (ch == '.') return null
-        throw IllegalStateException()
+        throw IllegalArgumentException(ch.toString())
     }
 
     override fun toString(): String {
@@ -202,11 +196,9 @@ class Board(val size: Int) {
         internal val done: MutableSet<Point> = HashSet()
         internal val liberties: MutableSet<Point> = HashSet()
 
-        init {
-            color.javaClass
-        }
-
         internal fun count(x: Int, y: Int) {
+            checkNotNull(color)
+
             todo.add(Point(x, y))
 
             while (!todo.isEmpty()) {
