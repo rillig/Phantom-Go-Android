@@ -142,7 +142,7 @@ class CountingBoard(board: Board) {
             }
         }
 
-        while (true) {
+        do {
             var changed = false
             for (y in 0 until size) {
                 for (x in 0 until size) {
@@ -158,10 +158,7 @@ class CountingBoard(board: Board) {
                     }
                 }
             }
-
-            if (changed)
-                break
-        }
+        } while (changed)
 
         var blackTerritory = 0
         var whiteTerritory = 0
