@@ -3,18 +3,19 @@ package de.roland_illig.phantomgo
 import android.support.annotation.VisibleForTesting
 import java.util.*
 
-class Board(val size: Int) {
+class Board(val size: Int) : java.io.Serializable {
 
-    private val pieces: Array<Array<Player?>>
+    private val pieces = Array(size) { arrayOfNulls<Player>(size) }
     private val captured = IntArray(2)
     var turn: Player = Player.BLACK
     private var prevMove: Point? = null
     private var passed: Boolean = false
-    var isGameOver: Boolean = false
+    var gameOver: Boolean = false
+        private set
+    var empty: Boolean = false
         private set
 
     init {
-        pieces = Array(size) { arrayOfNulls<Player>(size) }
         reset()
     }
 
@@ -26,7 +27,8 @@ class Board(val size: Int) {
         turn = Player.BLACK
         prevMove = Point(-1, -1)
         passed = false
-        isGameOver = false
+        gameOver = false
+        empty = true
     }
 
     fun copy(): Board {
@@ -38,7 +40,8 @@ class Board(val size: Int) {
         copy.turn = turn
         copy.prevMove = prevMove
         copy.passed = passed
-        copy.isGameOver = isGameOver
+        copy.gameOver = gameOver
+        copy.empty = empty
         return copy
     }
 
@@ -83,7 +86,7 @@ class Board(val size: Int) {
     }
 
     fun play(x: Int, y: Int): RefereeResult {
-        if (isGameOver) {
+        if (gameOver) {
             throw IllegalStateException("GameOver")
         }
         val other = turn.other()
@@ -143,6 +146,7 @@ class Board(val size: Int) {
             prevMove = if (capturedStones == 1 && selfAtari) Point(x, y) else Point(-1, -1)
             turn = turn.other()
             undo = false
+            empty = false
 
             return RefereeResult.ok(atari, selfAtari, capturedStones)
         } finally {
@@ -153,10 +157,11 @@ class Board(val size: Int) {
     }
 
     fun pass(): RefereeResult {
-        if (isGameOver) {
+        if (gameOver) {
             throw IllegalStateException("GameOver")
         }
-        isGameOver = passed
+        empty = false
+        gameOver = passed
         passed = true
         turn = turn.other()
         return RefereeResult.pass()
@@ -236,5 +241,13 @@ class Board(val size: Int) {
         }
     }
 
-    internal data class Point(val x: Int, val y: Int)
+    companion object {
+        private val serialVersionUID = 20171005L
+    }
+
+    internal data class Point(val x: Int, val y: Int) : java.io.Serializable {
+        companion object {
+            private val serialVersionUID = 20171005L
+        }
+    }
 }

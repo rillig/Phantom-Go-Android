@@ -11,6 +11,8 @@ import de.roland_illig.phantomgo.PlayerBoardView
 
 class PlayerActivity : AppCompatActivity() {
 
+    var state: GameState? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
@@ -19,8 +21,14 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        state = GameState.load(this)
         findViewById<PlayerBoardView>(R.id.playerBoardView)
-                .configure(GameState.GLOBAL.refereeBoard, board, player)
+                .configure(state!!.refereeBoard, board, player)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GameState.save(this, state!!)
     }
 
     fun onPassClick(view: View) {
@@ -30,7 +38,7 @@ class PlayerActivity : AppCompatActivity() {
 
     fun onHandOverClick(view: View) {
         val refereeResults = findViewById<PlayerBoardView>(R.id.playerBoardView).refereeResults
-        if (GameState.GLOBAL.refereeBoard.isGameOver) {
+        if (state!!.refereeBoard.gameOver) {
             CountingActivity.start(this)
         } else {
             HandOverActivity.start(this, player.other(), refereeResults)
@@ -39,7 +47,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private val board: Board
-        get() = if (player == Player.BLACK) GameState.GLOBAL.blackBoard else GameState.GLOBAL.whiteBoard
+        get() = if (player == Player.BLACK) state!!.blackBoard else state!!.whiteBoard
     private val player: Player
         get() = intent.getSerializableExtra("phantomGo.player") as Player
 

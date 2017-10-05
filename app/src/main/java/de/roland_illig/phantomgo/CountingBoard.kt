@@ -2,7 +2,7 @@ package de.roland_illig.phantomgo
 
 import android.support.annotation.VisibleForTesting
 
-class CountingBoard(board: Board) {
+class CountingBoard(board: Board) : java.io.Serializable {
     private val size = board.size
     private val color: Array<Array<Player?>>
     private val region: Array<IntArray>

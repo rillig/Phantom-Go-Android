@@ -10,6 +10,8 @@ import de.roland_illig.phantomgo.CountingBoardView
 
 class CountingActivity : AppCompatActivity() {
 
+    var state: GameState? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_counting)
@@ -17,16 +19,22 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (GameState.GLOBAL.countingBoard == null) {
-            GameState.GLOBAL.countingBoard = CountingBoard(GameState.GLOBAL.refereeBoard)
+        state = GameState.load(this)
+        if (state!!.countingBoard == null) {
+            state!!.countingBoard = CountingBoard(state!!.refereeBoard)
         }
         findViewById<CountingBoardView>(R.id.countingBoard).configure(
-                GameState.GLOBAL.refereeBoard,
-                GameState.GLOBAL.countingBoard!!)
+                state!!.refereeBoard,
+                state!!.countingBoard!!)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GameState.save(this, state!!)
     }
 
     fun onFinishClick(view: View) {
-        GameState.GLOBAL.reset()
+        state = GameState()
         finish()
     }
 

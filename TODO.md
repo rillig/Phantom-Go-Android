@@ -12,6 +12,8 @@
 
 * Board.getLiberties(x, y): Liberties; with enum Liberties { OOB, NONE, ONE, MANY }
 
+* Non-overlapping arrangement in landscape mode
+
 # Prio 2
 
 * Remove animations between activities
