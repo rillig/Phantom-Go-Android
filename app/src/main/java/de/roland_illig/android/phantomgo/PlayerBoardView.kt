@@ -9,7 +9,7 @@ import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 import de.roland_illig.phantomgo.RefereeResult
-import java.util.*
+import java.util.ArrayList
 
 class PlayerBoardView : AbstractBoardView {
 

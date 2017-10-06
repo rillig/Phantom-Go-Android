@@ -1,7 +1,8 @@
 package de.roland_illig.phantomgo
 
 import android.support.annotation.VisibleForTesting
-import java.util.*
+import java.util.Arrays
+import java.util.HashSet
 
 class Board(val size: Int) : java.io.Serializable {
 
