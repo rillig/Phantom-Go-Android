@@ -10,8 +10,8 @@ import de.roland_illig.phantomgo.Player
 
 abstract class AbstractBoardView : View {
 
-    private var lastX = 0.toFloat()
-    private var lastY = 0.toFloat()
+    private var lastX = 0.0
+    private var lastY = 0.0
 
     protected abstract val boardSize: Int
 
@@ -29,8 +29,8 @@ abstract class AbstractBoardView : View {
 
     private fun init() {
         setOnTouchListener { view, e ->
-            lastX = e.x
-            lastY = e.y
+            lastX = e.x.toDouble()
+            lastY = e.y.toDouble()
             false
         }
         setOnClickListener {
@@ -100,9 +100,9 @@ abstract class AbstractBoardView : View {
         return Math.round((size * bc + size) / (boardSize + 1)).toInt()
     }
 
-    private fun screenToBoard(sc: Float): Int {
+    private fun screenToBoard(sc: Double): Int {
         val size = Math.min(width, height)
-        return Math.round((sc * (boardSize + 1)).toDouble() / size - 1).toInt()
+        return Math.round(sc * (boardSize + 1) / size - 1).toInt()
     }
 
     protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
