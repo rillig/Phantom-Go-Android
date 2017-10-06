@@ -10,10 +10,8 @@ class Board(val size: Int) : java.io.Serializable {
     var turn: Player = Player.BLACK
     private var prevMove: Point? = null
     private var passed: Boolean = false
-    var gameOver: Boolean = false
-        private set
-    var empty: Boolean = false
-        private set
+    var gameOver: Boolean = false; private set
+    var empty: Boolean = false; private set
 
     init {
         reset()
@@ -49,7 +47,8 @@ class Board(val size: Int) : java.io.Serializable {
 
     fun getCaptured(player: Player) = captured[player.ordinal]
 
-    private fun getLiberties(x: Int, y: Int, color: Player?) = if (get(x, y) == color) getLiberties(x, y) else -1
+    private fun getLiberties(x: Int, y: Int, color: Player?)
+            = if (get(x, y) == color) getLiberties(x, y) else -1
 
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0 until size && y in 0 until size) {

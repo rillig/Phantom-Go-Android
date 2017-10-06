@@ -1,4 +1,4 @@
-package de.roland_illig.phantomgo
+package de.roland_illig.android.phantomgo
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import de.roland_illig.phantomgo.Player
 
 abstract class AbstractBoardView : View {
 

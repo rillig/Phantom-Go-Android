@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="de.roland_illig.android.phantomgo.CountingActivity">
 
-    <de.roland_illig.phantomgo.CountingBoardView
+    <de.roland_illig.android.phantomgo.CountingBoardView
         android:id="@+id/countingBoard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

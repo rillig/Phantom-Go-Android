@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
-import de.roland_illig.phantomgo.PlayerBoardView
 
 class PlayerActivity : AppCompatActivity() {
 

@@ -1,11 +1,14 @@
-package de.roland_illig.phantomgo
+package de.roland_illig.android.phantomgo
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RadioButton
 import android.widget.TextView
-import de.roland_illig.android.phantomgo.R
+import de.roland_illig.phantomgo.Board
+import de.roland_illig.phantomgo.Player
+import de.roland_illig.phantomgo.Referee
+import de.roland_illig.phantomgo.RefereeResult
 import java.util.*
 
 class PlayerBoardView : AbstractBoardView {

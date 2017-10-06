@@ -1,8 +1,6 @@
 package de.roland_illig.phantomgo
 
-import java.io.Serializable
-
-class RefereeResult : Serializable {
+class RefereeResult : java.io.Serializable {
 
     val invalidReason: InvalidReason?
     val atari: Boolean
@@ -72,31 +70,15 @@ class RefereeResult : Serializable {
     }
 
     companion object {
-
         private const val serialVersionUID = 20170924L
 
-        fun ok(atari: Boolean, selfAtari: Boolean, capturedStones: Int): RefereeResult {
-            return RefereeResult(atari, selfAtari, capturedStones)
-        }
+        fun ok(atari: Boolean, selfAtari: Boolean, capturedStones: Int)
+                = RefereeResult(atari, selfAtari, capturedStones)
 
-        fun pass(): RefereeResult {
-            return RefereeResult()
-        }
-
-        fun ownStone(): RefereeResult {
-            return RefereeResult(InvalidReason.OWN_STONE)
-        }
-
-        fun otherStone(): RefereeResult {
-            return RefereeResult(InvalidReason.OTHER_STONE)
-        }
-
-        fun suicide(): RefereeResult {
-            return RefereeResult(InvalidReason.SUICIDE)
-        }
-
-        fun ko(): RefereeResult {
-            return RefereeResult(InvalidReason.KO)
-        }
+        fun pass() = RefereeResult()
+        fun ownStone() = RefereeResult(InvalidReason.OWN_STONE)
+        fun otherStone() = RefereeResult(InvalidReason.OTHER_STONE)
+        fun suicide() = RefereeResult(InvalidReason.SUICIDE)
+        fun ko() = RefereeResult(InvalidReason.KO)
     }
 }
