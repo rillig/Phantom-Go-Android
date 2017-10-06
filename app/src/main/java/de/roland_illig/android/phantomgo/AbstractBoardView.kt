@@ -10,8 +10,8 @@ import de.roland_illig.phantomgo.Player
 
 abstract class AbstractBoardView : View {
 
-    private var lastX = 0.0
-    private var lastY = 0.0
+    private var lastX = -1
+    private var lastY = -1
 
     protected abstract val boardSize: Int
 
@@ -29,15 +29,13 @@ abstract class AbstractBoardView : View {
 
     private fun init() {
         setOnTouchListener { view, e ->
-            lastX = e.x.toDouble()
-            lastY = e.y.toDouble()
+            lastX = screenToBoard(e.x.toDouble())
+            lastY = screenToBoard(e.y.toDouble())
             false
         }
         setOnClickListener {
-            val x = screenToBoard(lastX)
-            val y = screenToBoard(lastY)
-            if (x in 0 until boardSize && y in 0 until boardSize) {
-                boardMouseClicked(x, y)
+            if (lastX in 0 until boardSize && lastY in 0 until boardSize) {
+                boardMouseClicked(lastX, lastY)
             }
         }
     }
