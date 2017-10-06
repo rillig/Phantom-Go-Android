@@ -16,8 +16,6 @@
 
 # Prio 2
 
-* Remove animations between activities
-
 * Add Bluetooth support
 
 # Prio 3
