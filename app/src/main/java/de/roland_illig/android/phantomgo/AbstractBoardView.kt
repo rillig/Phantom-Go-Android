@@ -29,8 +29,13 @@ abstract class AbstractBoardView : View {
 
     private fun init() {
         setOnTouchListener { view, e ->
-            lastX = screenToBoard(e.x.toDouble())
-            lastY = screenToBoard(e.y.toDouble())
+            val x = screenToBoard(e.x.toDouble())
+            val y = screenToBoard(e.y.toDouble())
+            if (x != lastX || y != lastY) {
+                lastX = x
+                lastY = y
+                invalidate()
+            }
             false
         }
         setOnClickListener {
@@ -47,6 +52,8 @@ abstract class AbstractBoardView : View {
 
         val linePaint = solidPaint(0xFF000000.toInt())
         linePaint.strokeWidth = lineWidth().toFloat()
+        val currentLinePaint = solidPaint(0xFFFF9900.toInt())
+        currentLinePaint.strokeWidth = lineWidth().toFloat()
         val boardPaint = solidPaint(0xFFD48E00.toInt())
         val blackPaint = solidPaint(0xFF000000.toInt())
         val whitePaint = solidPaint(0xFFFFFFFF.toInt())
@@ -59,8 +66,10 @@ abstract class AbstractBoardView : View {
             val start = boardToScreen(0.0)
             val end = boardToScreen((bsize - 1).toDouble())
             val fixed = boardToScreen(i.toDouble())
-            g.drawLine(start.toFloat(), fixed.toFloat(), end.toFloat(), fixed.toFloat(), linePaint)
-            g.drawLine(fixed.toFloat(), start.toFloat(), fixed.toFloat(), end.toFloat(), linePaint)
+            val hpaint = if (i == lastY && lastX in 0 until bsize) currentLinePaint else linePaint
+            val vpaint = if (i == lastX && lastY in 0 until bsize) currentLinePaint else linePaint
+            g.drawLine(start.toFloat(), fixed.toFloat(), end.toFloat(), fixed.toFloat(), hpaint)
+            g.drawLine(fixed.toFloat(), start.toFloat(), fixed.toFloat(), end.toFloat(), vpaint)
         }
 
         for (y in 0 until bsize) {

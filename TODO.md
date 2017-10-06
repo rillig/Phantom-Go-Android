@@ -26,8 +26,6 @@ Klick auf Titelzeile: Name ändern
 
 Kein separater Bildschirm für Übergabe, sondern Brett übermalen
 
-Beim Drücken auf das Brett aktuelle Zeile und Spalte fetter malen
-
 "Weiter" statt "Überreichen"
 
 Schiedsrichter in scrollbarer Liste permanent aufbewahren. Zu eigenen Zügen könnten auch nachträglich die Koordinaten angezeigt werden
