@@ -3,7 +3,6 @@ package de.roland_illig.android.phantomgo
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.RadioButton
 import android.widget.TextView
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
@@ -13,6 +12,7 @@ import java.util.ArrayList
 
 class PlayerBoardView : AbstractBoardView {
 
+    internal var mode = R.id.playButton
     private var refereeBoard = Board(9)
     private var board = Board(9)
     private var player = Player.BLACK
@@ -36,25 +36,24 @@ class PlayerBoardView : AbstractBoardView {
     override fun getBoard(x: Int, y: Int) = AbstractBoardView.Cell(board[x, y], null, false)
 
     override fun boardMouseClicked(x: Int, y: Int) {
-        if (isChecked(R.id.playButton)) {
-            onPlayModeClick(x, y)
-        } else if (isChecked(R.id.blackButton)) {
-            board.turn = Player.BLACK
-            if (board.play(x, y).invalidReason != null) {
-                board[x, y] = Player.BLACK
+        when (mode) {
+            R.id.playButton -> onPlayModeClick(x, y)
+            R.id.blackButton -> {
+                board.turn = Player.BLACK
+                if (board.play(x, y).invalidReason != null) {
+                    board[x, y] = Player.BLACK
+                }
             }
-        } else if (isChecked(R.id.whiteButton)) {
-            board.turn = Player.WHITE
-            if (board.play(x, y).invalidReason != null) {
-                board[x, y] = Player.WHITE
+            R.id.whiteButton -> {
+                board.turn = Player.WHITE
+                if (board.play(x, y).invalidReason != null) {
+                    board[x, y] = Player.WHITE
+                }
             }
-        } else if (isChecked(R.id.eraserButton)) {
-            board[x, y] = null
+            R.id.eraserButton -> board[x, y] = null
         }
         invalidate()
     }
-
-    private fun isChecked(resourceId: Int) = findParentView<RadioButton>(resourceId).isChecked
 
     private fun onPlayModeClick(x: Int, y: Int) {
         if (player != refereeBoard.turn) {

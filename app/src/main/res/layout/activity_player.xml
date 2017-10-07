@@ -27,34 +27,45 @@
         android:id="@+id/buttonBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
 
-        <RadioButton
+        <ImageButton
             android:id="@+id/playButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
             android:checked="true"
-            android:text="@string/play_button"/>
+            android:contentDescription="@string/play_button"
+            android:onClick="onToolClick"
+            app:srcCompat="@drawable/ic_play_24dp"/>
 
-        <RadioButton
+        <ImageButton
             android:id="@+id/blackButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
-            android:text="@string/black_button"/>
+            android:contentDescription="@string/black_button"
+            android:onClick="onToolClick"
+            app:srcCompat="@drawable/ic_black_24dp"/>
 
-        <RadioButton
+        <ImageButton
             android:id="@+id/whiteButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
-            android:text="@string/white_button"/>
+            android:contentDescription="@string/white_button"
+            android:onClick="onToolClick"
+            app:srcCompat="@drawable/ic_white_24dp"/>
 
-        <RadioButton
+        <ImageButton
             android:id="@+id/eraserButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
-            android:text="@string/eraser_button"/>
-
+            android:contentDescription="@string/eraser_button"
+            android:onClick="onToolClick"
+            app:srcCompat="@drawable/ic_erase_24dp"/>
     </RadioGroup>
 
     <Button
