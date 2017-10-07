@@ -17,7 +17,7 @@ abstract class AbstractBoardView : View {
 
     protected abstract fun getBoard(x: Int, y: Int): Cell
 
-    protected open fun boardMouseClicked(x: Int, y: Int) {}
+    protected abstract fun boardMouseClicked(x: Int, y: Int)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init()
