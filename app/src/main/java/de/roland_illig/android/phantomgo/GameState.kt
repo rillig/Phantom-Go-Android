@@ -47,5 +47,5 @@ class GameState : java.io.Serializable {
         }
     }
 
-    data class RefereeHistoryEntry(val player: Player, val result: RefereeResult) : java.io.Serializable
+    class RefereeHistoryEntry(val player: Player, val result: RefereeResult) : java.io.Serializable
 }
