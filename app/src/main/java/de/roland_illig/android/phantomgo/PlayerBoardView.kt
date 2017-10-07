@@ -16,13 +16,12 @@ class PlayerBoardView : AbstractBoardView {
     private var game: Game? = null
 
     private fun getBoard() = game!!.playerBoard()
-    private fun getRefereeBoard() = game!!.refereeBoard
 
     private fun setRefereeText(text: CharSequence) {
         findParentView<TextView>(R.id.referee).text = text
     }
 
-    override val boardSize get() = getRefereeBoard().size
+    override val boardSize get() = game!!.size
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
@@ -64,8 +63,7 @@ class PlayerBoardView : AbstractBoardView {
         }
 
         val turn = game.turn
-        val result = getRefereeBoard().play(x, y)
-        game.refereeHistory.add(Game.RefereeHistoryEntry(turn, result))
+        val result = game.play(x, y)
 
         when (result.invalidReason) {
             RefereeResult.InvalidReason.OTHER_STONE -> board[x, y] = turn.other()
@@ -93,8 +91,7 @@ class PlayerBoardView : AbstractBoardView {
             return
         }
 
-        val result = getRefereeBoard().pass()
-        game.refereeHistory.add(Game.RefereeHistoryEntry(game.turn, result))
+        game.pass()
         updateViews()
     }
 

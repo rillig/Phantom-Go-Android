@@ -40,7 +40,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     fun onContinueClick(view: View) {
-        if (game!!.refereeBoard.gameOver) {
+        if (game!!.isGameOver) {
             CountingActivity.start(this)
         } else {
             game!!.finishMove()

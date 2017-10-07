@@ -9,10 +9,9 @@ import de.roland_illig.phantomgo.Game
 class CountingBoardView : AbstractBoardView {
 
     private var game: Game? = null
-    private val refereeBoard get() = game!!.refereeBoard
     private val countingBoard get() = game!!.countingBoard()
 
-    override val boardSize get() = refereeBoard.size
+    override val boardSize get() = game!!.size
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
@@ -24,14 +23,14 @@ class CountingBoardView : AbstractBoardView {
     }
 
     override fun getBoard(x: Int, y: Int): AbstractBoardView.Cell {
-        val stone = refereeBoard[x, y]
+        val stone = game!!.getRefereeBoard(x, y)
         val territory = countingBoard.getTerritory(x, y)
         val dead = countingBoard.isDead(x, y)
         return AbstractBoardView.Cell(stone, territory, dead)
     }
 
     override fun onBoardClicked(x: Int, y: Int) {
-        if (refereeBoard[x, y] != null) {
+        if (game!!.getRefereeBoard(x, y) != null) {
             countingBoard.toggleDead(x, y)
             updateSummary()
             invalidate()
