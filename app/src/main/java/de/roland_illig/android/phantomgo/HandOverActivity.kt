@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 import de.roland_illig.phantomgo.RefereeResult
@@ -20,7 +21,10 @@ class HandOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hand_over)
 
-        val refereeStrings = refereeResults.map { result -> Referee.comment(result, target.other(), resources) }
+        val playerName = getText(if (player() == Player.BLACK) R.string.referee_black else R.string.referee_white)
+        (findViewById<TextView>(R.id.handOverText)).text = resources.getString(R.string.hand_over_text, playerName)
+
+        val refereeStrings = refereeResults().map { result -> Referee.comment(result, player().other(), resources) }
         val refereeResultsView = findViewById<ListView>(R.id.refereeResults)
         refereeResultsView.adapter = ArrayAdapter(this, R.layout.string_list_item, refereeStrings)
 
@@ -29,19 +33,17 @@ class HandOverActivity : AppCompatActivity() {
     }
 
     fun onContinueClick(view: View) {
-        PlayerActivity.start(this, target)
+        PlayerActivity.start(this, player())
         finish()
     }
 
-    private val target: Player
-        get() = intent.getSerializableExtra("phantomGo.target") as Player
-    private val refereeResults: List<RefereeResult>
-        get() = intent.getSerializableExtra("phantomGo.refereeResults") as List<RefereeResult>
+    private fun player() = intent.getSerializableExtra("phantomGo.player") as Player
+    private fun refereeResults() = intent.getSerializableExtra("phantomGo.refereeResults") as List<RefereeResult>
 
     companion object {
         fun start(ctx: Context, target: Player, refereeResults: List<RefereeResult>) {
             val intent = Intent(ctx, HandOverActivity::class.java)
-            intent.putExtra("phantomGo.target", target)
+            intent.putExtra("phantomGo.player", target)
             intent.putExtra("phantomGo.refereeResults", refereeResults as Serializable)
             ctx.startActivity(intent)
         }

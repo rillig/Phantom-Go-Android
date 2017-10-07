@@ -39,7 +39,7 @@
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
             android:checked="true"
-            android:contentDescription="@string/play_button"
+            android:contentDescription="@string/play_button_description"
             android:onClick="onToolClick"
             app:srcCompat="@drawable/ic_play_24dp"/>
 
@@ -47,7 +47,7 @@
             android:id="@+id/blackButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
-            android:contentDescription="@string/black_button"
+            android:contentDescription="@string/black_button_description"
             android:onClick="onToolClick"
             app:srcCompat="@drawable/ic_black_24dp"/>
 
@@ -55,7 +55,7 @@
             android:id="@+id/whiteButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
-            android:contentDescription="@string/white_button"
+            android:contentDescription="@string/white_button_description"
             android:onClick="onToolClick"
             app:srcCompat="@drawable/ic_white_24dp"/>
 
@@ -63,7 +63,7 @@
             android:id="@+id/eraserButton"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
-            android:contentDescription="@string/eraser_button"
+            android:contentDescription="@string/eraser_button_description"
             android:onClick="onToolClick"
             app:srcCompat="@drawable/ic_erase_24dp"/>
     </RadioGroup>
@@ -84,12 +84,11 @@
         android:id="@+id/handOverButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:enabled="false"
         android:onClick="onHandOverClick"
-        android:text="@string/hand_over_title"
+        android:text="@string/continue_button"
         app:layout_constraintBottom_toBottomOf="@id/buttonBar"
         app:layout_constraintRight_toRightOf="parent"/>
 

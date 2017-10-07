@@ -6,19 +6,19 @@
     <string name="play_title">Spielen</string>
     <string name="black_to_play">Schwarz am Zug</string>
     <string name="white_to_play">Weiß am Zug</string>
-    <string name="play_button">▶</string>
-    <string name="black_button">⚫</string>
-    <string name="white_button">⚪</string>
-    <string name="eraser_button">×</string>
+    <string name="play_button_description">Einen Zug machen</string>
+    <string name="black_button_description">Schwarze Steine setzen</string>
+    <string name="white_button_description">Weiße Steine setzen</string>
+    <string name="eraser_button_description">Steine vom Brett nehmen</string>
     <string name="pass_button">Passen</string>
     <string name="hand_over">Überreichen</string>
     <string name="not_your_turn">Du bist nicht dran.</string>
 
     <string name="hand_over_title">Überreichen</string>
-    <string name="hand_over_text">Handy, Handy, du musst wandern,\nvon der einen Hand zur andern.\nDas ist schön, das ist schön,\nlass das Brett nur niemand sehn.</string>
+    <string name="hand_over_text">Gib das Gerät an %s weiter.</string>
     <string name="continue_button">Weiter</string>
 
-    <string name="counting">Auszählen</string>
+    <string name="counting_title">Auszählen</string>
     <string name="result_summary">Schwarz: %d + %d = %d\nWeiß: %d + %d = %d</string>
     <string name="finish_button">Fertig</string>
 

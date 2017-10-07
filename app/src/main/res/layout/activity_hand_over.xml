@@ -7,7 +7,7 @@
     tools:context="de.roland_illig.android.phantomgo.HandOverActivity">
 
     <TextView
-        android:id="@+id/handOverPoem"
+        android:id="@+id/handOverText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.2"
@@ -26,7 +26,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintBottom_toTopOf="@id/continueButton"
-        app:layout_constraintTop_toBottomOf="@id/handOverPoem"/>
+        app:layout_constraintTop_toBottomOf="@id/handOverText"/>
 
     <Button
         android:id="@+id/continueButton"

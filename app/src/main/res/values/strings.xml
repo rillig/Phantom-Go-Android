@@ -6,19 +6,19 @@
     <string name="play_title">Play</string>
     <string name="black_to_play">Black to play</string>
     <string name="white_to_play">White to play</string>
-    <string name="play_button">▶</string>
-    <string name="black_button">⚫</string>
-    <string name="white_button">⚪</string>
-    <string name="eraser_button">×</string>
+    <string name="play_button_description">Play a move</string>
+    <string name="black_button_description">Put black stones on the board</string>
+    <string name="white_button_description">Put white stones on the board</string>
+    <string name="eraser_button_description">Remove stones from the board</string>
     <string name="pass_button">Pass</string>
     <string name="hand_over">Hand over</string>
     <string name="not_your_turn">It’s not your turn.</string>
 
     <string name="hand_over_title">Hand over</string>
-    <string name="hand_over_text">Two boards of Go on the screen,\ntake one down, pass it around.\nOne less board of Go on the screen.</string>
+    <string name="hand_over_text">Pass the device to %s.</string>
     <string name="continue_button">Continue</string>
 
-    <string name="counting">Counting</string>
+    <string name="counting_title">Counting</string>
     <string name="result_summary">Black: %d + %d = %d\nWhite: %d + %d = %d</string>
     <string name="finish_button">Done</string>
 

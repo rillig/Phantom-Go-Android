@@ -6,19 +6,18 @@
     <string name="play_title">Jugar</string>
     <string name="black_to_play">Negro juega</string>
     <string name="white_to_play">Blanco juega</string>
-    <string name="play_button">▶</string>
-    <string name="black_button">⚫</string>
-    <string name="white_button">⚪</string>
-    <string name="eraser_button">×</string>
+    <string name="play_button_description">Hacer el movimiento</string>
+    <string name="black_button_description">Poner piedras negras</string>
+    <string name="white_button_description">Poner piedras blancas</string>
+    <string name="eraser_button_description">Remover piedras</string>
     <string name="pass_button">Pasar el turno</string>
-    <string name="hand_over">Pasar el teléfono</string>
     <string name="not_your_turn">No es tu turno.</string>
 
-    <string name="hand_over_title">Pasar el teléfono</string>
-    <string name="hand_over_text">Da el teléfono al otro jugador.</string>
+    <string name="hand_over_title">Pasar el aparejo</string>
+    <string name="hand_over_text">Da el aparejo a %s.</string>
     <string name="continue_button">Continuar</string>
 
-    <string name="counting">Marcador</string>
+    <string name="counting_title">Marcador</string>
     <string name="result_summary">Negro: %d + %d = %d\nBlanco: %d + %d = %d</string>
     <string name="finish_button">Finalizar</string>
 

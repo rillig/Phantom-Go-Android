@@ -18,10 +18,10 @@
             android:name=".PlayerActivity"/>
         <activity
             android:name=".HandOverActivity"
-            android:label="@string/hand_over"/>
+            android:label="@string/hand_over_title"/>
         <activity
             android:name=".CountingActivity"
-            android:label="@string/counting"/>
+            android:label="@string/counting_title"/>
     </application>
 
 </manifest>
