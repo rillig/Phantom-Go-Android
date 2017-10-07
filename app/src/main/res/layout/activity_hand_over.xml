@@ -37,7 +37,6 @@
         android:enabled="false"
         android:onClick="onContinueClick"
         android:text="@string/continue_button"
-        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
