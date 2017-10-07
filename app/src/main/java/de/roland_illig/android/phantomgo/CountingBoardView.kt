@@ -32,7 +32,7 @@ class CountingBoardView : AbstractBoardView {
         return AbstractBoardView.Cell(stone, territory, dead)
     }
 
-    override fun boardMouseClicked(x: Int, y: Int) {
+    override fun onBoardClicked(x: Int, y: Int) {
         if (board!![x, y] != null) {
             countingBoard!!.toggleDead(x, y)
             updateSummary()

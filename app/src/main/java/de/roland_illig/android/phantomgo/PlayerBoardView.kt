@@ -34,7 +34,7 @@ class PlayerBoardView : AbstractBoardView {
 
     override fun getBoard(x: Int, y: Int) = AbstractBoardView.Cell(board[x, y], null, false)
 
-    override fun boardMouseClicked(x: Int, y: Int) {
+    override fun onBoardClicked(x: Int, y: Int) {
         val board = this.board
         when (mode) {
             R.id.playButton -> onPlayModeClick(board, x, y)

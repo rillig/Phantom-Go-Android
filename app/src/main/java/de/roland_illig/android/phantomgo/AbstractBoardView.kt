@@ -17,7 +17,7 @@ abstract class AbstractBoardView : View {
 
     protected abstract fun getBoard(x: Int, y: Int): Cell
 
-    protected abstract fun boardMouseClicked(x: Int, y: Int)
+    protected abstract fun onBoardClicked(x: Int, y: Int)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init()
@@ -40,7 +40,7 @@ abstract class AbstractBoardView : View {
         }
         setOnClickListener {
             if (lastX in 0 until boardSize && lastY in 0 until boardSize) {
-                boardMouseClicked(lastX, lastY)
+                onBoardClicked(lastX, lastY)
             }
         }
     }
