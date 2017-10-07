@@ -1,15 +1,14 @@
-package de.roland_illig.phantomgo;
+package de.roland_illig.phantomgo
 
-import org.junit.Test;
+import org.junit.Assert.assertThat
+import org.junit.Test
+import org.hamcrest.CoreMatchers.`is` as eq
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-public class CountingBoardTest {
+class CountingBoardTest {
 
     @Test
-    public void testCountSimple() {
-        Board board = new Board(9);
+    fun testCountSimple() {
+        val board = Board(9)
         board.setup(
                 ". . B . . W . . .",
                 ". . B . . W . . .",
@@ -19,11 +18,11 @@ public class CountingBoardTest {
                 ". . B . . W . . .",
                 ". . B . . W . . .",
                 ". . B . . W . . .",
-                ". . B . . W . . .");
+                ". . B . . W . . .")
 
-        CountingBoard countingBoard = new CountingBoard(board);
+        val countingBoard = CountingBoard(board)
 
-        assertThat(countingBoard.regionsToString(), is(""
+        assertThat(countingBoard.regionsToString(), eq(""
                 + "1 1 2 3 3 4 5 5 5\n"
                 + "1 1 2 3 3 4 5 5 5\n"
                 + "1 1 2 3 3 4 5 5 5\n"
@@ -32,18 +31,18 @@ public class CountingBoardTest {
                 + "1 1 2 3 3 4 5 5 5\n"
                 + "1 1 2 3 3 4 5 5 5\n"
                 + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"));
+                + "1 1 2 3 3 4 5 5 5\n"))
 
-        CountResult result = countingBoard.count();
-        assertThat(result.getBlackTerritory(), is(18));
-        assertThat(result.getWhiteTerritory(), is(27));
-        assertThat(result.getBlackCaptured(), is(0));
-        assertThat(result.getWhiteCaptured(), is(0));
+        val result = countingBoard.count()
+        assertThat(result.blackTerritory, eq(18))
+        assertThat(result.whiteTerritory, eq(27))
+        assertThat(result.blackCaptured, eq(0))
+        assertThat(result.whiteCaptured, eq(0))
     }
 
     @Test
-    public void testCountBeforeMarkingDeadStones() {
-        Board board = new Board(9);
+    fun testCountBeforeMarkingDeadStones() {
+        val board = Board(9)
         board.setup(
                 "B . . . W W B . .",
                 "B W . W W B B . .",
@@ -53,11 +52,11 @@ public class CountingBoardTest {
                 ". B B W W B B B B",
                 "B B W . W W B W W",
                 ". B W W . W W B .",
-                ". B W . . . W B .");
+                ". B W . . . W B .")
 
-        CountingBoard countingBoard = new CountingBoard(board);
+        val countingBoard = CountingBoard(board)
 
-        assertThat(countingBoard.regionsToString(), is(""
+        assertThat(countingBoard.regionsToString(), eq(""
                 + "1 2 2 2 3 3 4 5 5\n"
                 + "1 3 2 3 3 4 4 5 5\n"
                 + "1 3 2 3 4 4 4 5 5\n"
@@ -66,15 +65,15 @@ public class CountingBoardTest {
                 + "7 6 6 8 8 4 4 4 4\n"
                 + "6 6 9 A 8 8 4 B B\n"
                 + "C 6 9 9 D 8 8 E F\n"
-                + "C 6 9 D D D 8 E F\n"));
+                + "C 6 9 D D D 8 E F\n"))
 
-        CountResult result = countingBoard.count();
-        assertThat(result.toString(), is("black=15+0, white=5+0"));
+        val result = countingBoard.count()
+        assertThat(result.toString(), eq("black=15+0, white=5+0"))
     }
 
     @Test
-    public void testCountAfterMarkingDeadStones() {
-        Board board = new Board(9);
+    fun testCountAfterMarkingDeadStones() {
+        val board = Board(9)
         board.setup(
                 "B . . . W W B . .",
                 "B W . W W B B . .",
@@ -84,16 +83,16 @@ public class CountingBoardTest {
                 ". B B W W B B B B",
                 "B B W . W W B W W",
                 ". B W W . W W B .",
-                ". B W . . . W B .");
+                ". B W . . . W B .")
 
-        CountingBoard countingBoard = new CountingBoard(board);
-        countingBoard.toggleDead(0, 0);
-        countingBoard.toggleDead(8, 6);
+        val countingBoard = CountingBoard(board)
+        countingBoard.toggleDead(0, 0)
+        countingBoard.toggleDead(8, 6)
 
-        CountResult result = countingBoard.count();
-        assertThat(result.toString(), is("black=19+2, white=13+3"));
+        val result = countingBoard.count()
+        assertThat(result.toString(), eq("black=19+2, white=13+3"))
 
-        assertThat(countingBoard.toString(), is(""
+        assertThat(countingBoard.toString(), eq(""
                 + "# w w w W W B b b\n"
                 + "# W w W W B B b b\n"
                 + "# W w W B B B b b\n"
@@ -102,12 +101,12 @@ public class CountingBoardTest {
                 + "b B B W W B B B B\n"
                 + "B B W w W W B # #\n"
                 + "b B W W w W W B b\n"
-                + "b B W w w w W B b\n"));
+                + "b B W w w w W B b\n"))
     }
 
     @Test
-    public void testBoardViewAfterMarkingDeadStones() {
-        Board board = new Board(9);
+    fun testBoardViewAfterMarkingDeadStones() {
+        val board = Board(9)
         board.setup(
                 "B . . . W W B . .",
                 "B W . W W B B . .",
@@ -117,19 +116,19 @@ public class CountingBoardTest {
                 ". B B W W B B B B",
                 "B B W . W W B W W",
                 ". B W W . W W B .",
-                ". B W . . . W B .");
+                ". B W . . . W B .")
 
-        CountingBoard countingBoard = new CountingBoard(board);
-        countingBoard.toggleDead(0, 0);
-        countingBoard.toggleDead(8, 6);
+        val countingBoard = CountingBoard(board)
+        countingBoard.toggleDead(0, 0)
+        countingBoard.toggleDead(8, 6)
 
-        CountResult result = countingBoard.count();
-        assertThat(result.toString(), is("black=19+2, white=13+3"));
+        val result = countingBoard.count()
+        assertThat(result.toString(), eq("black=19+2, white=13+3"))
     }
 
     @Test
-    public void testToggleDead() {
-        Board board = new Board(9);
+    fun testToggleDead() {
+        val board = Board(9)
         board.setup(
                 "W . . B . . . . W",
                 ". . B . . . . W .",
@@ -139,12 +138,12 @@ public class CountingBoardTest {
                 ". . . W . . . . B",
                 ". . W . . . . B .",
                 ". W . . . . B . .",
-                "W . . . . B . . W");
-        CountingBoard countingBoard = new CountingBoard(board);
+                "W . . . . B . . W")
+        val countingBoard = CountingBoard(board)
 
-        countingBoard.toggleDead(0, 8);
+        countingBoard.toggleDead(0, 8)
 
-        assertThat(countingBoard.toString(), is(""
+        assertThat(countingBoard.toString(), eq(""
                 + "W . . B b b b b #\n"
                 + ". . B b b b b # b\n"
                 + ". B b b b b # b b\n"
@@ -153,11 +152,11 @@ public class CountingBoardTest {
                 + "b b b # b b b b B\n"
                 + "b b # b b b b B .\n"
                 + "b # b b b b B . .\n"
-                + "# b b b b B . . W\n"));
+                + "# b b b b B . . W\n"))
 
-        countingBoard.toggleDead(0, 8);
+        countingBoard.toggleDead(0, 8)
 
-        assertThat(countingBoard.toString(), is(""
+        assertThat(countingBoard.toString(), eq(""
                 + "W . . B . . . . W\n"
                 + ". . B . . . . W .\n"
                 + ". B . . . . W . .\n"
@@ -166,6 +165,6 @@ public class CountingBoardTest {
                 + ". . . W . . . . B\n"
                 + ". . W . . . . B .\n"
                 + ". W . . . . B . .\n"
-                + "W . . . . B . . W\n"));
+                + "W . . . . B . . W\n"))
     }
 }

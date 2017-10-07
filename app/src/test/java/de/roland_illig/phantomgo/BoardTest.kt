@@ -1,15 +1,15 @@
-package de.roland_illig.phantomgo;
+package de.roland_illig.phantomgo
 
-import org.junit.Test;
+import org.junit.Test
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.hamcrest.CoreMatchers.`is` as eq
+import org.junit.Assert.assertThat
 
-public class BoardTest {
+class BoardTest {
 
     @Test
-    public void testAtari() {
-        Board board = new Board(9);
+    fun testAtari() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . . .",
                 ". . . . . . . . .",
@@ -19,16 +19,16 @@ public class BoardTest {
                 ". . . . . . . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(5, 3);
+        val result = board.play(5, 3)
 
-        assertThat(result.toString(), is("atari"));
+        assertThat(result.toString(), eq("atari"))
     }
 
     @Test
-    public void testSuicide() {
-        Board board = new Board(9);
+    fun testSuicide() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . . .",
                 ". . . . . . . . .",
@@ -38,16 +38,16 @@ public class BoardTest {
                 ". . . . . . . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(4, 3);
+        val result = board.play(4, 3)
 
-        assertThat(result.toString(), is("suicide"));
+        assertThat(result.toString(), eq("suicide"))
     }
 
     @Test
-    public void testGetLiberties() {
-        Board board = new Board(9);
+    fun testGetLiberties() {
+        val board = Board(9)
         board.setup(
                 "B . . B . . . . .",
                 ". . . . . B . . .",
@@ -57,19 +57,19 @@ public class BoardTest {
                 "B B . . . B B B .",
                 ". B B . . . . . .",
                 ". . B B . . . . .",
-                ". . . B . . . . .");
+                ". . . B . . . . .")
 
-        assertThat(board.getLiberties(0, 0), is(2));
-        assertThat(board.getLiberties(3, 0), is(3));
-        assertThat(board.getLiberties(5, 1), is(4));
-        assertThat(board.getLiberties(2, 3), is(6));
-        assertThat(board.getLiberties(5, 3), is(13));
-        assertThat(board.getLiberties(3, 8), is(9));
+        assertThat(board.getLiberties(0, 0), eq(2))
+        assertThat(board.getLiberties(3, 0), eq(3))
+        assertThat(board.getLiberties(5, 1), eq(4))
+        assertThat(board.getLiberties(2, 3), eq(6))
+        assertThat(board.getLiberties(5, 3), eq(13))
+        assertThat(board.getLiberties(3, 8), eq(9))
     }
 
     @Test
-    public void testCapture() {
-        Board board = new Board(9);
+    fun testCapture() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . . .",
                 ". . . . . . . . .",
@@ -79,14 +79,14 @@ public class BoardTest {
                 ". . . . B . . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(5, 4);
+        val result = board.play(5, 4)
 
-        assertThat(result.toString(), is("captured 1"));
-        assertThat(board.getCaptured(Player.BLACK), is(1));
-        assertThat(board.getCaptured(Player.WHITE), is(0));
-        assertThat(board.toString(), is(""
+        assertThat(result.toString(), eq("captured 1"))
+        assertThat(board.getCaptured(Player.BLACK), eq(1))
+        assertThat(board.getCaptured(Player.WHITE), eq(0))
+        assertThat(board.toString(), eq(""
                 + ". . . . . . . . .\n"
                 + ". . . . . . . . .\n"
                 + ". . . . . . . . .\n"
@@ -95,12 +95,12 @@ public class BoardTest {
                 + ". . . . B . . . .\n"
                 + ". . . . . . . . .\n"
                 + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"));
+                + ". . . . . . . . .\n"))
     }
 
     @Test
-    public void testCaptureInKo() {
-        Board board = new Board(9);
+    fun testCaptureInKo() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . . .",
                 ". . . . . . . . .",
@@ -110,16 +110,16 @@ public class BoardTest {
                 ". . . . B W . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(5, 4);
+        val result = board.play(5, 4)
 
-        assertThat(result.toString(), is("atari, selfAtari, captured 1"));
+        assertThat(result.toString(), eq("atari, selfAtari, captured 1"))
     }
 
     @Test
-    public void testSelfAtari() {
-        Board board = new Board(9);
+    fun testSelfAtari() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . W .",
                 ". . . . . . W B W",
@@ -129,16 +129,16 @@ public class BoardTest {
                 ". . . . . . . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(8, 0);
+        val result = board.play(8, 0)
 
-        assertThat(result.toString(), is("atari, selfAtari, captured 1"));
+        assertThat(result.toString(), eq("atari, selfAtari, captured 1"))
     }
 
     @Test
-    public void testKo() {
-        Board board = new Board(9);
+    fun testKo() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . . .",
                 ". . . . . . . . .",
@@ -148,24 +148,24 @@ public class BoardTest {
                 ". . . W B . . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(3, 4);
+        val result = board.play(3, 4)
 
-        assertThat(result.toString(), is("selfAtari"));
+        assertThat(result.toString(), eq("selfAtari"))
 
-        RefereeResult capture = board.play(4, 4);
+        val capture = board.play(4, 4)
 
-        assertThat(capture.toString(), is("selfAtari, captured 1"));
+        assertThat(capture.toString(), eq("selfAtari, captured 1"))
 
-        RefereeResult ko = board.play(3, 4);
+        val ko = board.play(3, 4)
 
-        assertThat(ko.toString(), is("ko"));
+        assertThat(ko.toString(), eq("ko"))
     }
 
     @Test
-    public void testStayInAtari() {
-        Board board = new Board(9);
+    fun testStayInAtari() {
+        val board = Board(9)
         board.setup(
                 ". . . . . . . W B",
                 ". . . . . . . W .",
@@ -175,10 +175,10 @@ public class BoardTest {
                 ". . . . . . . . .",
                 ". . . . . . . . .",
                 ". . . . . . . . .",
-                ". . . . . . . . .");
+                ". . . . . . . . .")
 
-        RefereeResult result = board.play(8, 1);
+        val result = board.play(8, 1)
 
-        assertThat(result.toString(), is("ok"));
+        assertThat(result.toString(), eq("ok"))
     }
 }
