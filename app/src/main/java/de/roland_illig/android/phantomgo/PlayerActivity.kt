@@ -43,7 +43,7 @@ class PlayerActivity : AppCompatActivity() {
         if (game!!.refereeBoard.gameOver) {
             CountingActivity.start(this)
         } else {
-            game!!.turn = game!!.refereeBoard.turn
+            game!!.finishMove()
             HandOverActivity.start(this)
         }
         finish()

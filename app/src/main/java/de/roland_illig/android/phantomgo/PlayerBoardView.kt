@@ -57,14 +57,15 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     private fun onPlayModeClick(board: Board, x: Int, y: Int) {
-        val turn = game!!.turn
-        if (turn != game!!.refereeBoard.turn) {
+        val game = game!!
+        if (game.isMoveDone()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
 
+        val turn = game.turn
         val result = getRefereeBoard().play(x, y)
-        game!!.refereeHistory.add(Game.RefereeHistoryEntry(turn, result))
+        game.refereeHistory.add(Game.RefereeHistoryEntry(turn, result))
 
         when (result.invalidReason) {
             RefereeResult.InvalidReason.OTHER_STONE -> board[x, y] = turn.other()
@@ -86,24 +87,24 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     fun pass() {
-        val turn = game!!.turn
-        if (turn != getRefereeBoard().turn) {
+        val game = game!!
+        if (game.isMoveDone()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
 
         val result = getRefereeBoard().pass()
-        game!!.refereeHistory.add(Game.RefereeHistoryEntry(turn, result))
+        game.refereeHistory.add(Game.RefereeHistoryEntry(game.turn, result))
         updateViews()
     }
 
     private fun updateViews() {
-        val game = this.game!!
+        val game = game!!
         val last = game.refereeHistory.lastOrNull()
         if (last != null) {
             setRefereeText(Referee.comment(last.result, last.player, resources))
         }
-        val done = game.turn != game.refereeBoard.turn
+        val done = game.isMoveDone()
         findParentView<View>(R.id.passButton).isEnabled = !done
         findParentView<View>(R.id.handOverButton).isEnabled = done
     }

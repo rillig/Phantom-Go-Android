@@ -1,7 +1,7 @@
 package de.roland_illig.phantomgo
 
 class Game : java.io.Serializable {
-    var turn = Player.BLACK
+    var turn = Player.BLACK; private set
     val refereeBoard = Board(9)
     val refereeHistory = mutableListOf<RefereeHistoryEntry>()
     private val blackBoard = Board(9)
@@ -15,6 +15,12 @@ class Game : java.io.Serializable {
             countingBoard = CountingBoard(refereeBoard)
         }
         return countingBoard!!
+    }
+
+    fun isMoveDone() = turn != refereeBoard.turn
+
+    fun finishMove() {
+        turn = refereeBoard.turn
     }
 
     class RefereeHistoryEntry(val player: Player, val result: RefereeResult) : java.io.Serializable
