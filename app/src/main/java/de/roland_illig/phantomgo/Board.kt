@@ -15,10 +15,6 @@ class Board(val size: Int) : java.io.Serializable {
     var empty: Boolean = false; private set
 
     init {
-        reset()
-    }
-
-    fun reset() {
         for (row in pieces) {
             Arrays.fill(row, null)
         }

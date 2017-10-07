@@ -8,11 +8,11 @@ class Referee {
 
         fun comment(result: RefereeResult, color: Player, resources: Resources): String {
             if (result.invalidReason != null) {
-                when (result.invalidReason) {
-                    RefereeResult.InvalidReason.OTHER_STONE -> return resources.getString(R.string.referee_other_stone)
-                    RefereeResult.InvalidReason.OWN_STONE -> return resources.getString(R.string.referee_own_stone)
-                    RefereeResult.InvalidReason.SUICIDE -> return resources.getString(R.string.referee_suicide)
-                    RefereeResult.InvalidReason.KO -> return resources.getString(R.string.referee_ko)
+                return when (result.invalidReason) {
+                    RefereeResult.InvalidReason.OTHER_STONE -> resources.getString(R.string.referee_other_stone)
+                    RefereeResult.InvalidReason.OWN_STONE -> resources.getString(R.string.referee_own_stone)
+                    RefereeResult.InvalidReason.SUICIDE -> resources.getString(R.string.referee_suicide)
+                    RefereeResult.InvalidReason.KO -> resources.getString(R.string.referee_ko)
                 }
             }
 

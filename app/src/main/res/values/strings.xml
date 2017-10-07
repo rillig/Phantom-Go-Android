@@ -11,7 +11,6 @@
     <string name="white_button_description">Put white stones on the board</string>
     <string name="eraser_button_description">Remove stones from the board</string>
     <string name="pass_button">Pass</string>
-    <string name="hand_over">Hand over</string>
     <string name="not_your_turn">It’s not your turn.</string>
 
     <string name="hand_over_title">Hand over</string>

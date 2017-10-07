@@ -20,12 +20,10 @@ class CentralActivity : AppCompatActivity() {
 
     fun onPlayClick(view: View) {
         val refereeBoard = state!!.refereeBoard
-        if (refereeBoard.gameOver) {
-            CountingActivity.start(this)
-        } else if (refereeBoard.empty) {
-            PlayerActivity.start(this)
-        } else {
-            HandOverActivity.start(this)
+        when {
+            refereeBoard.gameOver -> CountingActivity.start(this)
+            refereeBoard.empty -> PlayerActivity.start(this)
+            else -> HandOverActivity.start(this)
         }
     }
 }

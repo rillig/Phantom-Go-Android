@@ -9,7 +9,7 @@ import de.roland_illig.phantomgo.CountingBoard
 
 class CountingActivity : AppCompatActivity() {
 
-    var state: GameState? = null
+    private var state: GameState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

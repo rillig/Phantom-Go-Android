@@ -95,7 +95,7 @@ class CountingBoard(board: Board) : java.io.Serializable {
 
     @VisibleForTesting
     fun regionsToString(): String {
-        val alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        val alphabet = "0123456789" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz"
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
@@ -203,12 +203,10 @@ class CountingBoard(board: Board) : java.io.Serializable {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                if (territory[x][y] == Player.WHITE) {
-                    sb.append(if (dead[x][y]) '#' else 'w')
-                } else if (territory[x][y] == Player.BLACK) {
-                    sb.append(if (dead[x][y]) '#' else 'b')
-                } else {
-                    sb.append(if (color[x][y] != null) "BW"[color[x][y]!!.ordinal] else '.')
+                when (territory[x][y]) {
+                    Player.WHITE -> sb.append(if (dead[x][y]) '#' else 'w')
+                    Player.BLACK -> sb.append(if (dead[x][y]) '#' else 'b')
+                    else -> sb.append(if (color[x][y] != null) "BW"[color[x][y]!!.ordinal] else '.')
                 }
                 sb.append(if (x == size - 1) "\n" else " ")
             }

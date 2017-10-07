@@ -34,11 +34,11 @@ class RefereeResult : java.io.Serializable {
 
     override fun toString(): String {
         if (invalidReason != null) {
-            when (invalidReason) {
-                RefereeResult.InvalidReason.OWN_STONE -> return "own"
-                RefereeResult.InvalidReason.OTHER_STONE -> return "other"
-                RefereeResult.InvalidReason.SUICIDE -> return "suicide"
-                RefereeResult.InvalidReason.KO -> return "ko"
+            return when (invalidReason) {
+                RefereeResult.InvalidReason.OWN_STONE -> "own"
+                RefereeResult.InvalidReason.OTHER_STONE -> "other"
+                RefereeResult.InvalidReason.SUICIDE -> "suicide"
+                RefereeResult.InvalidReason.KO -> "ko"
             }
         }
 
