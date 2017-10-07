@@ -2,10 +2,6 @@
 
 * Switching between portrait and landscape must not hide any text from the screen
 
-* Order of the Board methods (public before private)
-
-* Board.capture == floodfill?
-
 * Non-overlapping arrangement in landscape mode
 
 # Prio 2
