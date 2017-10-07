@@ -1,6 +1,6 @@
 # Prio 1
 
-* Switching between portrait and landscape must not hide any text from the screen
+* "Schwarz fängt 3 Steine" führt nicht dazu, dass der Zug auf dem Kontrollbrett gleichartig ausgeführt wird.
 
 * Non-overlapping arrangement in landscape mode
 

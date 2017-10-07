@@ -237,13 +237,5 @@ class Board(val size: Int) : java.io.Serializable {
         }
     }
 
-    companion object {
-        private val serialVersionUID = 20171005L
-    }
-
-    internal data class Point(val x: Int, val y: Int) : java.io.Serializable {
-        companion object {
-            private val serialVersionUID = 20171005L
-        }
-    }
+    internal data class Point(val x: Int, val y: Int) : java.io.Serializable
 }

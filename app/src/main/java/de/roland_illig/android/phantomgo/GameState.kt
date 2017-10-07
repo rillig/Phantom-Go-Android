@@ -14,14 +14,13 @@ import java.io.WriteAbortedException
 class GameState : java.io.Serializable {
 
     val refereeBoard = Board(9)
+    var turn = Player.BLACK
     val blackBoard = Board(9)
     val whiteBoard = Board(9)
     var countingBoard: CountingBoard? = null
     val refereeHistory = mutableListOf<RefereeHistoryEntry>()
 
     companion object {
-        private const val serialVersionUID = 20171007L
-
         fun load(ctx: Context): GameState {
             try {
                 ctx.openFileInput("state").use {

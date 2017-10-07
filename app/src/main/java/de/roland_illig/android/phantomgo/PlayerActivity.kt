@@ -10,7 +10,6 @@ import de.roland_illig.phantomgo.Player
 class PlayerActivity : AppCompatActivity() {
 
     private var state: GameState? = null
-    private var player = Player.BLACK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +18,10 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        state = GameState.load(this)
-        player = state!!.refereeBoard.turn
-        setTitle(if (player == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
-        boardView().configure(state!!)
+        val state = GameState.load(this)
+        this.state = state
+        setTitle(if (state.turn == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
+        boardView().configure(state)
     }
 
     override fun onPause() {
@@ -30,19 +29,20 @@ class PlayerActivity : AppCompatActivity() {
         GameState.save(this, state!!)
     }
 
-    fun onPassClick(view: View) {
-        boardView().pass()
-        onHandOverClick(view)
-    }
-
     fun onToolClick(view: View) {
         boardView().mode = view.id
     }
 
-    fun onHandOverClick(view: View) {
+    fun onPassClick(view: View) {
+        boardView().pass()
+        onContinueClick(view)
+    }
+
+    fun onContinueClick(view: View) {
         if (state!!.refereeBoard.gameOver) {
             CountingActivity.start(this)
         } else {
+            state!!.turn = state!!.refereeBoard.turn
             HandOverActivity.start(this)
         }
         finish()

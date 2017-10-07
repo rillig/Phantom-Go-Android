@@ -18,13 +18,12 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        state = GameState.load(this)
-        if (state!!.countingBoard == null) {
-            state!!.countingBoard = CountingBoard(state!!.refereeBoard)
+        val state = GameState.load(this)
+        this.state = state
+        if (state.countingBoard == null) {
+            state.countingBoard = CountingBoard(state.refereeBoard)
         }
-        findViewById<CountingBoardView>(R.id.countingBoard).configure(
-                state!!.refereeBoard,
-                state!!.countingBoard!!)
+        findViewById<CountingBoardView>(R.id.countingBoard).configure(state)
     }
 
     override fun onPause() {

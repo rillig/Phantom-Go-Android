@@ -70,8 +70,6 @@ class RefereeResult : java.io.Serializable {
     }
 
     companion object {
-        private const val serialVersionUID = 20170924L
-
         fun ok(atari: Boolean, selfAtari: Boolean, capturedStones: Int)
                 = RefereeResult(atari, selfAtari, capturedStones)
 
