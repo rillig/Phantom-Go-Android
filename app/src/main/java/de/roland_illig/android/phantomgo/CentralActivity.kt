@@ -23,9 +23,9 @@ class CentralActivity : AppCompatActivity() {
         if (refereeBoard.gameOver) {
             CountingActivity.start(this)
         } else if (refereeBoard.empty) {
-            PlayerActivity.start(this, refereeBoard.turn)
+            PlayerActivity.start(this)
         } else {
-            HandOverActivity.start(this, refereeBoard.turn, listOf())
+            HandOverActivity.start(this)
         }
     }
 }

@@ -12,8 +12,6 @@ import android.widget.ListView
 import android.widget.TextView
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
-import de.roland_illig.phantomgo.RefereeResult
-import java.io.Serializable
 
 class HandOverActivity : AppCompatActivity() {
 
@@ -21,11 +19,12 @@ class HandOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hand_over)
 
-        val playerName = getText(if (player() == Player.BLACK) R.string.referee_black else R.string.referee_white)
+        val state = GameState.load(this)
+        val playerName = getText(if (state.refereeBoard.turn == Player.BLACK) R.string.referee_black else R.string.referee_white)
         (findViewById<TextView>(R.id.handOverText)).text = resources.getString(R.string.hand_over_text, playerName)
 
-        val refereeStrings = refereeResults().map { result -> Referee.comment(result, player().other(), resources) }
-        val refereeResultsView = findViewById<ListView>(R.id.refereeResults)
+        val refereeStrings = state.refereeHistory.map { result -> format(result) }
+        val refereeResultsView = findViewById<ListView>(R.id.refereeHistory)
         refereeResultsView.adapter = ArrayAdapter(this, R.layout.string_list_item, refereeStrings)
 
         // To prevent accidental double-clicks.
@@ -33,19 +32,19 @@ class HandOverActivity : AppCompatActivity() {
     }
 
     fun onContinueClick(view: View) {
-        PlayerActivity.start(this, player())
+        PlayerActivity.start(this)
         finish()
     }
 
-    private fun player() = intent.getSerializableExtra("phantomGo.player") as Player
-    private fun refereeResults() = intent.getSerializableExtra("phantomGo.refereeResults") as List<RefereeResult>
+    private fun format(result: GameState.RefereeHistoryEntry): String {
+        val playerName = getText(if (result.player == Player.BLACK) R.string.referee_black else R.string.referee_white)
+        val comment = Referee.comment(result.result, result.player, resources)
+        return "$playerName: $comment"
+    }
 
     companion object {
-        fun start(ctx: Context, target: Player, refereeResults: List<RefereeResult>) {
-            val intent = Intent(ctx, HandOverActivity::class.java)
-            intent.putExtra("phantomGo.player", target)
-            intent.putExtra("phantomGo.refereeResults", refereeResults as Serializable)
-            ctx.startActivity(intent)
+        fun start(ctx: Context) {
+            ctx.startActivity(Intent(ctx, HandOverActivity::class.java))
         }
     }
 }

@@ -8,27 +8,26 @@ import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 import de.roland_illig.phantomgo.RefereeResult
-import java.util.ArrayList
 
 class PlayerBoardView : AbstractBoardView {
 
     internal var mode = R.id.playButton
-    private var refereeBoard = Board(9)
-    private var board = Board(9)
     private var player = Player.BLACK
-    internal val refereeResults = ArrayList<RefereeResult>()
+    private var state: GameState? = null
 
-    override val boardSize: Int
-        get() = board.size
+    private val board get() = if (player == Player.BLACK) state!!.blackBoard else state!!.whiteBoard
+    private val refereeBoard get() = state!!.refereeBoard
+    private val refereeHistory get() = state!!.refereeHistory
+
+    override val boardSize get() = refereeBoard.size
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun configure(refereeBoard: Board, board: Board, player: Player) {
-        this.refereeBoard = refereeBoard
-        this.board = board
-        this.player = player
+    fun configure(state: GameState) {
+        this.state = state
+        this.player = state.refereeBoard.turn
 
         updateViews(null)
     }
@@ -36,8 +35,9 @@ class PlayerBoardView : AbstractBoardView {
     override fun getBoard(x: Int, y: Int) = AbstractBoardView.Cell(board[x, y], null, false)
 
     override fun boardMouseClicked(x: Int, y: Int) {
+        val board = this.board
         when (mode) {
-            R.id.playButton -> onPlayModeClick(x, y)
+            R.id.playButton -> onPlayModeClick(board, x, y)
             R.id.blackButton -> {
                 board.turn = Player.BLACK
                 if (board.play(x, y).invalidReason != null) {
@@ -55,14 +55,14 @@ class PlayerBoardView : AbstractBoardView {
         invalidate()
     }
 
-    private fun onPlayModeClick(x: Int, y: Int) {
+    private fun onPlayModeClick(board: Board, x: Int, y: Int) {
         if (player != refereeBoard.turn) {
             findParentView<TextView>(R.id.referee).setText(R.string.not_your_turn)
             return
         }
 
         val result = refereeBoard.play(x, y)
-        refereeResults.add(result)
+        refereeHistory.add(GameState.RefereeHistoryEntry(player, result))
 
         if (result.invalidReason != null) {
             when (result.invalidReason) {
@@ -98,7 +98,7 @@ class PlayerBoardView : AbstractBoardView {
         }
 
         val result = refereeBoard.pass()
-        refereeResults.add(result)
+        refereeHistory.add(GameState.RefereeHistoryEntry(player, result))
         findParentView<TextView>(R.id.referee).text = Referee.comment(result, player, resources)
     }
 }

@@ -10,17 +10,19 @@ import de.roland_illig.phantomgo.Player
 class PlayerActivity : AppCompatActivity() {
 
     private var state: GameState? = null
+    private var player = Player.BLACK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
-        setTitle(if (player() == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
     }
 
     override fun onResume() {
         super.onResume()
         state = GameState.load(this)
-        boardView().configure(state!!.refereeBoard, board(), player())
+        player = state!!.refereeBoard.turn
+        setTitle(if (player == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
+        boardView().configure(state!!)
     }
 
     override fun onPause() {
@@ -38,24 +40,19 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     fun onHandOverClick(view: View) {
-        val refereeResults = boardView().refereeResults
         if (state!!.refereeBoard.gameOver) {
             CountingActivity.start(this)
         } else {
-            HandOverActivity.start(this, player().other(), refereeResults)
+            HandOverActivity.start(this)
         }
         finish()
     }
 
     private fun boardView() = findViewById<PlayerBoardView>(R.id.playerBoardView)
-    private fun board() = if (player() == Player.BLACK) state!!.blackBoard else state!!.whiteBoard
-    private fun player() = intent.getSerializableExtra("phantomGo.player") as Player
 
     companion object {
-        fun start(ctx: Context, player: Player) {
-            val intent = Intent(ctx, PlayerActivity::class.java)
-            intent.putExtra("phantomGo.player", player)
-            ctx.startActivity(intent)
+        fun start(ctx: Context) {
+            ctx.startActivity(Intent(ctx, PlayerActivity::class.java))
         }
     }
 }

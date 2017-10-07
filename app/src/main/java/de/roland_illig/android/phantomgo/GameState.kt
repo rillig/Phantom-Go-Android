@@ -3,6 +3,8 @@ package de.roland_illig.android.phantomgo
 import android.content.Context
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.CountingBoard
+import de.roland_illig.phantomgo.Player
+import de.roland_illig.phantomgo.RefereeResult
 import java.io.FileNotFoundException
 import java.io.InvalidClassException
 import java.io.ObjectInputStream
@@ -15,9 +17,10 @@ class GameState : java.io.Serializable {
     val blackBoard = Board(9)
     val whiteBoard = Board(9)
     var countingBoard: CountingBoard? = null
+    val refereeHistory = mutableListOf<RefereeHistoryEntry>()
 
     companion object {
-        private const val serialVersionUID = 1L
+        private const val serialVersionUID = 20171007L
 
         fun load(ctx: Context): GameState {
             try {
@@ -43,4 +46,6 @@ class GameState : java.io.Serializable {
             }
         }
     }
+
+    data class RefereeHistoryEntry(val player: Player, val result: RefereeResult) : java.io.Serializable
 }
