@@ -50,13 +50,11 @@ abstract class AbstractBoardView : View {
 
         val bsize = boardSize
 
-        val linePaint = solidPaint(0xFF000000.toInt())
-        linePaint.strokeWidth = lineWidth().toFloat()
-        val currentLinePaint = solidPaint(0xFFFF9900.toInt())
-        currentLinePaint.strokeWidth = lineWidth().toFloat()
-        val boardPaint = solidPaint(0xFFD48E00.toInt())
-        val blackPaint = solidPaint(0xFF000000.toInt())
-        val whitePaint = solidPaint(0xFFFFFFFF.toInt())
+        val linePaint = linePaint(0xFF000000)
+        val currentLinePaint = linePaint(0xFFFF9900)
+        val boardPaint = solidPaint(0xFFD48E00)
+        val blackPaint = solidPaint(0xFF000000)
+        val whitePaint = solidPaint(0xFFFFFFFF)
         val blackTranslucentPaint = solidPaint(0x55000000)
         val whiteTranslucentPaint = solidPaint(0x55FFFFFF)
 
@@ -98,9 +96,7 @@ abstract class AbstractBoardView : View {
         g.drawOval(RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat()), paint)
     }
 
-    private fun lineWidth(): Int {
-        return Math.max(1, ((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0).toInt())
-    }
+    private fun lineWidth() = Math.max(1.0, Math.floor((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0))
 
     private fun boardToScreen(bc: Double): Int {
         val size = Math.min(width, height)
@@ -112,15 +108,19 @@ abstract class AbstractBoardView : View {
         return Math.round(sc * (boardSize + 1) / size - 1).toInt()
     }
 
-    protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
-
-    companion object {
-        private fun solidPaint(color: Int): Paint {
-            val paint = Paint()
-            paint.color = color
-            paint.style = Paint.Style.FILL
-            paint.isAntiAlias = true
-            return paint
-        }
+    private fun linePaint(color: Long): Paint {
+        val paint = solidPaint(color)
+        paint.strokeWidth = lineWidth().toFloat()
+        return paint
     }
+
+    private fun solidPaint(color: Long): Paint {
+        val paint = Paint()
+        paint.color = color.toInt()
+        paint.style = Paint.Style.FILL
+        paint.isAntiAlias = true
+        return paint
+    }
+
+    protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
 }
