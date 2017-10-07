@@ -12,32 +12,19 @@
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="10"
-        android:padding="8dp"
+        android:layout_margin="8dp"
         android:text="@string/under_construction"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/buttonBar"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <Button
-            android:id="@+id/playButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:onClick="onPlayClick"
-            android:text="@string/play_title"/>
-
-    </LinearLayout>
-
-
+        android:layout_margin="8dp"
+        android:onClick="onPlayClick"
+        android:text="@string/play_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>
