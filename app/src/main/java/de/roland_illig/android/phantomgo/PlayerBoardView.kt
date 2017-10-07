@@ -15,7 +15,7 @@ class PlayerBoardView : AbstractBoardView {
     internal var mode = R.id.playButton
     private var game: Game? = null
 
-    private val board get() = if (game!!.turn == Player.BLACK) game!!.blackBoard else game!!.whiteBoard
+    private val board get() = game!!.playerBoard()
     private val refereeBoard get() = game!!.refereeBoard
     private val refereeHistory get() = game!!.refereeHistory
 
