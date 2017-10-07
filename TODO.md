@@ -16,10 +16,6 @@ Kein separater Bildschirm für Übergabe, sondern Brett übermalen
 
 Partieprotokoll per Mail verschicken
 
-Antialias prüfen
-
 Aufgeben
 
 Fehler melden mit Partieprotokoll
-
-Nocaps auf Buttons

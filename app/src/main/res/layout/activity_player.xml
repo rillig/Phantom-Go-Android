@@ -77,6 +77,7 @@
         android:layout_marginRight="8dp"
         android:onClick="onPassClick"
         android:text="@string/pass_button"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/handOverButton"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -89,6 +90,7 @@
         android:enabled="false"
         android:onClick="onHandOverClick"
         android:text="@string/continue_button"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="@id/buttonBar"
         app:layout_constraintRight_toRightOf="parent"/>
 

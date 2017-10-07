@@ -20,6 +20,7 @@
         android:layout_marginRight="8dp"
         android:onClick="onFinishClick"
         android:text="@string/finish_button"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

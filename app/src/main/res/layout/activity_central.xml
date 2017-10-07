@@ -35,7 +35,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:onClick="onPlayClick"
-            android:text="@string/play_title"/>
+            android:text="@string/play_title"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
