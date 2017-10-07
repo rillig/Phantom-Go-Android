@@ -1,42 +1,17 @@
 package de.roland_illig.phantomgo
 
-class RefereeResult : java.io.Serializable {
-
-    val invalidReason: InvalidReason?
-    val atari: Boolean
-    val selfAtari: Boolean
-    val capturedStones: Int
-    val pass: Boolean
-
-    private constructor(invalidReason: InvalidReason) {
-        this.invalidReason = invalidReason
-        this.atari = false
-        this.selfAtari = false
-        this.capturedStones = 0
-        this.pass = false
-    }
-
-    private constructor() {
-        this.invalidReason = null
-        this.atari = false
-        this.selfAtari = false
-        this.capturedStones = 0
-        this.pass = true
-    }
-
-    private constructor(atari: Boolean, selfAtari: Boolean, capturedStones: Int) {
-        this.invalidReason = null
-        this.atari = atari
-        this.selfAtari = selfAtari
-        this.capturedStones = capturedStones
-        this.pass = false
-    }
+class RefereeResult private constructor(
+        val invalidReason: InvalidReason?,
+        val atari: Boolean,
+        val selfAtari: Boolean,
+        val capturedStones: Int,
+        val pass: Boolean) : java.io.Serializable {
 
     override fun toString(): String {
         if (invalidReason != null) {
             return when (invalidReason) {
-                RefereeResult.InvalidReason.OWN_STONE -> "own"
-                RefereeResult.InvalidReason.OTHER_STONE -> "other"
+                RefereeResult.InvalidReason.OWN_STONE -> "ownStone"
+                RefereeResult.InvalidReason.OTHER_STONE -> "otherStone"
                 RefereeResult.InvalidReason.SUICIDE -> "suicide"
                 RefereeResult.InvalidReason.KO -> "ko"
             }
@@ -71,12 +46,12 @@ class RefereeResult : java.io.Serializable {
 
     companion object {
         fun ok(atari: Boolean, selfAtari: Boolean, capturedStones: Int)
-                = RefereeResult(atari, selfAtari, capturedStones)
+                = RefereeResult(null, atari, selfAtari, capturedStones, false)
 
-        fun pass() = RefereeResult()
-        fun ownStone() = RefereeResult(InvalidReason.OWN_STONE)
-        fun otherStone() = RefereeResult(InvalidReason.OTHER_STONE)
-        fun suicide() = RefereeResult(InvalidReason.SUICIDE)
-        fun ko() = RefereeResult(InvalidReason.KO)
+        fun pass() = RefereeResult(null, false, false, 0, true)
+        fun ownStone() = RefereeResult(InvalidReason.OWN_STONE, false, false, 0, false)
+        fun otherStone() = RefereeResult(InvalidReason.OTHER_STONE, false, false, 0, false)
+        fun suicide() = RefereeResult(InvalidReason.SUICIDE, false, false, 0, false)
+        fun ko() = RefereeResult(InvalidReason.KO, false, false, 0, false)
     }
 }
