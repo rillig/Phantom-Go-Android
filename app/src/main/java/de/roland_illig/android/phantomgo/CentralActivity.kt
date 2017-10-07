@@ -3,10 +3,11 @@ package de.roland_illig.android.phantomgo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import de.roland_illig.phantomgo.Game
 
 class CentralActivity : AppCompatActivity() {
 
-    private var state: GameState? = null
+    private var game: Game? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,11 +16,11 @@ class CentralActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        state = GameState.load(this)
+        game = Persistence.load(this)
     }
 
     fun onPlayClick(view: View) {
-        val refereeBoard = state!!.refereeBoard
+        val refereeBoard = game!!.refereeBoard
         when {
             refereeBoard.gameOver -> CountingActivity.start(this)
             refereeBoard.empty -> PlayerActivity.start(this)

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
+import de.roland_illig.phantomgo.Game
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 
@@ -19,11 +20,11 @@ class HandOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hand_over)
 
-        val state = GameState.load(this)
-        val playerName = getText(if (state.turn == Player.BLACK) R.string.referee_black else R.string.referee_white)
+        val game = Persistence.load(this)
+        val playerName = getText(if (game.turn == Player.BLACK) R.string.referee_black else R.string.referee_white)
         (findViewById<TextView>(R.id.handOverText)).text = resources.getString(R.string.hand_over_text, playerName)
 
-        val refereeStrings = state.refereeHistory.map { result -> format(result) }
+        val refereeStrings = game.refereeHistory.map { result -> format(result) }
         val refereeResultsView = findViewById<ListView>(R.id.refereeHistory)
         refereeResultsView.adapter = ArrayAdapter(this, R.layout.string_list_item, refereeStrings)
 
@@ -36,7 +37,7 @@ class HandOverActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun format(result: GameState.RefereeHistoryEntry): String {
+    private fun format(result: Game.RefereeHistoryEntry): String {
         val playerName = getText(if (result.player == Player.BLACK) R.string.referee_black else R.string.referee_white)
         val comment = Referee.comment(result.result, result.player, resources)
         return "$playerName: $comment"

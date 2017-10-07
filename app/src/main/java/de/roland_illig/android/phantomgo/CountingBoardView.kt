@@ -4,12 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
+import de.roland_illig.phantomgo.Game
 
 class CountingBoardView : AbstractBoardView {
 
-    private var state: GameState? = null
-    private val refereeBoard get() = state!!.refereeBoard
-    private val countingBoard get() = state!!.countingBoard!!
+    private var game: Game? = null
+    private val refereeBoard get() = game!!.refereeBoard
+    private val countingBoard get() = game!!.countingBoard!!
 
     override val boardSize get() = refereeBoard.size
 
@@ -17,8 +18,8 @@ class CountingBoardView : AbstractBoardView {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun configure(state: GameState) {
-        this.state = state
+    fun configure(game: Game) {
+        this.game = game
         updateSummary()
     }
 

@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import de.roland_illig.phantomgo.CountingBoard
+import de.roland_illig.phantomgo.Game
 
 class CountingActivity : AppCompatActivity() {
 
-    private var state: GameState? = null
+    private var game: Game? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,21 +19,21 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val state = GameState.load(this)
-        this.state = state
-        if (state.countingBoard == null) {
-            state.countingBoard = CountingBoard(state.refereeBoard)
+        val game = Persistence.load(this)
+        this.game = game
+        if (game.countingBoard == null) {
+            game.countingBoard = CountingBoard(game.refereeBoard)
         }
-        findViewById<CountingBoardView>(R.id.countingBoard).configure(state)
+        findViewById<CountingBoardView>(R.id.countingBoard).configure(game)
     }
 
     override fun onPause() {
         super.onPause()
-        GameState.save(this, state!!)
+        Persistence.save(this, game!!)
     }
 
     fun onFinishClick(view: View) {
-        state = GameState()
+        game = Game()
         finish()
     }
 
