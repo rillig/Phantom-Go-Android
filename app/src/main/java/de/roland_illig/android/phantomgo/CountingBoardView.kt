@@ -10,7 +10,7 @@ class CountingBoardView : AbstractBoardView {
 
     private var game: Game? = null
     private val refereeBoard get() = game!!.refereeBoard
-    private val countingBoard get() = game!!.countingBoard!!
+    private val countingBoard get() = game!!.countingBoard()
 
     override val boardSize get() = refereeBoard.size
 
