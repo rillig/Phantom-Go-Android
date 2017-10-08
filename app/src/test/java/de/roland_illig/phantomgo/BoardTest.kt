@@ -1,9 +1,8 @@
 package de.roland_illig.phantomgo
 
-import org.junit.Test
-
-import org.hamcrest.CoreMatchers.`is` as eq
 import org.junit.Assert.assertThat
+import org.junit.Test
+import org.hamcrest.CoreMatchers.`is` as eq
 
 class BoardTest {
 
@@ -68,7 +67,7 @@ class BoardTest {
     }
 
     @Test
-    fun testCapture() {
+    fun testCaptureOneStone() {
         val board = Board(9)
         board.setup(
                 ". . . . . . . . .",
@@ -96,6 +95,58 @@ class BoardTest {
                 + ". . . . . . . . .\n"
                 + ". . . . . . . . .\n"
                 + ". . . . . . . . .\n"))
+    }
+
+    @Test
+    fun testCaptureSnake() {
+        val board = Board(9)
+        board.setup(
+                "W W W W W W W W W",
+                "B B B B B B B B W",
+                "W W W W W W W B W",
+                "W B B B B B W B W",
+                "W B W W . B W B W",
+                "W B W B B B W B W",
+                "W B W W W W W B W",
+                "W B B B B B B B W",
+                "W W W W W W W W W")
+
+        board.copy().also { board ->
+            val result = board.play(4, 4)
+
+            assertThat(result.toString(), eq("captured 48"))
+            assertThat(board.getCaptured(Player.BLACK), eq(48))
+            assertThat(board.getCaptured(Player.WHITE), eq(0))
+            assertThat(board.toString(), eq(""
+                    + ". . . . . . . . .\n"
+                    + "B B B B B B B B .\n"
+                    + ". . . . . . . B .\n"
+                    + ". B B B B B . B .\n"
+                    + ". B . . B B . B .\n"
+                    + ". B . B B B . B .\n"
+                    + ". B . . . . . B .\n"
+                    + ". B B B B B B B .\n"
+                    + ". . . . . . . . .\n"))
+        }
+
+        board.copy().also { board ->
+            board.turn = Player.WHITE
+            val result = board.play(4, 4)
+
+            assertThat(result.toString(), eq("captured 32"))
+            assertThat(board.getCaptured(Player.BLACK), eq(0))
+            assertThat(board.getCaptured(Player.WHITE), eq(32))
+            assertThat(board.toString(), eq(""
+                    + "W W W W W W W W W\n"
+                    + ". . . . . . . . W\n"
+                    + "W W W W W W W . W\n"
+                    + "W . . . . . W . W\n"
+                    + "W . W W W . W . W\n"
+                    + "W . W . . . W . W\n"
+                    + "W . W W W W W . W\n"
+                    + "W . . . . . . . W\n"
+                    + "W W W W W W W W W\n"))
+        }
     }
 
     @Test
