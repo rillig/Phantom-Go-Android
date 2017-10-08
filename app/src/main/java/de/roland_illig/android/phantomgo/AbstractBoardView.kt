@@ -73,11 +73,11 @@ abstract class AbstractBoardView : View {
         val blackTranslucentPaint = solidPaint(0x55000000)
         val whiteTranslucentPaint = solidPaint(0x55FFFFFF)
 
-        g.drawRect(RectF(0.toFloat(), 0.toFloat(), screenSize, screenSize), boardPaint)
+        g.drawRect(RectF(0.0F, 0.0F, screenSize, screenSize), boardPaint)
 
         for (i in 0 until boardSize) {
-            val start = boardToScreen(0.0) - lineWidth / 2.toFloat()
-            val end = boardToScreen((boardSize - 1).toDouble()) + lineWidth / 2.toFloat()
+            val start = boardToScreen(0.0) - lineWidth / 2.0F
+            val end = boardToScreen((boardSize - 1).toDouble()) + lineWidth / 2.0F
             val fixed = boardToScreen(i.toDouble())
             if (i != lastY) {
                 g.drawLine(start, fixed, end, fixed, linePaint)
@@ -88,14 +88,14 @@ abstract class AbstractBoardView : View {
         }
 
         if (lastX in 0 until boardSize) {
-            val startY = boardToScreen(0.0) + lineWidth / 2.toFloat()
-            val endY = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.toFloat()
+            val startY = boardToScreen(0.0) + lineWidth / 2.0F
+            val endY = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
             val screenX = boardToScreen(lastX.toDouble())
             g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
         }
         if (lastY in 0 until boardSize) {
-            val startX = boardToScreen(0.0) + lineWidth / 2.toFloat()
-            val endX = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.toFloat()
+            val startX = boardToScreen(0.0) + lineWidth / 2.0F
+            val endX = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
             val screenY = boardToScreen(lastY.toDouble())
             g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
         }
