@@ -38,18 +38,8 @@ class PlayerBoardView : AbstractBoardView {
         val board = this.getBoard()
         when (mode) {
             R.id.playButton -> onPlayModeClick(board, x, y)
-            R.id.blackButton -> {
-                board.turn = Player.BLACK
-                if (board.play(x, y).invalidReason != null) {
-                    board[x, y] = Player.BLACK
-                }
-            }
-            R.id.whiteButton -> {
-                board.turn = Player.WHITE
-                if (board.play(x, y).invalidReason != null) {
-                    board[x, y] = Player.WHITE
-                }
-            }
+            R.id.blackButton -> board.edit(x, y, Player.BLACK)
+            R.id.whiteButton -> board.edit(x, y, Player.WHITE)
             R.id.eraserButton -> board[x, y] = null
         }
         invalidate()

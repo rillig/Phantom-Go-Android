@@ -147,6 +147,13 @@ class Board(val size: Int) : java.io.Serializable {
         return RefereeResult.pass()
     }
 
+    fun edit(x: Int, y: Int, color: Player) {
+        turn = color
+        if (play(x, y).invalidReason != null) {
+            set(x, y, color)
+        }
+    }
+
     @VisibleForTesting
     fun setup(vararg rows: String) {
         for (y in 0 until size) {
