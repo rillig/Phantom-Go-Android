@@ -57,21 +57,16 @@ abstract class AbstractBoardView : View {
 
         val lineWidth = Math.max(1.0, Math.floor((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0)).toFloat()
 
-        fun solidPaint(color: Long): Paint {
-            val paint = Paint()
-            paint.color = color.toInt()
-            paint.style = Paint.Style.FILL
-            paint.isAntiAlias = true
-            return paint
-        }
+        fun linePaint(color: Long) = Paint().also { it.color = color.toInt(); it.strokeWidth = lineWidth }
+        fun fillPaint(color: Long) = Paint().also { it.color = color.toInt(); it.isAntiAlias = true }
 
-        val linePaint = solidPaint(0xFF000000).also { it.strokeWidth = lineWidth }
-        val currentLinePaint = solidPaint(0xFFFF9900).also { it.strokeWidth = lineWidth }
-        val boardPaint = solidPaint(0xFFD48E00)
-        val blackPaint = solidPaint(0xFF000000)
-        val whitePaint = solidPaint(0xFFFFFFFF)
-        val blackTranslucentPaint = solidPaint(0x55000000)
-        val whiteTranslucentPaint = solidPaint(0x55FFFFFF)
+        val linePaint = linePaint(0xFF000000)
+        val currentLinePaint = linePaint(0xFFFF9900)
+        val boardPaint = fillPaint(0xFFD48E00)
+        val blackPaint = fillPaint(0xFF000000)
+        val whitePaint = fillPaint(0xFFFFFFFF)
+        val blackTranslucentPaint = fillPaint(0x55000000)
+        val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
 
         g.drawRect(RectF(0.0F, 0.0F, screenSize, screenSize), boardPaint)
 
