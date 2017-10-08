@@ -1,7 +1,5 @@
 # Prio 1
 
-* "Schwarz fängt 3 Steine" führt nicht dazu, dass der Zug auf dem Kontrollbrett gleichartig ausgeführt wird.
-
 * Non-overlapping arrangement in landscape mode
 
 # Prio 2
