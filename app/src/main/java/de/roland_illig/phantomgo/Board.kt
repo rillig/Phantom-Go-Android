@@ -9,7 +9,7 @@ class Board(val size: Int) : java.io.Serializable {
     private val pieces = Array(size) { arrayOfNulls<Player>(size) }
     private val captured = IntArray(2)
     var turn: Player = Player.BLACK
-    private var prevMove: Point? = null
+    private var prevMove: Point = Point(-1, -1)
     private var passed: Boolean = false
     var gameOver: Boolean = false; private set
     var empty: Boolean = false; private set
@@ -44,8 +44,8 @@ class Board(val size: Int) : java.io.Serializable {
 
     fun getCaptured(player: Player) = captured[player.ordinal]
 
-    private fun getLiberties(x: Int, y: Int, color: Player?)
-            = if (get(x, y) == color) getLiberties(x, y) else -1
+    private fun getLiberties(x: Int, y: Int, color: Player)
+            = if (x in 0 until size && y in 0 until size && get(x, y) == color) getLiberties(x, y) else -1
 
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0 until size && y in 0 until size) {
@@ -87,21 +87,22 @@ class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.otherStone()
         }
 
-        val selfLeftBefore = x > 0 && getLiberties(x - 1, y, turn) == 1
-        val selfAboveBefore = y > 0 && getLiberties(x, y - 1, turn) == 1
-        val selfRightBefore = x + 1 < size && getLiberties(x + 1, y, turn) == 1
-        val selfBelowBefore = y + 1 < size && getLiberties(x, y + 1, turn) == 1
+        val selfLeftBefore = getLiberties(x - 1, y, turn) == 1
+        val selfAboveBefore = getLiberties(x, y - 1, turn) == 1
+        val selfRightBefore = getLiberties(x + 1, y, turn) == 1
+        val selfBelowBefore = getLiberties(x, y + 1, turn) == 1
         val selfAtariBefore = selfLeftBefore || selfAboveBefore || selfRightBefore || selfBelowBefore
 
-        val leftBefore = if (x > 0) getLiberties(x - 1, y, other) else 0
-        val aboveBefore = if (y > 0) getLiberties(x, y - 1, other) else 0
-        val rightBefore = if (x + 1 < size) getLiberties(x + 1, y, other) else 0
-        val belowBefore = if (y + 1 < size) getLiberties(x, y + 1, other) else 0
+        val leftBefore = getLiberties(x - 1, y, other) == 1
+        val aboveBefore = getLiberties(x, y - 1, other) == 1
+        val rightBefore = getLiberties(x + 1, y, other) == 1
+        val belowBefore = getLiberties(x, y + 1, other) == 1
+        val capturesSomething = leftBefore || aboveBefore || rightBefore || belowBefore
 
-        val dx = x - prevMove!!.x
-        val dy = y - prevMove!!.y
+        val dx = x - prevMove.x
+        val dy = y - prevMove.y
         if (dx * dx + dy * dy == 1) {
-            if (getLiberties(prevMove!!.x, prevMove!!.y, other) == 1) {
+            if (getLiberties(prevMove.x, prevMove.y, other) == 1) {
                 return RefereeResult.ko()
             }
         }
@@ -109,20 +110,19 @@ class Board(val size: Int) : java.io.Serializable {
         pieces[x][y] = turn
         var undo = true
         try {
-            val capturesSomething = leftBefore == 1 || aboveBefore == 1 || rightBefore == 1 || belowBefore == 1
             if (!capturesSomething && getLiberties(x, y) == 0) {
                 return RefereeResult.suicide()
             }
 
-            val left = if (x > 0) getLiberties(x - 1, y, other) else 0
-            val above = if (y > 0) getLiberties(x, y - 1, other) else 0
-            val right = if (x + 1 < size) getLiberties(x + 1, y, other) else 0
-            val below = if (y + 1 < size) getLiberties(x, y + 1, other) else 0
+            val left = getLiberties(x - 1, y, other) == 1
+            val above = getLiberties(x, y - 1, other) == 1
+            val right = getLiberties(x + 1, y, other) == 1
+            val below = getLiberties(x, y + 1, other) == 1
 
-            val atari = (leftBefore > 1 && left == 1
-                    || aboveBefore > 1 && above == 1
-                    || rightBefore > 1 && right == 1
-                    || belowBefore > 1 && below == 1)
+            val atari = (!leftBefore && left
+                    || !aboveBefore && above
+                    || !rightBefore && right
+                    || !belowBefore && below)
 
             val capturedStones = (captureCount(x - 1, y, other)
                     + captureCount(x, y - 1, other)
