@@ -4,11 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
-import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Game
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
-import de.roland_illig.phantomgo.RefereeResult
 
 class PlayerBoardView : AbstractBoardView {
 
@@ -37,7 +35,7 @@ class PlayerBoardView : AbstractBoardView {
     override fun onBoardClicked(x: Int, y: Int) {
         val board = this.getBoard()
         when (mode) {
-            R.id.playButton -> onPlayModeClick(board, x, y)
+            R.id.playButton -> onPlayModeClick(x, y)
             R.id.blackButton -> board.edit(x, y, Player.BLACK)
             R.id.whiteButton -> board.edit(x, y, Player.WHITE)
             R.id.eraserButton -> board[x, y] = null
@@ -45,32 +43,14 @@ class PlayerBoardView : AbstractBoardView {
         invalidate()
     }
 
-    private fun onPlayModeClick(board: Board, x: Int, y: Int) {
+    private fun onPlayModeClick(x: Int, y: Int) {
         val game = game!!
         if (game.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
 
-        val turn = game.turn
-        val result = game.play(x, y)
-
-        when (result.invalidReason) {
-            RefereeResult.InvalidReason.OTHER_STONE -> board[x, y] = turn.other()
-            RefereeResult.InvalidReason.OWN_STONE -> board[x, y] = turn
-            RefereeResult.InvalidReason.SUICIDE,
-            RefereeResult.InvalidReason.KO -> board[x, y] = null
-            null -> {
-                val playerResult = board.copy().also { it.turn = turn }.play(x, y)
-                if (playerResult.toString() == result.toString()) {
-                    board.turn = turn
-                    board.play(x, y)
-                } else {
-                    board[x, y] = turn
-                }
-            }
-        }
-
+        game.play(x, y)
         updateViews()
     }
 
