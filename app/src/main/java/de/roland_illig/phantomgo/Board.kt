@@ -56,13 +56,6 @@ class Board(val size: Int) : java.io.Serializable {
         return 0
     }
 
-    @VisibleForTesting
-    fun getLiberties(x: Int, y: Int): Int {
-        val counter = LibertiesCounter(get(x, y)!!)
-        counter.count(x, y)
-        return counter.liberties.size
-    }
-
     private fun capture(x: Int, y: Int, color: Player): Int {
         var captured = 1
         pieces[x][y] = null
@@ -192,43 +185,42 @@ class Board(val size: Int) : java.io.Serializable {
         return sb.toString()
     }
 
-    private inner class LibertiesCounter internal constructor(internal val color: Player) {
-        internal val todo: MutableSet<Point> = HashSet()
-        internal val done: MutableSet<Point> = HashSet()
-        internal val liberties: MutableSet<Point> = HashSet()
+    fun getLiberties(x: Int, y: Int): Int {
+        val color = get(x, y)!!
+        val todo: MutableSet<Point> = HashSet()
+        val done: MutableSet<Point> = HashSet()
+        val liberties: MutableSet<Point> = HashSet()
 
-        internal fun count(x: Int, y: Int) {
-            checkNotNull(color)
-
-            todo.add(Point(x, y))
-
-            fun countInternal(nx: Int, ny: Int) {
-                if (nx in 0 until size && ny in 0 until size) {
-                    val np = Point(nx, ny)
-                    val neighbor = get(nx, ny)
-                    if (neighbor == color && !done.contains(np)) {
-                        todo.add(np)
-                    }
-                    if (neighbor == null) {
-                        liberties.add(np)
-                    }
+        fun countInternal(nx: Int, ny: Int) {
+            if (nx in 0 until size && ny in 0 until size) {
+                val np = Point(nx, ny)
+                val neighbor = get(nx, ny)
+                if (neighbor == color && !done.contains(np)) {
+                    todo.add(np)
+                }
+                if (neighbor == null) {
+                    liberties.add(np)
                 }
             }
-
-            while (!todo.isEmpty()) {
-                val it = todo.iterator()
-                val point = it.next()
-                it.remove()
-                done.add(point)
-
-                val px = point.x
-                val py = point.y
-                countInternal(px - 1, py)
-                countInternal(px + 1, py)
-                countInternal(px, py - 1)
-                countInternal(px, py + 1)
-            }
         }
+
+        todo.add(Point(x, y))
+
+        while (!todo.isEmpty()) {
+            val it = todo.iterator()
+            val point = it.next()
+            it.remove()
+            done.add(point)
+
+            val px = point.x
+            val py = point.y
+            countInternal(px - 1, py)
+            countInternal(px + 1, py)
+            countInternal(px, py - 1)
+            countInternal(px, py + 1)
+        }
+
+        return liberties.size
     }
 
     internal data class Point(val x: Int, val y: Int) : java.io.Serializable
