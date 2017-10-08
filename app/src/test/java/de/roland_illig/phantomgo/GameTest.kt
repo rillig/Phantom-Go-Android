@@ -12,10 +12,15 @@ class GameTest {
 
         assertThat(game.isInitial, eq(true))
         assertThat(game.turn, eq(Player.BLACK))
+        assertThat(game.isReadyToHandOver(), eq(false))
 
         game.play(4, 4)
 
+        assertThat(game.isInitial, eq(false))
         assertThat(game.turn, eq(Player.BLACK))
+        assertThat(game.isReadyToHandOver(), eq(true))
+
+        // At this point, Black may want to edit his board to add opponent stones.
 
         game.finishMove()
 
@@ -33,5 +38,7 @@ class GameTest {
         game.pass()
 
         assertThat(game.isGameOver, eq(true))
+
+        assertThat(game.countingBoard().count().toString(), eq("black=80+0, white=0+0"))
     }
 }

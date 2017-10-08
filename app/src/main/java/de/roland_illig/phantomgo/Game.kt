@@ -18,16 +18,16 @@ class Game : java.io.Serializable {
         return countingBoard!!
     }
 
-    fun isMoveDone() = turn != refereeBoard.turn
+    fun isReadyToHandOver() = turn != refereeBoard.turn
 
     fun finishMove() {
         turn = refereeBoard.turn
     }
 
     fun play(x: Int, y: Int): RefereeResult {
-        return refereeBoard.play(x, y).also {
-            refereeHistory.add(RefereeHistoryEntry(turn, it))
-        }
+        val result = refereeBoard.play(x, y)
+        refereeHistory.add(RefereeHistoryEntry(turn, result))
+        return result
     }
 
     fun pass() {

@@ -57,7 +57,7 @@ class PlayerBoardView : AbstractBoardView {
 
     private fun onPlayModeClick(board: Board, x: Int, y: Int) {
         val game = game!!
-        if (game.isMoveDone()) {
+        if (game.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
@@ -86,7 +86,7 @@ class PlayerBoardView : AbstractBoardView {
 
     fun pass() {
         val game = game!!
-        if (game.isMoveDone()) {
+        if (game.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
@@ -101,7 +101,7 @@ class PlayerBoardView : AbstractBoardView {
         if (last != null) {
             setRefereeText(Referee.comment(last.result, last.player, resources))
         }
-        val done = game.isMoveDone()
+        val done = game.isReadyToHandOver()
         findParentView<View>(R.id.passButton).isEnabled = !done
         findParentView<View>(R.id.handOverButton).isEnabled = done
     }
