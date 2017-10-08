@@ -1,30 +1,19 @@
 package de.roland_illig.phantomgo
 
 import android.support.annotation.VisibleForTesting
-import java.util.Arrays
 import java.util.HashSet
 
 class Board(val size: Int) : java.io.Serializable {
 
+    private val nowhere = Point(-1, -1)
+
     private val pieces = Array(size) { arrayOfNulls<Player>(size) }
     private val captured = IntArray(2)
-    var turn: Player = Player.BLACK
-    private var prevMove: Point = Point(-1, -1)
-    private var passed: Boolean = false
-    var gameOver: Boolean = false; private set
-    var empty: Boolean = false; private set
-
-    init {
-        for (row in pieces) {
-            Arrays.fill(row, null)
-        }
-        Arrays.fill(captured, 0)
-        turn = Player.BLACK
-        prevMove = Point(-1, -1)
-        passed = false
-        gameOver = false
-        empty = true
-    }
+    var turn = Player.BLACK
+    private var prevMove = nowhere
+    private var passed = false
+    var gameOver = false; private set
+    var empty = true; private set
 
     fun copy(): Board {
         val copy = Board(size)
@@ -44,12 +33,9 @@ class Board(val size: Int) : java.io.Serializable {
 
     fun getCaptured(player: Player) = captured[player.ordinal]
 
-    private fun getLiberties(x: Int, y: Int, color: Player)
-            = if (x in 0 until size && y in 0 until size && get(x, y) == color) getLiberties(x, y) else -1
-
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0 until size && y in 0 until size) {
-            if (getLiberties(x, y, turn) == 0) {
+            if (get(x, y) == turn && getLiberties(x, y) == 0) {
                 return capture(x, y, turn)
             }
         }
@@ -78,6 +64,8 @@ class Board(val size: Int) : java.io.Serializable {
         if (gameOver) {
             throw IllegalStateException("GameOver")
         }
+
+        val turn = turn
         val other = turn.other()
 
         if (get(x, y) == turn) {
@@ -87,53 +75,56 @@ class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.otherStone()
         }
 
-        val selfLeftBefore = getLiberties(x - 1, y, turn) == 1
-        val selfAboveBefore = getLiberties(x, y - 1, turn) == 1
-        val selfRightBefore = getLiberties(x + 1, y, turn) == 1
-        val selfBelowBefore = getLiberties(x, y + 1, turn) == 1
-        val selfAtariBefore = selfLeftBefore || selfAboveBefore || selfRightBefore || selfBelowBefore
+        fun atari(x: Int, y: Int, color: Player): Boolean {
+            return x in 0 until size && y in 0 until size
+                    && get(x, y) == color && getLiberties(x, y) == 1
+        }
 
-        val leftBefore = getLiberties(x - 1, y, other) == 1
-        val aboveBefore = getLiberties(x, y - 1, other) == 1
-        val rightBefore = getLiberties(x + 1, y, other) == 1
-        val belowBefore = getLiberties(x, y + 1, other) == 1
-        val capturesSomething = leftBefore || aboveBefore || rightBefore || belowBefore
+        val selfAtariBefore = (false
+                || atari(x - 1, y, turn)
+                || atari(x + 1, y, turn)
+                || atari(x, y - 1, turn)
+                || atari(x, y + 1, turn))
+
+        val leftBefore = atari(x - 1, y, other)
+        val rightBefore = atari(x + 1, y, other)
+        val aboveBefore = atari(x, y - 1, other)
+        val belowBefore = atari(x, y + 1, other)
+        val capturesSomething = leftBefore || rightBefore || aboveBefore || belowBefore
 
         val dx = x - prevMove.x
         val dy = y - prevMove.y
         if (dx * dx + dy * dy == 1) {
-            if (getLiberties(prevMove.x, prevMove.y, other) == 1) {
+            if (atari(prevMove.x, prevMove.y, other)) {
                 return RefereeResult.ko()
             }
         }
 
         pieces[x][y] = turn
         var undo = true
+
         try {
             if (!capturesSomething && getLiberties(x, y) == 0) {
                 return RefereeResult.suicide()
             }
 
-            val left = getLiberties(x - 1, y, other) == 1
-            val above = getLiberties(x, y - 1, other) == 1
-            val right = getLiberties(x + 1, y, other) == 1
-            val below = getLiberties(x, y + 1, other) == 1
+            val atari = (false
+                    || !leftBefore && atari(x - 1, y, other)
+                    || !rightBefore && atari(x + 1, y, other)
+                    || !aboveBefore && atari(x, y - 1, other)
+                    || !belowBefore && atari(x, y + 1, other))
 
-            val atari = (!leftBefore && left
-                    || !aboveBefore && above
-                    || !rightBefore && right
-                    || !belowBefore && below)
-
-            val capturedStones = (captureCount(x - 1, y, other)
-                    + captureCount(x, y - 1, other)
+            val capturedStones = (0
+                    + captureCount(x - 1, y, other)
                     + captureCount(x + 1, y, other)
+                    + captureCount(x, y - 1, other)
                     + captureCount(x, y + 1, other))
 
-            val selfAtari = getLiberties(x, y, turn) == 1 && !selfAtariBefore
+            val selfAtari = atari(x, y, turn) && !selfAtariBefore
 
             captured[turn.ordinal] += capturedStones
-            prevMove = if (capturedStones == 1 && selfAtari) Point(x, y) else Point(-1, -1)
-            turn = turn.other()
+            prevMove = if (capturedStones == 1 && selfAtari) Point(x, y) else nowhere
+            this.turn = other
             undo = false
             empty = false
 
