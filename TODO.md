@@ -10,6 +10,8 @@
 
 # Prio 3
 
+Brettlinien müssen bündig abschließen.
+
 Klick auf Titelzeile: Name ändern
 
 Kein separater Bildschirm für Übergabe, sondern Brett übermalen
