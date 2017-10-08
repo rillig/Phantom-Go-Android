@@ -1,0 +1,123 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="48dp"
+        android:height="48dp"
+        android:viewportWidth="48"
+        android:viewportHeight="48">
+    <path
+        android:name="background"
+        android:fillAlpha="1"
+        android:fillColor="#FFD48E00"
+        android:pathData="M 5,0 L43,0 Q48,0 48,5 L48,43 Q48,48 43,48 L5,48 Q0,48 0,43 L0,5 Q0,0 5,0z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="lines"
+        android:fillColor="#FF000000"
+        android:pathData="
+            M  4.5, 4.25 v 40.5
+            M  9.5, 4.25 v 40.5
+            M 14.5, 4.25 v 40.5
+            M 19.5, 4.25 v 40.5
+            M 24.5, 4.25 v 40.5
+            M 29.5, 4.25 v 40.5
+            M 34.5, 4.25 v 40.5
+            M 39.5, 4.25 v 40.5
+            M 44.5, 4.25 v 40.5
+            M  4.25, 4.5 h 40.5
+            M  4.25, 9.5 h 40.5
+            M  4.25,14.5 h 40.5
+            M  4.25,19.5 h 40.5
+            M  4.25,24.5 h 40.5
+            M  4.25,29.5 h 40.5
+            M  4.25,34.5 h 40.5
+            M  4.25,39.5 h 40.5
+            M  4.25,44.5 h 40.5"
+        android:strokeColor="#FF000000"
+        android:strokeLineCap="butt"
+        android:strokeLineJoin="miter"
+        android:strokeMiterLimit="4"
+        android:strokeWidth="0.5"/>
+    <path
+        android:name="B1"
+        android:fillAlpha="1.0"
+        android:fillColor="#000000"
+        android:pathData="M 22,24.50 a 2.50,2.50 0 0 1 5 0 a 2.50,2.50 0 0 1 -5 0 z"
+        android:strokeWidth="1"/>
+    <path
+        android:name="W2"
+        android:fillAlpha="1.0"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 32.20,14.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="B3"
+        android:fillAlpha="1.0"
+        android:fillColor="#000000"
+        android:pathData="M 22.00,29.50 a 2.50,2.50 0 0 1 5.00 0 a 2.50,2.50 0 0 1 -5.00 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="W4"
+        android:fillAlpha="0.5"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 32.20,24.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="B5"
+        android:fillAlpha="1.0"
+        android:fillColor="#000000"
+        android:pathData="M 22.00,34.50 a 2.50,2.50 0 0 1 5.00 0 a 2.50,2.50 0 0 1 -5.00 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="W6"
+        android:fillAlpha="1.0"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 32.20,34.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="B7"
+        android:fillAlpha="1.0"
+        android:fillColor="#000000"
+        android:pathData="M 22.00,39.50 a 2.50,2.50 0 0 1 5.00 0 a 2.50,2.50 0 0 1 -5.00 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="W8"
+        android:fillAlpha="0.5"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 22.20,14.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="B9"
+        android:fillAlpha="1.0"
+        android:fillColor="#000000"
+        android:pathData="M 22.00,24.50 a 2.50,2.50 0 0 1 5.00 0 a 2.50,2.50 0 0 1 -5.00 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="W10"
+        android:fillAlpha="1.0"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 12.20,19.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="B11"
+        android:fillAlpha="0.5"
+        android:fillColor="#000000"
+        android:pathData="M 7.00,14.50 a 2.50,2.50 0 0 1 5.00 0 a 2.50,2.50 0 0 1 -5.00 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="W12"
+        android:fillAlpha="1.0"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 12.20,34.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="B13"
+        android:fillAlpha="0.5"
+        android:fillColor="#000000"
+        android:pathData="M 12.00,14.50 a 2.50,2.50 0 0 1 5.00 0 a 2.50,2.50 0 0 1 -5.00 0 z"
+        android:strokeWidth="0"/>
+    <path
+        android:name="W14"
+        android:fillAlpha="1.0"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 17.20,39.50 a 2.30,2.30 0 0 1 4.60 0 a 2.30,2.30 0 0 1 -4.60 0 z"
+        android:strokeWidth="0"/>
+</vector>
