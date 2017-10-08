@@ -76,13 +76,28 @@ abstract class AbstractBoardView : View {
         g.drawRect(RectF(0.toFloat(), 0.toFloat(), screenSize, screenSize), boardPaint)
 
         for (i in 0 until boardSize) {
-            val start = boardToScreen(0.0)
-            val end = boardToScreen((boardSize - 1).toDouble())
+            val start = boardToScreen(0.0) - lineWidth / 2.toFloat()
+            val end = boardToScreen((boardSize - 1).toDouble()) + lineWidth / 2.toFloat()
             val fixed = boardToScreen(i.toDouble())
-            val hpaint = if (i == lastY && lastX in 0 until boardSize) currentLinePaint else linePaint
-            val vpaint = if (i == lastX && lastY in 0 until boardSize) currentLinePaint else linePaint
-            g.drawLine(start, fixed, end, fixed, hpaint)
-            g.drawLine(fixed, start, fixed, end, vpaint)
+            if (i != lastY) {
+                g.drawLine(start, fixed, end, fixed, linePaint)
+            }
+            if (i != lastX) {
+                g.drawLine(fixed, start, fixed, end, linePaint)
+            }
+        }
+
+        if (lastX in 0 until boardSize) {
+            val startY = boardToScreen(0.0) + lineWidth / 2.toFloat()
+            val endY = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.toFloat()
+            val screenX = boardToScreen(lastX.toDouble())
+            g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+        }
+        if (lastY in 0 until boardSize) {
+            val startX = boardToScreen(0.0) + lineWidth / 2.toFloat()
+            val endX = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.toFloat()
+            val screenY = boardToScreen(lastY.toDouble())
+            g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
         }
 
         fun fillCircle(g: Canvas, x: Int, y: Int, radius: Double, paint: Paint) {
