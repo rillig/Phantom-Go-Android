@@ -202,6 +202,19 @@ class Board(val size: Int) : java.io.Serializable {
 
             todo.add(Point(x, y))
 
+            fun countInternal(nx: Int, ny: Int) {
+                if (nx in 0 until size && ny in 0 until size) {
+                    val np = Point(nx, ny)
+                    val neighbor = get(nx, ny)
+                    if (neighbor == color && !done.contains(np)) {
+                        todo.add(np)
+                    }
+                    if (neighbor == null) {
+                        liberties.add(np)
+                    }
+                }
+            }
+
             while (!todo.isEmpty()) {
                 val it = todo.iterator()
                 val point = it.next()
@@ -210,29 +223,10 @@ class Board(val size: Int) : java.io.Serializable {
 
                 val px = point.x
                 val py = point.y
-                if (px > 0) { // TODO: == floodfill?
-                    countInternal(px - 1, py)
-                }
-                if (py > 0) {
-                    countInternal(px, py - 1)
-                }
-                if (px < size - 1) {
-                    countInternal(px + 1, py)
-                }
-                if (py < size - 1) {
-                    countInternal(px, py + 1)
-                }
-            }
-        }
-
-        private fun countInternal(nx: Int, ny: Int) {
-            val np = Point(nx, ny)
-            val neighbor = get(nx, ny)
-            if (neighbor == color && !done.contains(np)) {
-                todo.add(np)
-            }
-            if (neighbor == null) {
-                liberties.add(np)
+                countInternal(px - 1, py)
+                countInternal(px + 1, py)
+                countInternal(px, py - 1)
+                countInternal(px, py + 1)
             }
         }
     }
