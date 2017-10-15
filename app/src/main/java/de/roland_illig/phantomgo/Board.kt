@@ -36,24 +36,21 @@ class Board(val size: Int) : java.io.Serializable {
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0 until size && y in 0 until size) {
             if (get(x, y) == turn && getLiberties(x, y) == 0) {
-                return capture(x, y, turn)
+                fun capture(x: Int, y: Int): Int {
+                    if (x in 0 until size && y in 0 until size && pieces[x][y] == turn) {
+                        pieces[x][y] = null
+                        return (1
+                                + capture(x - 1, y)
+                                + capture(x + 1, y)
+                                + capture(x, y - 1)
+                                + capture(x, y + 1))
+                    }
+                    return 0
+                }
+                return capture(x, y)
             }
         }
         return 0
-    }
-
-    private fun capture(x: Int, y: Int, color: Player): Int {
-        var captured = 1
-        pieces[x][y] = null
-        if (x > 0 && pieces[x - 1][y] == color)
-            captured += capture(x - 1, y, color)
-        if (x < size - 1 && pieces[x + 1][y] == color)
-            captured += capture(x + 1, y, color)
-        if (y > 0 && pieces[x][y - 1] == color)
-            captured += capture(x, y - 1, color)
-        if (y < size - 1 && pieces[x][y + 1] == color)
-            captured += capture(x, y + 1, color)
-        return captured
     }
 
     operator fun set(x: Int, y: Int, color: Player?) {
