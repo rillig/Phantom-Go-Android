@@ -68,27 +68,27 @@ class CountingBoard(board: Board) : java.io.Serializable {
         return chain
     }
 
-    private fun floodFill(`in`: Array<Array<Player?>>, out: Array<IntArray>, from: Player?, to: Int, x: Int, y: Int) {
-        if (0 <= x && x < out.size && 0 <= y && y < out.size) {
-            if (out[x][y] == 0 && `in`[x][y] == from) {
-                out[x][y] = to
-                floodFill(`in`, out, from, to, x - 1, y)
-                floodFill(`in`, out, from, to, x + 1, y)
-                floodFill(`in`, out, from, to, x, y - 1)
-                floodFill(`in`, out, from, to, x, y + 1)
+    private fun floodFill(input: Array<Array<Player?>>, output: Array<IntArray>, from: Player?, to: Int, x: Int, y: Int) {
+        if (x in 0 until output.size && y in 0 until output.size) {
+            if (output[x][y] == 0 && input[x][y] == from) {
+                output[x][y] = to
+                floodFill(input, output, from, to, x - 1, y)
+                floodFill(input, output, from, to, x + 1, y)
+                floodFill(input, output, from, to, x, y - 1)
+                floodFill(input, output, from, to, x, y + 1)
             }
         }
     }
 
-    private fun floodFillStep(`in`: Array<Array<Player?>>, out: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
-        if (x in 0 until out.size && y in 0 until out.size) {
-            if (!done[x][y] && (out[x][y] || `in`[x][y] == from)) {
+    private fun floodFillStep(input: Array<Array<Player?>>, output: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
+        if (x in 0 until output.size && y in 0 until output.size) {
+            if (!done[x][y] && (output[x][y] || input[x][y] == from)) {
                 done[x][y] = true
-                out[x][y] = true
-                floodFillStep(`in`, out, done, from, x - 1, y)
-                floodFillStep(`in`, out, done, from, x + 1, y)
-                floodFillStep(`in`, out, done, from, x, y - 1)
-                floodFillStep(`in`, out, done, from, x, y + 1)
+                output[x][y] = true
+                floodFillStep(input, output, done, from, x - 1, y)
+                floodFillStep(input, output, done, from, x + 1, y)
+                floodFillStep(input, output, done, from, x, y - 1)
+                floodFillStep(input, output, done, from, x, y + 1)
             }
         }
     }
