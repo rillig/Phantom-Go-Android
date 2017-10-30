@@ -162,9 +162,9 @@ class Board(val size: Int) : java.io.Serializable {
     }
 
     private fun parseChar(ch: Char): Player? {
-        if (ch == 'W') return Player.WHITE
-        if (ch == 'B') return Player.BLACK
-        if (ch == '.') return null
+        if (ch == 'O') return Player.WHITE
+        if (ch == 'X') return Player.BLACK
+        if (ch == '+') return null
         throw IllegalArgumentException(ch.toString())
     }
 
@@ -173,7 +173,7 @@ class Board(val size: Int) : java.io.Serializable {
         for (y in 0 until size) {
             for (x in 0 until size) {
                 val player = get(x, y)
-                sb.append(if (player != null) "BW"[player.ordinal] else '.')
+                sb.append(if (player != null) "XO"[player.ordinal] else '+')
                 sb.append(if (x == size - 1) "\n" else " ")
             }
         }

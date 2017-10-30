@@ -10,15 +10,15 @@ class BoardTest {
     fun testAtari() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . B . . . .",
-                ". . . B W . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + X + + + +",
+                "+ + + X O + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(5, 3)
 
@@ -29,15 +29,15 @@ class BoardTest {
     fun testSuicide() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . W . . . .",
-                ". . . W . W . . .",
-                ". . . . W . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + O + + + +",
+                "+ + + O + O + + +",
+                "+ + + + O + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(4, 3)
 
@@ -48,15 +48,15 @@ class BoardTest {
     fun testGetLiberties() {
         val board = Board(9)
         board.setup(
-                "B . . B . . . . .",
-                ". . . . . B . . .",
-                ". . . . . . . . .",
-                ". . B B . B B B .",
-                "B . . . . B . B .",
-                "B B . . . B B B .",
-                ". B B . . . . . .",
-                ". . B B . . . . .",
-                ". . . B . . . . .")
+                "X + + X + + + + +",
+                "+ + + + + X + + +",
+                "+ + + + + + + + +",
+                "+ + X X + X X X +",
+                "X + + + + X + X +",
+                "X X + + + X X X +",
+                "+ X X + + + + + +",
+                "+ + X X + + + + +",
+                "+ + + X + + + + +")
 
         assertThat(board.getLiberties(0, 0), eq(2))
         assertThat(board.getLiberties(3, 0), eq(3))
@@ -70,15 +70,15 @@ class BoardTest {
     fun testCaptureOneStone() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . B . . . .",
-                ". . . B W . . . .",
-                ". . . . B . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + X + + + +",
+                "+ + + X O + + + +",
+                "+ + + + X + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(5, 4)
 
@@ -86,30 +86,30 @@ class BoardTest {
         assertThat(board.getCaptured(Player.BLACK), eq(1))
         assertThat(board.getCaptured(Player.WHITE), eq(0))
         assertThat(board.toString(), eq(""
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . B . . . .\n"
-                + ". . . B . B . . .\n"
-                + ". . . . B . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"))
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + X + + + +\n"
+                + "+ + + X + X + + +\n"
+                + "+ + + + X + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"))
     }
 
     @Test
     fun testCaptureSnake() {
         val board = Board(9)
         board.setup(
-                "W W W W W W W W W",
-                "B B B B B B B B W",
-                "W W W W W W W B W",
-                "W B B B B B W B W",
-                "W B W W . B W B W",
-                "W B W B B B W B W",
-                "W B W W W W W B W",
-                "W B B B B B B B W",
-                "W W W W W W W W W")
+                "O O O O O O O O O",
+                "X X X X X X X X O",
+                "O O O O O O O X O",
+                "O X X X X X O X O",
+                "O X O O + X O X O",
+                "O X O X X X O X O",
+                "O X O O O O O X O",
+                "O X X X X X X X O",
+                "O O O O O O O O O")
 
         board.copy().also { board ->
             val result = board.play(4, 4)
@@ -118,15 +118,15 @@ class BoardTest {
             assertThat(board.getCaptured(Player.BLACK), eq(48))
             assertThat(board.getCaptured(Player.WHITE), eq(0))
             assertThat(board.toString(), eq(""
-                    + ". . . . . . . . .\n"
-                    + "B B B B B B B B .\n"
-                    + ". . . . . . . B .\n"
-                    + ". B B B B B . B .\n"
-                    + ". B . . B B . B .\n"
-                    + ". B . B B B . B .\n"
-                    + ". B . . . . . B .\n"
-                    + ". B B B B B B B .\n"
-                    + ". . . . . . . . .\n"))
+                    + "+ + + + + + + + +\n"
+                    + "X X X X X X X X +\n"
+                    + "+ + + + + + + X +\n"
+                    + "+ X X X X X + X +\n"
+                    + "+ X + + X X + X +\n"
+                    + "+ X + X X X + X +\n"
+                    + "+ X + + + + + X +\n"
+                    + "+ X X X X X X X +\n"
+                    + "+ + + + + + + + +\n"))
         }
 
         board.copy().also { board ->
@@ -137,15 +137,15 @@ class BoardTest {
             assertThat(board.getCaptured(Player.BLACK), eq(0))
             assertThat(board.getCaptured(Player.WHITE), eq(32))
             assertThat(board.toString(), eq(""
-                    + "W W W W W W W W W\n"
-                    + ". . . . . . . . W\n"
-                    + "W W W W W W W . W\n"
-                    + "W . . . . . W . W\n"
-                    + "W . W W W . W . W\n"
-                    + "W . W . . . W . W\n"
-                    + "W . W W W W W . W\n"
-                    + "W . . . . . . . W\n"
-                    + "W W W W W W W W W\n"))
+                    + "O O O O O O O O O\n"
+                    + "+ + + + + + + + O\n"
+                    + "O O O O O O O + O\n"
+                    + "O + + + + + O + O\n"
+                    + "O + O O O + O + O\n"
+                    + "O + O + + + O + O\n"
+                    + "O + O O O O O + O\n"
+                    + "O + + + + + + + O\n"
+                    + "O O O O O O O O O\n"))
         }
     }
 
@@ -153,15 +153,15 @@ class BoardTest {
     fun testCaptureInKo() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . B . . .",
-                ". . . . B W . . .",
-                ". . . B W . W . .",
-                ". . . . B W . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + X + + +",
+                "+ + + + X O + + +",
+                "+ + + X O + O + +",
+                "+ + + + X O + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(5, 4)
 
@@ -172,15 +172,15 @@ class BoardTest {
     fun testSelfAtari() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . W .",
-                ". . . . . . W B W",
-                ". . . . . . W B B",
-                ". . . . . . . W .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + O +",
+                "+ + + + + + O X O",
+                "+ + + + + + O X X",
+                "+ + + + + + + O +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(8, 0)
 
@@ -191,15 +191,15 @@ class BoardTest {
     fun testKo() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . W B . . . .",
-                ". . W . . B . . .",
-                ". . . W B . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + O X + + + +",
+                "+ + O + + X + + +",
+                "+ + + O X + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(3, 4)
 
@@ -218,15 +218,15 @@ class BoardTest {
     fun testStayInAtari() {
         val board = Board(9)
         board.setup(
-                ". . . . . . . W B",
-                ". . . . . . . W .",
-                ". . . . . . . W .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .",
-                ". . . . . . . . .")
+                "+ + + + + + + O X",
+                "+ + + + + + + O +",
+                "+ + + + + + + O +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +",
+                "+ + + + + + + + +")
 
         val result = board.play(8, 1)
 

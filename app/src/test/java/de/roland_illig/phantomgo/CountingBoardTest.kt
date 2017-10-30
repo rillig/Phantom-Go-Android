@@ -10,15 +10,15 @@ class CountingBoardTest {
     fun testCountSimple() {
         val board = Board(9)
         board.setup(
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .",
-                ". . B . . W . . .")
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +",
+                "+ + X + + O + + +")
 
         val countingBoard = CountingBoard(board)
 
@@ -44,15 +44,15 @@ class CountingBoardTest {
     fun testCountBeforeMarkingDeadStones() {
         val board = Board(9)
         board.setup(
-                "B . . . W W B . .",
-                "B W . W W B B . .",
-                "B W . W B B B . .",
-                "W W W W W B . . .",
-                "B B W B B B . . .",
-                ". B B W W B B B B",
-                "B B W . W W B W W",
-                ". B W W . W W B .",
-                ". B W . . . W B .")
+                "X + + + O O X + +",
+                "X O + O O X X + +",
+                "X O + O X X X + +",
+                "O O O O O X + + +",
+                "X X O X X X + + +",
+                "+ X X O O X X X X",
+                "X X O + O O X O O",
+                "+ X O O + O O X +",
+                "+ X O + + + O X +")
 
         val countingBoard = CountingBoard(board)
 
@@ -75,15 +75,15 @@ class CountingBoardTest {
     fun testCountAfterMarkingDeadStones() {
         val board = Board(9)
         board.setup(
-                "B . . . W W B . .",
-                "B W . W W B B . .",
-                "B W . W B B B . .",
-                "W W W W W B . . .",
-                "B B W B B B . . .",
-                ". B B W W B B B B",
-                "B B W . W W B W W",
-                ". B W W . W W B .",
-                ". B W . . . W B .")
+                "X + + + O O X + +",
+                "X O + O O X X + +",
+                "X O + O X X X + +",
+                "O O O O O X + + +",
+                "X X O X X X + + +",
+                "+ X X O O X X X X",
+                "X X O + O O X O O",
+                "+ X O O + O O X +",
+                "+ X O + + + O X +")
 
         val countingBoard = CountingBoard(board)
         countingBoard.toggleDead(0, 0)
@@ -93,30 +93,30 @@ class CountingBoardTest {
         assertThat(result.toString(), eq("black=19+2, white=13+3"))
 
         assertThat(countingBoard.toString(), eq(""
-                + "# w w w W W B b b\n"
-                + "# W w W W B B b b\n"
-                + "# W w W B B B b b\n"
-                + "W W W W W B b b b\n"
-                + "B B W B B B b b b\n"
-                + "b B B W W B B B B\n"
-                + "B B W w W W B # #\n"
-                + "b B W W w W W B b\n"
-                + "b B W w w w W B b\n"))
+                + "# o o o O O X x x\n"
+                + "# O o O O X X x x\n"
+                + "# O o O X X X x x\n"
+                + "O O O O O X x x x\n"
+                + "X X O X X X x x x\n"
+                + "x X X O O X X X X\n"
+                + "X X O o O O X # #\n"
+                + "x X O O o O O X x\n"
+                + "x X O o o o O X x\n"))
     }
 
     @Test
     fun testBoardViewAfterMarkingDeadStones() {
         val board = Board(9)
         board.setup(
-                "B . . . W W B . .",
-                "B W . W W B B . .",
-                "B W . W B B B . .",
-                "W W W W W B . . .",
-                "B B W B B B . . .",
-                ". B B W W B B B B",
-                "B B W . W W B W W",
-                ". B W W . W W B .",
-                ". B W . . . W B .")
+                "X + + + O O X + +",
+                "X O + O O X X + +",
+                "X O + O X X X + +",
+                "O O O O O X + + +",
+                "X X O X X X + + +",
+                "+ X X O O X X X X",
+                "X X O + O O X O O",
+                "+ X O O + O O X +",
+                "+ X O + + + O X +")
 
         val countingBoard = CountingBoard(board)
         countingBoard.toggleDead(0, 0)
@@ -130,41 +130,41 @@ class CountingBoardTest {
     fun testToggleDead() {
         val board = Board(9)
         board.setup(
-                "W . . B . . . . W",
-                ". . B . . . . W .",
-                ". B . . . . W . .",
-                "B . . . . W . . .",
-                ". . . . W . . . .",
-                ". . . W . . . . B",
-                ". . W . . . . B .",
-                ". W . . . . B . .",
-                "W . . . . B . . W")
+                "O + + X + + + + O",
+                "+ + X + + + + O +",
+                "+ X + + + + O + +",
+                "X + + + + O + + +",
+                "+ + + + O + + + +",
+                "+ + + O + + + + X",
+                "+ + O + + + + X +",
+                "+ O + + + + X + +",
+                "O + + + + X + + O")
         val countingBoard = CountingBoard(board)
 
         countingBoard.toggleDead(0, 8)
 
         assertThat(countingBoard.toString(), eq(""
-                + "W . . B b b b b #\n"
-                + ". . B b b b b # b\n"
-                + ". B b b b b # b b\n"
-                + "B b b b b # b b b\n"
-                + "b b b b # b b b b\n"
-                + "b b b # b b b b B\n"
-                + "b b # b b b b B .\n"
-                + "b # b b b b B . .\n"
-                + "# b b b b B . . W\n"))
+                + "O + + X x x x x #\n"
+                + "+ + X x x x x # x\n"
+                + "+ X x x x x # x x\n"
+                + "X x x x x # x x x\n"
+                + "x x x x # x x x x\n"
+                + "x x x # x x x x X\n"
+                + "x x # x x x x X +\n"
+                + "x # x x x x X + +\n"
+                + "# x x x x X + + O\n"))
 
         countingBoard.toggleDead(0, 8)
 
         assertThat(countingBoard.toString(), eq(""
-                + "W . . B . . . . W\n"
-                + ". . B . . . . W .\n"
-                + ". B . . . . W . .\n"
-                + "B . . . . W . . .\n"
-                + ". . . . W . . . .\n"
-                + ". . . W . . . . B\n"
-                + ". . W . . . . B .\n"
-                + ". W . . . . B . .\n"
-                + "W . . . . B . . W\n"))
+                + "O + + X + + + + O\n"
+                + "+ + X + + + + O +\n"
+                + "+ X + + + + O + +\n"
+                + "X + + + + O + + +\n"
+                + "+ + + + O + + + +\n"
+                + "+ + + O + + + + X\n"
+                + "+ + O + + + + X +\n"
+                + "+ O + + + + X + +\n"
+                + "O + + + + X + + O\n"))
     }
 }

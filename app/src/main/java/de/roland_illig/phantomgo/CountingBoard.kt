@@ -204,9 +204,9 @@ class CountingBoard(board: Board) : java.io.Serializable {
         for (y in 0 until size) {
             for (x in 0 until size) {
                 when (territory[x][y]) {
-                    Player.WHITE -> sb.append(if (dead[x][y]) '#' else 'w')
-                    Player.BLACK -> sb.append(if (dead[x][y]) '#' else 'b')
-                    else -> sb.append(if (color[x][y] != null) "BW"[color[x][y]!!.ordinal] else '.')
+                    Player.WHITE -> sb.append(if (dead[x][y]) '#' else 'o')
+                    Player.BLACK -> sb.append(if (dead[x][y]) '#' else 'x')
+                    else -> sb.append(if (color[x][y] != null) "XO"[color[x][y]!!.ordinal] else '+')
                 }
                 sb.append(if (x == size - 1) "\n" else " ")
             }

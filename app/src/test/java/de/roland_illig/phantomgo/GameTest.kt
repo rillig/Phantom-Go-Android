@@ -52,29 +52,29 @@ class GameTest {
 
         // White still thinks his stones are on the board.
         assertThat(game.whiteBoard.toString(), eq(""
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + "W . . . . . . . .\n"
-                + "W W . . . . . . .\n"))
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "O + + + + + + + +\n"
+                + "O O + + + + + + +\n"))
 
         // Since the referee said "Black captured 3 stones" and a referee
         // looking at Black's board whould have said the same, it was
         // played there also, removing the 3 white stones.
         assertThat(game.blackBoard.toString(), eq(""
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + ". . . . . . . . .\n"
-                + "B . . . . . . . .\n"
-                + ". B B . . . . . .\n"
-                + ". . B . . . . . .\n"))
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "+ + + + + + + + +\n"
+                + "X + + + + + + + +\n"
+                + "+ X X + + + + + +\n"
+                + "+ + X + + + + + +\n"))
     }
 
     private fun playMoves(game: Game, moves: String): RefereeResult {
