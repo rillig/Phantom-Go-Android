@@ -48,22 +48,24 @@ class BoardTest {
     fun testGetLiberties() {
         val board = Board(9)
         board.setup(
-                "X + + X + + + + +",
+                "X + + X + + X + +",
                 "+ + + + + X + + +",
                 "+ + + + + + + + +",
                 "+ + X X + X X X +",
                 "X + + + + X + X +",
                 "X X + + + X X X +",
                 "+ X X + + + + + +",
-                "+ + X X + + + + +",
-                "+ + + X + + + + +")
+                "+ + X X + + O + +",
+                "+ + + X + O X + +")
 
         assertThat(board.getLiberties(0, 0), eq(2))
+        assertThat(board.getLiberties(1, 0), eq(-1))
         assertThat(board.getLiberties(3, 0), eq(3))
         assertThat(board.getLiberties(5, 1), eq(4))
         assertThat(board.getLiberties(2, 3), eq(6))
         assertThat(board.getLiberties(5, 3), eq(13))
         assertThat(board.getLiberties(3, 8), eq(9))
+        assertThat(board.getLiberties(6, 8), eq(1))
     }
 
     @Test
