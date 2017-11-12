@@ -11,15 +11,15 @@ import de.roland_illig.phantomgo.Referee
 class PlayerBoardView : AbstractBoardView {
 
     internal var mode = R.id.playButton
-    private var game: Game? = null
+    private lateinit var game: Game
 
-    private fun getBoard() = game!!.playerBoard()
+    private fun getBoard() = game.playerBoard()
 
     private fun setRefereeText(text: CharSequence) {
         findParentView<TextView>(R.id.referee).text = text
     }
 
-    override val boardSize get() = game!!.size
+    override val boardSize get() = game.size
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
@@ -44,7 +44,6 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     private fun onPlayModeClick(x: Int, y: Int) {
-        val game = game!!
         if (game.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
@@ -55,7 +54,6 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     fun pass() {
-        val game = game!!
         if (game.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
@@ -66,7 +64,6 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     private fun updateViews() {
-        val game = game!!
         val last = game.refereeHistory.lastOrNull()
         if (last != null) {
             setRefereeText(Referee.comment(last.result, last.player, resources))

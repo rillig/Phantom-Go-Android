@@ -7,7 +7,7 @@ import de.roland_illig.phantomgo.Game
 
 class CentralActivity : AppCompatActivity() {
 
-    private var game: Game? = null
+    private lateinit var game: Game
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +21,8 @@ class CentralActivity : AppCompatActivity() {
 
     fun onPlayClick(view: View) {
         when {
-            game!!.isGameOver -> CountingActivity.start(this)
-            game!!.isInitial -> PlayerActivity.start(this)
+            game.isGameOver -> CountingActivity.start(this)
+            game.isInitial -> PlayerActivity.start(this)
             else -> HandOverActivity.start(this)
         }
     }

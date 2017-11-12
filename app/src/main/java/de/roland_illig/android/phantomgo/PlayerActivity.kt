@@ -10,7 +10,7 @@ import de.roland_illig.phantomgo.Player
 
 class PlayerActivity : AppCompatActivity() {
 
-    private var game: Game? = null
+    private lateinit var game: Game
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        Persistence.save(this, game!!)
+        Persistence.save(this, game)
     }
 
     fun onToolClick(view: View) {
@@ -40,10 +40,10 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     fun onContinueClick(view: View) {
-        if (game!!.isGameOver) {
+        if (game.isGameOver) {
             CountingActivity.start(this)
         } else {
-            game!!.finishMove()
+            game.finishMove()
             HandOverActivity.start(this)
         }
         finish()

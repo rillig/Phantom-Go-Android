@@ -9,7 +9,7 @@ import de.roland_illig.phantomgo.Game
 
 class CountingActivity : AppCompatActivity() {
 
-    private var game: Game? = null
+    private lateinit var game: Game
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,7 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        Persistence.save(this, game!!)
+        Persistence.save(this, game)
     }
 
     fun onFinishClick(view: View) {
