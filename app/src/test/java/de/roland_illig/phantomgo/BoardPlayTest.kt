@@ -1,6 +1,6 @@
 package de.roland_illig.phantomgo
 
-import org.junit.Assert.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class BoardPlayTest {
@@ -219,11 +219,12 @@ class BoardPlayTest {
 
     private fun assertPlay(x: Int, y: Int, expectedResult: String) {
         val result = board.play(x, y)
-        assertEquals(expectedResult, result.toString())
+        assertThat(result.toString()).isEqualTo(expectedResult)
     }
 
     private fun assertBoard(vararg expectedRows: String) {
-        assertEquals(expectedRows.reduce { acc, s -> acc + "\n" + s } + "\n", board.toString())
+        assertThat(board.toString())
+                .isEqualTo(expectedRows.reduce { acc, s -> acc + "\n" + s } + "\n")
     }
 
     private fun setupBoard(vararg setupRows: String) {
