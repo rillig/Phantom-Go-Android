@@ -1,8 +1,8 @@
 package de.roland_illig.phantomgo
 
-import org.junit.Assert.assertThat
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.hamcrest.CoreMatchers.`is` as eq
 
 class BoardTest {
 
@@ -22,7 +22,7 @@ class BoardTest {
 
         val result = board.play(5, 3)
 
-        assertThat(result.toString(), eq("atari"))
+        assertThat(result.toString()).isEqualTo("atari")
     }
 
     @Test
@@ -41,7 +41,7 @@ class BoardTest {
 
         val result = board.play(4, 3)
 
-        assertThat(result.toString(), eq("suicide"))
+        assertThat(result.toString()).isEqualTo("suicide")
     }
 
     @Test
@@ -58,14 +58,16 @@ class BoardTest {
                 "+ + X X + + O + +",
                 "+ + + X + O X + +")
 
-        assertThat(board.getLiberties(0, 0), eq(2))
-        assertThat(board.getLiberties(1, 0), eq(-1))
-        assertThat(board.getLiberties(3, 0), eq(3))
-        assertThat(board.getLiberties(5, 1), eq(4))
-        assertThat(board.getLiberties(2, 3), eq(6))
-        assertThat(board.getLiberties(5, 3), eq(13))
-        assertThat(board.getLiberties(3, 8), eq(9))
-        assertThat(board.getLiberties(6, 8), eq(1))
+        assertThat(board.getLiberties(0, 0)).isEqualTo(2)
+        assertThat(board.getLiberties(3, 0)).isEqualTo(3)
+        assertThat(board.getLiberties(5, 1)).isEqualTo(4)
+        assertThat(board.getLiberties(2, 3)).isEqualTo(6)
+        assertThat(board.getLiberties(5, 3)).isEqualTo(13)
+        assertThat(board.getLiberties(3, 8)).isEqualTo(9)
+        assertThat(board.getLiberties(6, 8)).isEqualTo(1)
+
+        assertThatThrownBy { board.getLiberties(1, 0) }
+                .isInstanceOf(KotlinNullPointerException::class.java)
     }
 
     @Test
@@ -84,10 +86,10 @@ class BoardTest {
 
         val result = board.play(5, 4)
 
-        assertThat(result.toString(), eq("captured 1"))
-        assertThat(board.getCaptured(Player.BLACK), eq(1))
-        assertThat(board.getCaptured(Player.WHITE), eq(0))
-        assertThat(board.toString(), eq(""
+        assertThat(result.toString()).isEqualTo("captured 1")
+        assertThat(board.getCaptured(Player.BLACK)).isEqualTo(1)
+        assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
+        assertThat(board.toString()).isEqualTo(""
                 + "+ + + + + + + + +\n"
                 + "+ + + + + + + + +\n"
                 + "+ + + + + + + + +\n"
@@ -96,7 +98,7 @@ class BoardTest {
                 + "+ + + + X + + + +\n"
                 + "+ + + + + + + + +\n"
                 + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"))
+                + "+ + + + + + + + +\n")
     }
 
     @Test
@@ -116,10 +118,10 @@ class BoardTest {
         board.copy().also { board ->
             val result = board.play(4, 4)
 
-            assertThat(result.toString(), eq("captured 48"))
-            assertThat(board.getCaptured(Player.BLACK), eq(48))
-            assertThat(board.getCaptured(Player.WHITE), eq(0))
-            assertThat(board.toString(), eq(""
+            assertThat(result.toString()).isEqualTo("captured 48")
+            assertThat(board.getCaptured(Player.BLACK)).isEqualTo(48)
+            assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
+            assertThat(board.toString()).isEqualTo(""
                     + "+ + + + + + + + +\n"
                     + "X X X X X X X X +\n"
                     + "+ + + + + + + X +\n"
@@ -128,17 +130,17 @@ class BoardTest {
                     + "+ X + X X X + X +\n"
                     + "+ X + + + + + X +\n"
                     + "+ X X X X X X X +\n"
-                    + "+ + + + + + + + +\n"))
+                    + "+ + + + + + + + +\n")
         }
 
         board.copy().also { board ->
             board.turn = Player.WHITE
             val result = board.play(4, 4)
 
-            assertThat(result.toString(), eq("captured 32"))
-            assertThat(board.getCaptured(Player.BLACK), eq(0))
-            assertThat(board.getCaptured(Player.WHITE), eq(32))
-            assertThat(board.toString(), eq(""
+            assertThat(result.toString()).isEqualTo("captured 32")
+            assertThat(board.getCaptured(Player.BLACK)).isEqualTo(0)
+            assertThat(board.getCaptured(Player.WHITE)).isEqualTo(32)
+            assertThat(board.toString()).isEqualTo(""
                     + "O O O O O O O O O\n"
                     + "+ + + + + + + + O\n"
                     + "O O O O O O O + O\n"
@@ -147,7 +149,7 @@ class BoardTest {
                     + "O + O + + + O + O\n"
                     + "O + O O O O O + O\n"
                     + "O + + + + + + + O\n"
-                    + "O O O O O O O O O\n"))
+                    + "O O O O O O O O O\n")
         }
     }
 
@@ -167,7 +169,7 @@ class BoardTest {
 
         val result = board.play(5, 4)
 
-        assertThat(result.toString(), eq("atari, selfAtari, captured 1"))
+        assertThat(result.toString()).isEqualTo("atari, selfAtari, captured 1")
     }
 
     @Test
@@ -186,7 +188,7 @@ class BoardTest {
 
         val result = board.play(8, 0)
 
-        assertThat(result.toString(), eq("atari, selfAtari, captured 1"))
+        assertThat(result.toString()).isEqualTo("atari, selfAtari, captured 1")
     }
 
     @Test
@@ -205,15 +207,15 @@ class BoardTest {
 
         val result = board.play(3, 4)
 
-        assertThat(result.toString(), eq("selfAtari"))
+        assertThat(result.toString()).isEqualTo("selfAtari")
 
         val capture = board.play(4, 4)
 
-        assertThat(capture.toString(), eq("selfAtari, captured 1"))
+        assertThat(capture.toString()).isEqualTo("selfAtari, captured 1")
 
         val ko = board.play(3, 4)
 
-        assertThat(ko.toString(), eq("ko"))
+        assertThat(ko.toString()).isEqualTo("ko")
     }
 
     @Test
@@ -232,6 +234,6 @@ class BoardTest {
 
         val result = board.play(8, 1)
 
-        assertThat(result.toString(), eq("ok"))
+        assertThat(result.toString()).isEqualTo("ok")
     }
 }
