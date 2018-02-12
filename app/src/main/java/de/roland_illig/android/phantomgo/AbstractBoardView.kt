@@ -8,6 +8,14 @@ import android.util.AttributeSet
 import android.view.View
 import de.roland_illig.phantomgo.Player
 
+/**
+ * Handles drawing of a Go board and translates click coordinates to board coordinates.
+ *
+ * Subclasses must implement [boardSize], [getBoard] and [onBoardClicked].
+ *
+ * The [AbstractBoardView.Cell] returned by [getBoard] contains all information necessary
+ * for drawing the given intersection. The actual drawing is done by this class.
+ */
 abstract class AbstractBoardView : View {
 
     private var lastX = -1

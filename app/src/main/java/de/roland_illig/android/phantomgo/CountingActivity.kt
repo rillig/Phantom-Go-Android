@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import de.roland_illig.phantomgo.Game
 
+/** After a game has ended, the players mark and remove the dead stones and count the points. */
 class CountingActivity : AppCompatActivity() {
 
     private lateinit var game: Game

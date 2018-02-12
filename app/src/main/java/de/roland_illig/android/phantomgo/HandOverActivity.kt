@@ -14,6 +14,11 @@ import de.roland_illig.phantomgo.Game
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 
+/**
+ * After playing a move, the player's board is hidden and the device
+ * is handed over to the other player. During this, neither board must
+ * be visible to avoid kibitzing.
+ */
 class HandOverActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

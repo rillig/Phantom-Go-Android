@@ -8,6 +8,11 @@ import android.view.View
 import de.roland_illig.phantomgo.Game
 import de.roland_illig.phantomgo.Player
 
+/**
+ * It's one of the players' turn.
+ * The current player can either play or take notes on the board by
+ * placing black and white stones.
+ */
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var game: Game
