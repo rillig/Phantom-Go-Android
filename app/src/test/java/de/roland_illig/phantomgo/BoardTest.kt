@@ -4,24 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 
-fun Board.setup(vararg rows: String) {
-    fun parseChar(ch: Char): Player? {
-        return when (ch) {
-            'O' -> Player.WHITE
-            'X' -> Player.BLACK
-            '+' -> null
-            else -> throw IllegalArgumentException(ch.toString())
-        }
-    }
-
-    for (y in 0 until size) {
-        for (x in 0 until size) {
-            val ch = rows[y][2 * x]
-            this[x, y] = parseChar(ch)
-        }
-    }
-}
-
 class BoardTest {
 
     @Test
@@ -253,5 +235,21 @@ class BoardTest {
         val result = board.play(8, 1)
 
         assertThat(result.toString()).isEqualTo("ok")
+    }
+}
+
+fun Board.setup(vararg rows: String) {
+    fun parseChar(ch: Char) = when (ch) {
+        'O' -> Player.WHITE
+        'X' -> Player.BLACK
+        '+' -> null
+        else -> throw IllegalArgumentException(ch.toString())
+    }
+
+    for (y in 0 until size) {
+        for (x in 0 until size) {
+            val ch = rows[y][2 * x]
+            this[x, y] = parseChar(ch)
+        }
     }
 }

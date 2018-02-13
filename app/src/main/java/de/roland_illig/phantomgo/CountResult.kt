@@ -8,7 +8,7 @@ class CountResult(
     val blackScore: Int = blackTerritory + blackCaptured
     val whiteScore: Int = whiteTerritory + whiteCaptured
 
-    override fun toString(): String = "" +
-            "black=" + blackTerritory + "+" + blackCaptured + ", " +
-            "white=" + whiteTerritory + "+" + whiteCaptured
+    override fun toString() = "" +
+            "black=$blackTerritory+$blackCaptured, " +
+            "white=$whiteTerritory+$whiteCaptured"
 }

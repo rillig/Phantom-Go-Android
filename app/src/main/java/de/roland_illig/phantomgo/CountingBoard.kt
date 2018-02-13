@@ -159,11 +159,12 @@ class CountingBoard(board: Board) : java.io.Serializable {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                when (territory[x][y]) {
-                    Player.WHITE -> sb.append(if (dead[x][y]) '#' else 'o')
-                    Player.BLACK -> sb.append(if (dead[x][y]) '#' else 'x')
-                    else -> sb.append(if (color[x][y] != null) "XO"[color[x][y]!!.ordinal] else '+')
-                }
+                sb.append(when  {
+                    dead[x][y] -> '#'
+                    territory[x][y] != null -> "xo"[territory[x][y]!!.ordinal]
+                    color[x][y] != null -> "XO"[color[x][y]!!.ordinal]
+                    else -> '+'
+                })
                 sb.append(if (x == size - 1) "\n" else " ")
             }
         }

@@ -1,13 +1,12 @@
 package de.roland_illig.phantomgo
 
-import android.support.annotation.VisibleForTesting
 import java.util.HashSet
 
 class Board(val size: Int) : java.io.Serializable {
 
     private val nowhere = Point(-1, -1)
 
-    private val pieces = Array(size) { arrayOfNulls<Player>(size) }
+    private val pieces = Array(size) { Array<Player?>(size) { null } }
     private val captured = IntArray(2)
     var turn = Player.BLACK
     private var prevMove = nowhere
@@ -36,6 +35,7 @@ class Board(val size: Int) : java.io.Serializable {
     private fun captureCount(x: Int, y: Int, turn: Player): Int {
         if (x in 0 until size && y in 0 until size) {
             if (get(x, y) == turn && getLiberties(x, y) == 0) {
+
                 fun capture(x: Int, y: Int): Int {
                     if (x in 0 until size && y in 0 until size && pieces[x][y] == turn) {
                         pieces[x][y] = null
@@ -47,6 +47,7 @@ class Board(val size: Int) : java.io.Serializable {
                     }
                     return 0
                 }
+
                 return capture(x, y)
             }
         }
@@ -77,11 +78,11 @@ class Board(val size: Int) : java.io.Serializable {
                     && get(x, y) == color && getLiberties(x, y) == 1
         }
 
-        val selfAtariBefore = (false
+        val selfAtariBefore = false
                 || atari(x - 1, y, turn)
                 || atari(x + 1, y, turn)
                 || atari(x, y - 1, turn)
-                || atari(x, y + 1, turn))
+                || atari(x, y + 1, turn)
 
         val leftBefore = atari(x - 1, y, other)
         val rightBefore = atari(x + 1, y, other)
@@ -105,11 +106,11 @@ class Board(val size: Int) : java.io.Serializable {
                 return RefereeResult.suicide()
             }
 
-            val atari = (false
+            val atari = false
                     || !leftBefore && atari(x - 1, y, other)
                     || !rightBefore && atari(x + 1, y, other)
                     || !aboveBefore && atari(x, y - 1, other)
-                    || !belowBefore && atari(x, y + 1, other))
+                    || !belowBefore && atari(x, y + 1, other)
 
             val capturedStones = (0
                     + captureCount(x - 1, y, other)

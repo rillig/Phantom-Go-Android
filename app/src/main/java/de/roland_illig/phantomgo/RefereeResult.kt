@@ -10,10 +10,10 @@ class RefereeResult private constructor(
     override fun toString(): String {
         if (invalidReason != null) {
             return when (invalidReason) {
-                RefereeResult.InvalidReason.OWN_STONE -> "ownStone"
-                RefereeResult.InvalidReason.OTHER_STONE -> "otherStone"
-                RefereeResult.InvalidReason.SUICIDE -> "suicide"
-                RefereeResult.InvalidReason.KO -> "ko"
+                InvalidReason.OWN_STONE -> "ownStone"
+                InvalidReason.OTHER_STONE -> "otherStone"
+                InvalidReason.SUICIDE -> "suicide"
+                InvalidReason.KO -> "ko"
             }
         }
 
@@ -24,20 +24,10 @@ class RefereeResult private constructor(
             return "ok"
         }
 
-        var str = ""
-        var sep = ""
-        if (atari) {
-            str = "atari"
-            sep = ", "
-        }
-        if (selfAtari) {
-            str += sep + "selfAtari"
-            sep = ", "
-        }
-        if (capturedStones > 0) {
-            str += sep + "captured " + capturedStones
-        }
-        return str
+        val atariStr = if (atari) "atari" else ""
+        val selfAtariStr = if (selfAtari) "selfAtari" else ""
+        val capturedStr = if (capturedStones > 0) "captured $capturedStones" else ""
+        return listOf(atariStr, selfAtariStr, capturedStr).filter { it != "" }.joinToString()
     }
 
     enum class InvalidReason {
