@@ -1,11 +1,8 @@
 package de.roland_illig.phantomgo
 
-import android.support.annotation.VisibleForTesting
-
 class CountingBoard(board: Board) : java.io.Serializable {
-    private val size = board.size
+    val size = board.size
     private val color: Array<Array<Player?>>
-    private val region: Array<IntArray>
     private val dead: Array<BooleanArray>
     private val territory: Array<Array<Player?>>
     private var countResult: CountResult? = null
@@ -14,9 +11,8 @@ class CountingBoard(board: Board) : java.io.Serializable {
 
     init {
         this.color = initPieces(board)
-        this.region = initRegion(color)
         this.dead = Array(size) { BooleanArray(size) }
-        this.territory = Array(size) { arrayOfNulls<Player?>(size) }
+        this.territory = Array(size) { Array<Player?>(size) { null } }
         this.blackCaptured = board.getCaptured(Player.BLACK)
         this.whiteCaptured = board.getCaptured(Player.WHITE)
     }
@@ -53,33 +49,6 @@ class CountingBoard(board: Board) : java.io.Serializable {
         return pieces
     }
 
-    private fun initRegion(pieces: Array<Array<Player?>>): Array<IntArray> {
-        val size = pieces.size
-        val chain = Array(size) { IntArray(size) }
-        var id = 1
-        for (y in 0 until size) {
-            for (x in 0 until size) {
-                if (chain[x][y] == 0) {
-                    floodFill(pieces, chain, pieces[x][y], id, x, y)
-                    id++
-                }
-            }
-        }
-        return chain
-    }
-
-    private fun floodFill(input: Array<Array<Player?>>, output: Array<IntArray>, from: Player?, to: Int, x: Int, y: Int) {
-        if (x in 0 until output.size && y in 0 until output.size) {
-            if (output[x][y] == 0 && input[x][y] == from) {
-                output[x][y] = to
-                floodFill(input, output, from, to, x - 1, y)
-                floodFill(input, output, from, to, x + 1, y)
-                floodFill(input, output, from, to, x, y - 1)
-                floodFill(input, output, from, to, x, y + 1)
-            }
-        }
-    }
-
     private fun floodFillStep(input: Array<Array<Player?>>, output: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
         if (x in 0 until output.size && y in 0 until output.size) {
             if (!done[x][y] && (output[x][y] || input[x][y] == from)) {
@@ -91,19 +60,6 @@ class CountingBoard(board: Board) : java.io.Serializable {
                 floodFillStep(input, output, done, from, x, y + 1)
             }
         }
-    }
-
-    @VisibleForTesting
-    fun regionsToString(): String {
-        val alphabet = "0123456789" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz"
-        val sb = StringBuilder()
-        for (y in 0 until size) {
-            for (x in 0 until size) {
-                sb.append(alphabet[region[x][y] % alphabet.length])
-                sb.append(if (x == size - 1) "\n" else " ")
-            }
-        }
-        return sb.toString()
     }
 
     fun count(): CountResult {

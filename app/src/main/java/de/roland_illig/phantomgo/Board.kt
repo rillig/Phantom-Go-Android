@@ -151,23 +151,6 @@ class Board(val size: Int) : java.io.Serializable {
         }
     }
 
-    @VisibleForTesting
-    fun setup(vararg rows: String) {
-        for (y in 0 until size) {
-            for (x in 0 until size) {
-                val ch = rows[y][2 * x]
-                pieces[x][y] = parseChar(ch)
-            }
-        }
-    }
-
-    private fun parseChar(ch: Char): Player? {
-        if (ch == 'O') return Player.WHITE
-        if (ch == 'X') return Player.BLACK
-        if (ch == '+') return null
-        throw IllegalArgumentException(ch.toString())
-    }
-
     override fun toString(): String {
         val sb = StringBuilder()
         for (y in 0 until size) {

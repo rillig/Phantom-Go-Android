@@ -21,16 +21,16 @@ class CountingBoardTest {
 
         val countingBoard = CountingBoard(board)
 
-        assertThat(countingBoard.regionsToString()).isEqualTo(""
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n"
-                + "1 1 2 3 3 4 5 5 5\n")
+        assertThat(countingBoard.toString()).isEqualTo(""
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n"
+                + "x x X + + O o o o\n")
 
         val result = countingBoard.count()
         assertThat(result.blackTerritory).isEqualTo(18)
@@ -55,16 +55,16 @@ class CountingBoardTest {
 
         val countingBoard = CountingBoard(board)
 
-        assertThat(countingBoard.regionsToString()).isEqualTo(""
-                + "1 2 2 2 3 3 4 5 5\n"
-                + "1 3 2 3 3 4 4 5 5\n"
-                + "1 3 2 3 4 4 4 5 5\n"
-                + "3 3 3 3 3 4 5 5 5\n"
-                + "6 6 3 4 4 4 5 5 5\n"
-                + "7 6 6 8 8 4 4 4 4\n"
-                + "6 6 9 A 8 8 4 B B\n"
-                + "C 6 9 9 D 8 8 E F\n"
-                + "C 6 9 D D D 8 E F\n")
+        assertThat(countingBoard.toString()).isEqualTo(""
+                + "X + + + O O X x x\n"
+                + "X O + O O X X x x\n"
+                + "X O + O X X X x x\n"
+                + "O O O O O X x x x\n"
+                + "X X O X X X x x x\n"
+                + "x X X O O X X X X\n"
+                + "X X O o O O X O O\n"
+                + "x X O O o O O X +\n"
+                + "x X O o o o O X +\n")
 
         val result = countingBoard.count()
         assertThat(result.toString()).isEqualTo("black=15+0, white=5+0")
