@@ -9,7 +9,6 @@ import org.junit.ComparisonFailure
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale
-import org.hamcrest.CoreMatchers.`is` as eq
 
 @RunWith(AndroidJUnit4::class)
 class RefereeTest {
