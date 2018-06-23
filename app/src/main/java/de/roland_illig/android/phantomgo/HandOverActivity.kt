@@ -43,9 +43,9 @@ class HandOverActivity : AppCompatActivity() {
     }
 
     private fun format(result: Game.RefereeHistoryEntry): String {
-        val playerName = getText(if (result.player == Player.BLACK) R.string.referee_black else R.string.referee_white)
+        val playerSymbol = if (result.player == Player.BLACK) "⚫" else "⚪"
         val comment = Referee.comment(result.result, result.player, resources)
-        return "$playerName: $comment"
+        return "$playerSymbol\u2004$comment"
     }
 
     companion object {
