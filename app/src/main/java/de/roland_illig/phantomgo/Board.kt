@@ -67,10 +67,10 @@ class Board(val size: Int) : java.io.Serializable {
         val other = turn.other()
 
         if (get(x, y) == turn) {
-            return RefereeResult.ownStone()
+            return RefereeResult.OwnStone
         }
         if (get(x, y) == other) {
-            return RefereeResult.otherStone()
+            return RefereeResult.OtherStone
         }
 
         fun atari(x: Int, y: Int, color: Player): Boolean {
@@ -94,7 +94,7 @@ class Board(val size: Int) : java.io.Serializable {
         val dy = y - prevMove.y
         if (dx * dx + dy * dy == 1) {
             if (atari(prevMove.x, prevMove.y, other)) {
-                return RefereeResult.ko()
+                return RefereeResult.Ko
             }
         }
 
@@ -103,7 +103,7 @@ class Board(val size: Int) : java.io.Serializable {
 
         try {
             if (!capturesSomething && getLiberties(x, y) == 0) {
-                return RefereeResult.suicide()
+                return RefereeResult.Suicide
             }
 
             val atari = false
@@ -126,7 +126,7 @@ class Board(val size: Int) : java.io.Serializable {
             undo = false
             empty = false
 
-            return RefereeResult.ok(atari, selfAtari, capturedStones)
+            return RefereeResult.Ok(atari, selfAtari, capturedStones)
         } finally {
             if (undo) {
                 pieces[x][y] = null
@@ -142,14 +142,14 @@ class Board(val size: Int) : java.io.Serializable {
         gameOver = passed
         passed = true
         turn = turn.other()
-        return RefereeResult.pass()
+        return RefereeResult.Pass
     }
 
     fun edit(x: Int, y: Int, color: Player) {
         turn = color
-        val invalidReason = play(x, y).invalidReason
-        if (invalidReason != null) {
-            val newColor = if (invalidReason == RefereeResult.InvalidReason.OWN_STONE) null else color
+        val result = play(x, y)
+        if (result is RefereeResult.Invalid) {
+            val newColor = if (result is RefereeResult.OwnStone) null else color
             set(x, y, newColor);
         }
     }

@@ -81,7 +81,7 @@ class GameTest {
             val x = "abcdefghijklmnopqrstuvwxyz".indexOf(move[0])
             val y = game.size - Integer.parseInt(move.substring(1))
             val result = game.play(x, y)
-            assertThat(result.invalidReason).withFailMessage("invalid move %s: %s", move, result).isNull()
+            assertThat(result is RefereeResult.Ok).withFailMessage("invalid move %s: %s", move, result).isTrue()
             game.finishMove()
             lastResult = result
         }

@@ -28,12 +28,12 @@ class Game(val size: Int = 9) : java.io.Serializable {
         val result = refereeBoard.play(x, y)
         refereeHistory.add(RefereeHistoryEntry(turn, result))
 
-        when (result.invalidReason) {
-            RefereeResult.InvalidReason.OTHER_STONE -> board[x, y] = turn.other()
-            RefereeResult.InvalidReason.OWN_STONE -> board[x, y] = turn
-            RefereeResult.InvalidReason.SUICIDE,
-            RefereeResult.InvalidReason.KO -> board[x, y] = null
-            null -> {
+        when (result) {
+            is RefereeResult.OtherStone -> board[x, y] = turn.other()
+            is RefereeResult.OwnStone -> board[x, y] = turn
+            is RefereeResult.Suicide,
+            is RefereeResult.Ko -> board[x, y] = null
+            is RefereeResult.Ok -> {
                 val playerResult = board.copy().also { it.turn = turn }.play(x, y)
                 if (playerResult.toString() == result.toString()) {
                     board.turn = turn

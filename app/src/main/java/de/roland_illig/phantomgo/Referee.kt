@@ -7,13 +7,11 @@ class Referee {
     companion object {
 
         fun comment(result: RefereeResult, color: Player, resources: Resources): String {
-            if (result.invalidReason != null) {
-                return when (result.invalidReason) {
-                    RefereeResult.InvalidReason.OTHER_STONE -> resources.getString(R.string.referee_other_stone)
-                    RefereeResult.InvalidReason.OWN_STONE -> resources.getString(R.string.referee_own_stone)
-                    RefereeResult.InvalidReason.SUICIDE -> resources.getString(R.string.referee_suicide)
-                    RefereeResult.InvalidReason.KO -> resources.getString(R.string.referee_ko)
-                }
+            when (result) {
+                is RefereeResult.OtherStone -> return resources.getString(R.string.referee_other_stone)
+                is RefereeResult.OwnStone -> return resources.getString(R.string.referee_own_stone)
+                is RefereeResult.Suicide -> return resources.getString(R.string.referee_suicide)
+                is RefereeResult.Ko -> return resources.getString(R.string.referee_ko)
             }
 
             val black = resources.getString(R.string.referee_black)
@@ -22,10 +20,11 @@ class Referee {
             val me = if (isBlack) black else white
             val other = if (isBlack) white else black
 
-            if (result.pass) {
+            if (result is RefereeResult.Pass) {
                 return resources.getString(R.string.referee_passes, me)
             }
 
+            result as RefereeResult.Ok
             val atari = result.atari
             val selfAtari = result.selfAtari
             val captured = result.capturedStones

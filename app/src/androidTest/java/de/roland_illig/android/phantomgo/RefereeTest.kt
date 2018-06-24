@@ -130,27 +130,27 @@ class RefereeTest {
         res.updateConfiguration(res.configuration.also { it.locale = locale }, res.displayMetrics)
 
         val actuals = listOf(
-                Referee.comment(RefereeResult.ok(false, false, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(false, false, 0), Player.WHITE, res),
+                Referee.comment(RefereeResult.Ok(false, false, 0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, 0), Player.WHITE, res),
 
-                Referee.comment(RefereeResult.ok(false, false, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(false, false, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(false, false, 3), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(false, true, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(false, true, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(false, true, 3), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(true, false, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(true, false, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(true, false, 3), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(true, true, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(true, true, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.ok(true, true, 3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, 0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, 1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, 3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, true, 0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, true, 1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, true, 3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, false, 0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, false, 1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, false, 3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, true, 0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, true, 1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, true, 3), Player.BLACK, res),
 
-                Referee.comment(RefereeResult.ownStone(), Player.BLACK, res),
-                Referee.comment(RefereeResult.otherStone(), Player.BLACK, res),
-                Referee.comment(RefereeResult.suicide(), Player.BLACK, res),
-                Referee.comment(RefereeResult.ko(), Player.BLACK, res),
-                Referee.comment(RefereeResult.pass(), Player.BLACK, res))
+                Referee.comment(RefereeResult.OwnStone, Player.BLACK, res),
+                Referee.comment(RefereeResult.OtherStone, Player.BLACK, res),
+                Referee.comment(RefereeResult.Suicide, Player.BLACK, res),
+                Referee.comment(RefereeResult.Ko, Player.BLACK, res),
+                Referee.comment(RefereeResult.Pass, Player.BLACK, res))
 
         val actual = actuals.joinToString("\n")
         val expected = listOf(*results).joinToString("\n")
