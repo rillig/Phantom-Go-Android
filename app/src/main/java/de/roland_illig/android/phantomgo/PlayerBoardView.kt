@@ -21,7 +21,7 @@ class PlayerBoardView : AbstractBoardView {
 
     override val boardSize get() = game.size
 
-    override val activeTurn get() = !game.isReadyToHandOver()
+    override val highlightCross get() = !game.isReadyToHandOver()
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 

@@ -22,7 +22,7 @@ class CountingBoardView : AbstractBoardView {
 
     override val boardSize get() = game.size
 
-    override val activeTurn get() = true
+    override val highlightCross get() = false
 
     override fun getBoard(x: Int, y: Int): AbstractBoardView.Cell {
         val stone = game.getRefereeBoard(x, y)

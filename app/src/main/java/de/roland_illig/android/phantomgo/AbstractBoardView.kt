@@ -3,8 +3,10 @@ package de.roland_illig.android.phantomgo
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Point
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import de.roland_illig.phantomgo.Player
 
@@ -18,14 +20,18 @@ import de.roland_illig.phantomgo.Player
  */
 abstract class AbstractBoardView : View {
 
-    private var lastX = -1
-    private var lastY = -1
+    // For some reason, the click event is also fired for large distances.
+    // Therefore, keep track of the start and end of the click.
+    private val clickStart = Point(-1, -1)
+    private val clickEnd = Point(-1, -1)
+
+    private val cross = Point(-1, -1)
 
     protected abstract val boardSize: Int
 
     protected abstract fun getBoard(x: Int, y: Int): Cell
 
-    protected abstract val activeTurn: Boolean
+    protected abstract val highlightCross: Boolean
 
     protected abstract fun onBoardClicked(x: Int, y: Int)
 
@@ -43,16 +49,33 @@ abstract class AbstractBoardView : View {
             fun screenToBoard(sc: Double) = Math.round(sc * (boardSize + 1) / size - 1).toInt()
             val x = screenToBoard(e.x.toDouble())
             val y = screenToBoard(e.y.toDouble())
-            if (x != lastX || y != lastY) {
-                lastX = x
-                lastY = y
-                invalidate()
+            when {
+                e.action == MotionEvent.ACTION_DOWN -> {
+                    clickStart.set(x, y)
+                    cross.set(x, y)
+                    if (highlightCross) {
+                        invalidate()
+                    }
+                }
+                e.action == MotionEvent.ACTION_UP -> {
+                    clickEnd.set(x, y)
+                    cross.set(-1, -1)
+                    if (highlightCross) {
+                        invalidate()
+                    }
+                }
+                Point(x, y) != cross -> {
+                    cross.set(x, y)
+                    if (highlightCross) {
+                        invalidate()
+                    }
+                }
             }
             false
         }
         setOnClickListener {
-            if (lastX in 0 until boardSize && lastY in 0 until boardSize) {
-                onBoardClicked(lastX, lastY)
+            if (clickEnd.x in 0 until boardSize && clickEnd.y in 0 until boardSize && clickEnd == clickStart) {
+                onBoardClicked(clickEnd.x, clickEnd.y)
             }
         }
     }
@@ -80,33 +103,32 @@ abstract class AbstractBoardView : View {
 
         g.drawRect(RectF(0.0F, 0.0F, screenSize, screenSize), boardPaint)
 
-        for (i in 0 until boardSize) {
+        val crossX = cross.x
+        val crossY = cross.y
+        val highlightCross = highlightCross && crossX in 0 until boardSize && crossY in 0 until boardSize
+
+        for (i in (0 until boardSize)) {
             val start = boardToScreen(0.0) - lineWidth / 2.0F
             val end = boardToScreen((boardSize - 1).toDouble()) + lineWidth / 2.0F
             val fixed = boardToScreen(i.toDouble())
-            if (i != lastY || !activeTurn) {
+            if (!(highlightCross && i == crossY)) {
                 g.drawLine(start, fixed, end, fixed, linePaint)
             }
-            if (i != lastX || !activeTurn) {
+            if (!(highlightCross && i == crossX)) {
                 g.drawLine(fixed, start, fixed, end, linePaint)
             }
         }
 
-        if (lastX in 0 until boardSize) {
+        if (highlightCross) {
             val startY = boardToScreen(0.0) + lineWidth / 2.0F
             val endY = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
-            val screenX = boardToScreen(lastX.toDouble())
-            if (activeTurn) {
-                g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
-            }
-        }
-        if (lastY in 0 until boardSize) {
+            val screenX = boardToScreen(crossX.toDouble())
+            g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+
             val startX = boardToScreen(0.0) + lineWidth / 2.0F
             val endX = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
-            val screenY = boardToScreen(lastY.toDouble())
-            if (activeTurn) {
-                g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
-            }
+            val screenY = boardToScreen(crossY.toDouble())
+            g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
         }
 
         fun fillCircle(g: Canvas, x: Int, y: Int, radius: Double, paint: Paint) {
