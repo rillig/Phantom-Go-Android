@@ -9,8 +9,8 @@ android {
         applicationId 'de.roland_illig.android.phantomgo'
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 8
-        versionName '0.9.8'
+        versionCode 9
+        versionName '0.9.9'
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
     }
