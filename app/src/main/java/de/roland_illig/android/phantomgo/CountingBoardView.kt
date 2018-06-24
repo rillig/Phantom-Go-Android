@@ -11,8 +11,6 @@ class CountingBoardView : AbstractBoardView {
     private lateinit var game: Game
     private val countingBoard get() = game.countingBoard()
 
-    override val boardSize get() = game.size
-
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
@@ -21,6 +19,10 @@ class CountingBoardView : AbstractBoardView {
         this.game = game
         updateSummary()
     }
+
+    override val boardSize get() = game.size
+
+    override val activeTurn get() = true
 
     override fun getBoard(x: Int, y: Int): AbstractBoardView.Cell {
         val stone = game.getRefereeBoard(x, y)

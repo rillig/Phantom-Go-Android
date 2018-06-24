@@ -25,6 +25,8 @@ abstract class AbstractBoardView : View {
 
     protected abstract fun getBoard(x: Int, y: Int): Cell
 
+    protected abstract val activeTurn: Boolean
+
     protected abstract fun onBoardClicked(x: Int, y: Int)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -36,7 +38,7 @@ abstract class AbstractBoardView : View {
     }
 
     private fun init() {
-        setOnTouchListener { view, e ->
+        setOnTouchListener { _, e ->
             val size = Math.min(width, height)
             fun screenToBoard(sc: Double) = Math.round(sc * (boardSize + 1) / size - 1).toInt()
             val x = screenToBoard(e.x.toDouble())
@@ -82,10 +84,10 @@ abstract class AbstractBoardView : View {
             val start = boardToScreen(0.0) - lineWidth / 2.0F
             val end = boardToScreen((boardSize - 1).toDouble()) + lineWidth / 2.0F
             val fixed = boardToScreen(i.toDouble())
-            if (i != lastY) {
+            if (i != lastY || !activeTurn) {
                 g.drawLine(start, fixed, end, fixed, linePaint)
             }
-            if (i != lastX) {
+            if (i != lastX || !activeTurn) {
                 g.drawLine(fixed, start, fixed, end, linePaint)
             }
         }
@@ -94,13 +96,17 @@ abstract class AbstractBoardView : View {
             val startY = boardToScreen(0.0) + lineWidth / 2.0F
             val endY = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
             val screenX = boardToScreen(lastX.toDouble())
-            g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+            if (activeTurn) {
+                g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+            }
         }
         if (lastY in 0 until boardSize) {
             val startX = boardToScreen(0.0) + lineWidth / 2.0F
             val endX = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
             val screenY = boardToScreen(lastY.toDouble())
-            g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
+            if (activeTurn) {
+                g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
+            }
         }
 
         fun fillCircle(g: Canvas, x: Int, y: Int, radius: Double, paint: Paint) {
