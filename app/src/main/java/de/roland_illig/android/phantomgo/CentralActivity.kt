@@ -17,9 +17,12 @@ class CentralActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         game = Persistence.load(this)
+        onPlayClick()
     }
 
-    fun onPlayClick(view: View) {
+    fun onPlayClick(view: View) = onPlayClick()
+
+    private fun onPlayClick() {
         when {
             game.isGameOver -> CountingActivity.start(this)
             game.isInitial -> PlayerActivity.start(this)

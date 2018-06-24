@@ -19,7 +19,7 @@
 
     <string name="counting_title">Marcador</string>
     <string name="result_summary">Negro: %d + %d = %d\nBlanco: %d + %d = %d</string>
-    <string name="finish_button">Finalizar</string>
+    <string name="finish_button">Nueva partida</string>
 
     <string name="referee_black">Negro</string>
     <string name="referee_white">Blanco</string>

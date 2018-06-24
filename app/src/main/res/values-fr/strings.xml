@@ -19,7 +19,7 @@
 
     <string name="counting_title">Décompte</string>
     <string name="result_summary">Noir: %d + %d = %d\nBlanc: %d + %d = %d</string>
-    <string name="finish_button">Terminer</string>
+    <string name="finish_button">Nouvelle partie</string>
 
     <string name="referee_black">Noir</string>
     <string name="referee_white">Blanc</string>

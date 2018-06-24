@@ -19,7 +19,7 @@
 
     <string name="counting_title">Auszählen</string>
     <string name="result_summary">Schwarz: %d + %d = %d\nWeiß: %d + %d = %d</string>
-    <string name="finish_button">Fertig</string>
+    <string name="finish_button">Neues Spiel</string>
 
     <string name="referee_black">Schwarz</string>
     <string name="referee_white">Weiß</string>
