@@ -51,7 +51,7 @@ class Referee {
             if (atari) {
                 return resources.getString(R.string.referee_atari, me, other)
             }
-            return resources.getString(R.string.referee_to_play, other)
+            return resources.getString(R.string.referee_to_play, me, other)
         }
     }
 }

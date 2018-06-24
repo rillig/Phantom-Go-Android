@@ -18,10 +18,10 @@ class RefereeTest {
         assertReferee(
                 Locale.ENGLISH,
 
-                "White to move.",
-                "Black to move.",
+                "Black moves, White to move.",
+                "White moves, Black to move.",
 
-                "White to move.",
+                "Black moves, White to move.",
                 "Black captures one stone.",
                 "Black captures 3 stones.",
                 "Black puts himself in atari.",
@@ -46,10 +46,10 @@ class RefereeTest {
         assertReferee(
                 Locale.FRENCH,
 
-                "Blanc à jouer.",
-                "Noir à jouer.",
+                "Noir joue, Blanc à jouer.",
+                "Blanc joue, Noir à jouer.",
 
-                "Blanc à jouer.",
+                "Noir joue, Blanc à jouer.",
                 "Noir capture une pierre.",
                 "Noir capture 3 pierres.",
                 "Noir fait atari à lui-même.",
@@ -74,10 +74,10 @@ class RefereeTest {
         assertReferee(
                 Locale.GERMAN,
 
-                "Weiß ist dran.",
-                "Schwarz ist dran.",
+                "Schwarz zieht, Weiß ist dran.",
+                "Weiß zieht, Schwarz ist dran.",
 
-                "Weiß ist dran.",
+                "Schwarz zieht, Weiß ist dran.",
                 "Schwarz fängt einen Stein.",
                 "Schwarz fängt 3 Steine.",
                 "Schwarz setzt sich selbst ins Atari.",
@@ -102,10 +102,10 @@ class RefereeTest {
         assertReferee(
                 Locale("es", "es"),
 
-                "Blanco juega.",
-                "Negro juega.",
+                "Negro juega, Blanco a jugar.",
+                "Blanco juega, Negro a jugar.",
 
-                "Blanco juega.",
+                "Negro juega, Blanco a jugar.",
                 "Negro captura una piedra.",
                 "Negro captura 3 piedras.",
                 "Negro pone en atari a sí mismo.",

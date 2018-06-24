@@ -28,7 +28,7 @@
     <string name="referee_suicide">Suicidio.</string>
     <string name="referee_ko">No puedes recapturar el ko inmediatamente.</string>
     <string name="referee_passes">%s pasa.</string>
-    <string name="referee_to_play">%s juega.</string>
+    <string name="referee_to_play">%s juega, %s a jugar.</string>
     <string name="referee_atari">%s pone en atari a %s.</string>
     <string name="referee_selfatari">%s pone en atari a sí mismo.</string>
     <string name="referee_atari_selfatari">%s pone en atari a %s y a sí mismo.</string>
