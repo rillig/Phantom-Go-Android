@@ -147,8 +147,10 @@ class Board(val size: Int) : java.io.Serializable {
 
     fun edit(x: Int, y: Int, color: Player) {
         turn = color
-        if (play(x, y).invalidReason != null) {
-            set(x, y, color)
+        val invalidReason = play(x, y).invalidReason
+        if (invalidReason != null) {
+            val newColor = if (invalidReason == RefereeResult.InvalidReason.OWN_STONE) null else color
+            set(x, y, newColor);
         }
     }
 
