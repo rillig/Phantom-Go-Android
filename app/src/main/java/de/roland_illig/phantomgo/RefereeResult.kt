@@ -18,15 +18,15 @@ sealed class RefereeResult : java.io.Serializable {
     data class Ok(
             val atari: Boolean,
             val selfAtari: Boolean,
-            val capturedStones: Int) : RefereeResult() {
+            val capturedStones: List<Intersection>) : RefereeResult() {
 
         override fun toString(): String {
-            if (!atari && !selfAtari && capturedStones == 0) {
+            if (!atari && !selfAtari && capturedStones.isEmpty()) {
                 return "ok"
             }
             val atariStr = if (atari) "atari" else ""
             val selfAtariStr = if (selfAtari) "selfAtari" else ""
-            val capturedStr = if (capturedStones > 0) "captured $capturedStones" else ""
+            val capturedStr = if (capturedStones.isNotEmpty()) "captured ${capturedStones.size}" else ""
             return listOf(atariStr, selfAtariStr, capturedStr).filter { it != "" }.joinToString()
         }
     }

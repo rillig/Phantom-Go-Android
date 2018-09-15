@@ -27,7 +27,7 @@ class Referee {
             result as RefereeResult.Ok
             val atari = result.atari
             val selfAtari = result.selfAtari
-            val captured = result.capturedStones
+            val captured = result.capturedStones.size
 
             if (captured > 0 && selfAtari && atari) {
                 return resources.getQuantityString(R.plurals.referee_capture_atari_selfatari, captured, me, captured, other)

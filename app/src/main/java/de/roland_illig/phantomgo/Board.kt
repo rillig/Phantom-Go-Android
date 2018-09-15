@@ -32,26 +32,24 @@ class Board(val size: Int) : java.io.Serializable {
 
     fun getCaptured(player: Player) = captured[player.ordinal]
 
-    private fun captureCount(x: Int, y: Int, turn: Player): Int {
+    private fun captureCount(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
         if (x in 0 until size && y in 0 until size) {
             if (get(x, y) == turn && getLiberties(x, y) == 0) {
 
-                fun capture(x: Int, y: Int): Int {
+                fun capture(x: Int, y: Int) {
                     if (x in 0 until size && y in 0 until size && pieces[x][y] == turn) {
                         pieces[x][y] = null
-                        return (1
-                                + capture(x - 1, y)
-                                + capture(x + 1, y)
-                                + capture(x, y - 1)
-                                + capture(x, y + 1))
+                        captured += Intersection(x, y)
+                        capture(x - 1, y)
+                        capture(x + 1, y)
+                        capture(x, y - 1)
+                        capture(x, y + 1)
                     }
-                    return 0
                 }
 
-                return capture(x, y)
+                capture(x, y)
             }
         }
-        return 0
     }
 
     operator fun set(x: Int, y: Int, color: Player?) {
@@ -112,21 +110,21 @@ class Board(val size: Int) : java.io.Serializable {
                     || !aboveBefore && atari(x, y - 1, other)
                     || !belowBefore && atari(x, y + 1, other)
 
-            val capturedStones = (0
-                    + captureCount(x - 1, y, other)
-                    + captureCount(x + 1, y, other)
-                    + captureCount(x, y - 1, other)
-                    + captureCount(x, y + 1, other))
+            val capturedStones = mutableListOf<Intersection>()
+            captureCount(x - 1, y, other, capturedStones)
+            captureCount(x + 1, y, other, capturedStones)
+            captureCount(x, y - 1, other, capturedStones)
+            captureCount(x, y + 1, other, capturedStones)
 
             val selfAtari = atari(x, y, turn) && !selfAtariBefore
 
-            captured[turn.ordinal] += capturedStones
-            prevMove = if (capturedStones == 1 && selfAtari) Point(x, y) else nowhere
+            captured[turn.ordinal] += capturedStones.size
+            prevMove = if (capturedStones.size == 1 && selfAtari) Point(x, y) else nowhere
             this.turn = other
             undo = false
             empty = false
 
-            return RefereeResult.Ok(atari, selfAtari, capturedStones)
+            return RefereeResult.Ok(atari, selfAtari, capturedStones.toList())
         } finally {
             if (undo) {
                 pieces[x][y] = null

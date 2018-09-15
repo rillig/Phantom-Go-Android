@@ -7,8 +7,10 @@ class RefereeResultTest {
 
     @Test
     fun testToString() {
-        assertThat(RefereeResult.Ok(true, true, 7).toString()).isEqualTo("atari, selfAtari, captured 7")
-        assertThat(RefereeResult.Ok(false, false, 0).toString()).isEqualTo("ok")
+        fun i(x: Int, y: Int) = Intersection(x, y)
+
+        assertThat(RefereeResult.Ok(true, true, listOf(i(0, 0), i(0, 1), i(0, 2))).toString()).isEqualTo("atari, selfAtari, captured 3")
+        assertThat(RefereeResult.Ok(false, false, listOf()).toString()).isEqualTo("ok")
         assertThat(RefereeResult.Ko.toString()).isEqualTo("ko")
         assertThat(RefereeResult.OwnStone.toString()).isEqualTo("ownStone")
         assertThat(RefereeResult.OtherStone.toString()).isEqualTo("otherStone")
