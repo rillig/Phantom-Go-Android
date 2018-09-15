@@ -39,6 +39,12 @@ class PlayerActivity : AppCompatActivity() {
         boardView().mode = view.id
     }
 
+    fun onResignClick(view: View) {
+        game = Game()
+        PlayerActivity.start(this)
+        finish()
+    }
+
     fun onPassClick(view: View) {
         boardView().pass()
         onContinueClick(view)

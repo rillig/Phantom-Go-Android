@@ -10,6 +10,7 @@
     <string name="black_button_description">Poser des pierres noires</string>
     <string name="white_button_description">Poser des pierres blancs</string>
     <string name="eraser_button_description">Enlever des pierres</string>
+    <string name="resign_button">Résigner</string>
     <string name="pass_button">Passer</string>
     <string name="not_your_turn">C’est pas à toi.</string>
 

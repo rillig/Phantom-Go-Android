@@ -10,6 +10,7 @@
     <string name="black_button_description">Schwarze Steine setzen</string>
     <string name="white_button_description">Weiße Steine setzen</string>
     <string name="eraser_button_description">Steine vom Brett nehmen</string>
+    <string name="resign_button">Aufgeben</string>
     <string name="pass_button">Passen</string>
     <string name="not_your_turn">Du bist nicht dran.</string>
 

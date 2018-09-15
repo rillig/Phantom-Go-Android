@@ -10,6 +10,7 @@
     <string name="black_button_description">Put black stones on the board</string>
     <string name="white_button_description">Put white stones on the board</string>
     <string name="eraser_button_description">Remove stones from the board</string>
+    <string name="resign_button">Resign</string>
     <string name="pass_button">Pass</string>
     <string name="not_your_turn">It’s not your turn.</string>
 
