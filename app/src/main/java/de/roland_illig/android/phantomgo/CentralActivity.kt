@@ -18,6 +18,7 @@ class CentralActivity : AppCompatActivity() {
         super.onResume()
         game = Persistence.load(this)
         onPlayClick()
+        finish()
     }
 
     fun onPlayClick(view: View) = onPlayClick()
