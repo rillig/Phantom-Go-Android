@@ -1,7 +1,3 @@
-# Prio 1
-
-* Non-overlapping arrangement in landscape mode
-
 # Prio 2
 
 * Add Bluetooth support
