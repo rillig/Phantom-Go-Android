@@ -1,7 +1,5 @@
 package de.roland_illig.phantomgo
 
-import java.util.HashSet
-
 class Board(val size: Int) : java.io.Serializable {
 
     private val nowhere = Point(-1, -1)
@@ -57,9 +55,7 @@ class Board(val size: Int) : java.io.Serializable {
     }
 
     fun play(x: Int, y: Int): RefereeResult {
-        if (gameOver) {
-            throw IllegalStateException("GameOver")
-        }
+        check(!gameOver) { "GameOver" }
 
         val turn = turn
         val other = turn.other()
@@ -76,8 +72,7 @@ class Board(val size: Int) : java.io.Serializable {
                     && get(x, y) == color && getLiberties(x, y) == 1
         }
 
-        val selfAtariBefore = false
-                || atari(x - 1, y, turn)
+        val selfAtariBefore = atari(x - 1, y, turn)
                 || atari(x + 1, y, turn)
                 || atari(x, y - 1, turn)
                 || atari(x, y + 1, turn)
@@ -104,8 +99,7 @@ class Board(val size: Int) : java.io.Serializable {
                 return RefereeResult.Suicide
             }
 
-            val atari = false
-                    || !leftBefore && atari(x - 1, y, other)
+            val atari = !leftBefore && atari(x - 1, y, other)
                     || !rightBefore && atari(x + 1, y, other)
                     || !aboveBefore && atari(x, y - 1, other)
                     || !belowBefore && atari(x, y + 1, other)
@@ -148,7 +142,7 @@ class Board(val size: Int) : java.io.Serializable {
         val result = play(x, y)
         if (result is RefereeResult.Invalid) {
             val newColor = if (result is RefereeResult.OwnStone) null else color
-            set(x, y, newColor);
+            set(x, y, newColor)
         }
     }
 
@@ -166,9 +160,9 @@ class Board(val size: Int) : java.io.Serializable {
 
     fun getLiberties(x: Int, y: Int): Int {
         val color = get(x, y)!!
-        val todo: MutableSet<Point> = HashSet()
-        val done: MutableSet<Point> = HashSet()
-        val liberties: MutableSet<Point> = HashSet()
+        val todo = mutableSetOf<Point>()
+        val done = mutableSetOf<Point>()
+        val liberties = mutableSetOf<Point>()
 
         fun countInternal(nx: Int, ny: Int) {
             if (nx in 0 until size && ny in 0 until size) {
@@ -185,7 +179,7 @@ class Board(val size: Int) : java.io.Serializable {
 
         todo.add(Point(x, y))
 
-        while (!todo.isEmpty()) {
+        while (todo.isNotEmpty()) {
             val it = todo.iterator()
             val point = it.next()
             it.remove()
