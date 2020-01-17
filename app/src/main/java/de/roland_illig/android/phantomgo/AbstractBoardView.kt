@@ -143,15 +143,15 @@ abstract class AbstractBoardView : View {
             }
 
             if (highlightCross) {
-                val startY = boardToScreen(0.0F) + lineWidth / 2.0F
-                val endY = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
-                val screenX = boardToScreen(crossX.toFloat())
-                g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
-
-                val startX = boardToScreen(0.0F) + lineWidth / 2.0F
-                val endX = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
-                val screenY = boardToScreen(crossY.toFloat())
-                g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
+                drawCross(
+                    lineWidth,
+                    boardSize,
+                    crossX,
+                    g,
+                    currentLinePaint,
+                    crossY,
+                    ::boardToScreen
+                )
             }
 
             fun fillCircle(g: Canvas, x: Int, y: Int, radius: Float, paint: Paint) {
@@ -180,6 +180,26 @@ abstract class AbstractBoardView : View {
             }
 
             g.restore()
+        }
+
+        private fun drawCross(
+            lineWidth: Float,
+            boardSize: Int,
+            crossX: Int,
+            g: Canvas,
+            currentLinePaint: Paint,
+            crossY: Int,
+            boardToScreen: (Float) -> Float
+        ) {
+            val startY = boardToScreen(0.0F) + lineWidth / 2.0F
+            val endY = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
+            val screenX = boardToScreen(crossX.toFloat())
+            g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+
+            val startX = boardToScreen(0.0F) + lineWidth / 2.0F
+            val endX = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
+            val screenY = boardToScreen(crossY.toFloat())
+            g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
         }
     }
 }
