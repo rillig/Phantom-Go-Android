@@ -11,7 +11,6 @@ import android.view.MotionEvent
 import android.view.View
 import de.roland_illig.phantomgo.Player
 import kotlin.math.floor
-import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -94,9 +93,10 @@ abstract class AbstractBoardView : View {
         val boardSize = boardSize
         val screenSize = min(width, height).toFloat()
 
-        fun boardToScreen(bc: Double) = (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
+        fun boardToScreen(bc: Float) = (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
+        val lineDistance = (boardToScreen(1.0F) - boardToScreen(0.0F))
 
-        val lineWidth = max(1.0, floor((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0)).toFloat()
+        val lineWidth = floor(lineDistance / 20.0F).coerceAtLeast(1.0F)
 
         fun linePaint(color: Long) = Paint().also { it.color = color.toInt(); it.strokeWidth = lineWidth }
         fun fillPaint(color: Long) = Paint().also { it.color = color.toInt(); it.isAntiAlias = true }
@@ -121,9 +121,9 @@ abstract class AbstractBoardView : View {
         val highlightCross = highlightCross && crossX in 0 until boardSize && crossY in 0 until boardSize
 
         for (i in (0 until boardSize)) {
-            val start = boardToScreen(0.0) - lineWidth / 2.0F
-            val end = boardToScreen((boardSize - 1).toDouble()) + lineWidth / 2.0F
-            val fixed = boardToScreen(i.toDouble())
+            val start = boardToScreen(0.0F) - lineWidth / 2.0F
+            val end = boardToScreen((boardSize - 1).toFloat()) + lineWidth / 2.0F
+            val fixed = boardToScreen(i.toFloat())
             if (!(highlightCross && i == crossY)) {
                 g.drawLine(start, fixed, end, fixed, linePaint)
             }
@@ -133,18 +133,18 @@ abstract class AbstractBoardView : View {
         }
 
         if (highlightCross) {
-            val startY = boardToScreen(0.0) + lineWidth / 2.0F
-            val endY = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
-            val screenX = boardToScreen(crossX.toDouble())
+            val startY = boardToScreen(0.0F) + lineWidth / 2.0F
+            val endY = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
+            val screenX = boardToScreen(crossX.toFloat())
             g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
 
-            val startX = boardToScreen(0.0) + lineWidth / 2.0F
-            val endX = boardToScreen((boardSize - 1).toDouble()) - lineWidth / 2.0F
-            val screenY = boardToScreen(crossY.toDouble())
+            val startX = boardToScreen(0.0F) + lineWidth / 2.0F
+            val endX = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
+            val screenY = boardToScreen(crossY.toFloat())
             g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
         }
 
-        fun fillCircle(g: Canvas, x: Int, y: Int, radius: Double, paint: Paint) {
+        fun fillCircle(g: Canvas, x: Int, y: Int, radius: Float, paint: Paint) {
             val top = boardToScreen(y - radius)
             val left = boardToScreen(x - radius)
             val bottom = boardToScreen(y + radius)
@@ -158,13 +158,13 @@ abstract class AbstractBoardView : View {
                 val cell = getBoard(x, y)
                 if (cell.dead || cell.territory != null) {
                     if (cell.dead) {
-                        fillCircle(g, x, y, 0.48, if (cell.color == Player.BLACK) blackTranslucentPaint else whiteTranslucentPaint)
+                        fillCircle(g, x, y, 0.48F, if (cell.color == Player.BLACK) blackTranslucentPaint else whiteTranslucentPaint)
                     }
                     if (cell.territory != null) {
-                        fillCircle(g, x, y, 0.16, if (cell.territory == Player.BLACK) blackPaint else whitePaint)
+                        fillCircle(g, x, y, 0.16F, if (cell.territory == Player.BLACK) blackPaint else whitePaint)
                     }
                 } else if (cell.color != null) {
-                    fillCircle(g, x, y, 0.48, if (cell.color == Player.BLACK) blackPaint else whitePaint)
+                    fillCircle(g, x, y, 0.48F, if (cell.color == Player.BLACK) blackPaint else whitePaint)
                 }
             }
         }
