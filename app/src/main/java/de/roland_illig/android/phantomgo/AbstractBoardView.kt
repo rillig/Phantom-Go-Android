@@ -89,6 +89,8 @@ abstract class AbstractBoardView : View {
     override fun onDraw(g: Canvas) {
         super.onDraw(g)
 
+        g.save()
+
         val boardSize = boardSize
         val screenSize = min(width, height).toFloat()
 
@@ -108,6 +110,11 @@ abstract class AbstractBoardView : View {
         val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
 
         g.drawRect(RectF(0.0F, 0.0F, screenSize, screenSize), boardPaint)
+
+        g.translate(
+            ((width - screenSize.toInt()) / 2).toFloat(),
+            ((height - screenSize.toInt()) / 2).toFloat()
+        )
 
         val crossX = cross.x
         val crossY = cross.y
@@ -161,6 +168,8 @@ abstract class AbstractBoardView : View {
                 }
             }
         }
+
+        g.restore()
     }
 
     protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
