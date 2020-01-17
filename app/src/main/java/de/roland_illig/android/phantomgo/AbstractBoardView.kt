@@ -109,7 +109,7 @@ abstract class AbstractBoardView : View {
         val blackTranslucentPaint = fillPaint(0x55000000)
         val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
 
-        g.drawRect(RectF(0.0F, 0.0F, screenSize, screenSize), boardPaint)
+        g.drawRect(RectF(0.0F, 0.0F, width.toFloat(), height.toFloat()), boardPaint)
 
         g.translate(
             ((width - screenSize.toInt()) / 2).toFloat(),
