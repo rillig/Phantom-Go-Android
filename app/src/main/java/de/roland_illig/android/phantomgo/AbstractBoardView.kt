@@ -1,5 +1,6 @@
 package de.roland_illig.android.phantomgo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -84,6 +85,7 @@ abstract class AbstractBoardView : View {
         }
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(g: Canvas) {
         super.onDraw(g)
 
