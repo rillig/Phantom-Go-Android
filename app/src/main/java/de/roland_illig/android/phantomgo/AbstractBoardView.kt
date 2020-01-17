@@ -9,6 +9,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import de.roland_illig.phantomgo.Player
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * Handles drawing of a Go board and translates click coordinates to board coordinates.
@@ -45,8 +49,8 @@ abstract class AbstractBoardView : View {
 
     private fun init() {
         setOnTouchListener { _, e ->
-            val size = Math.min(width, height)
-            fun screenToBoard(sc: Double) = Math.round(sc * (boardSize + 1) / size - 1).toInt()
+            val size = min(width, height)
+            fun screenToBoard(sc: Double) = (sc * (boardSize + 1) / size - 1).roundToInt()
             val x = screenToBoard(e.x.toDouble())
             val y = screenToBoard(e.y.toDouble())
             when {
@@ -84,11 +88,11 @@ abstract class AbstractBoardView : View {
         super.onDraw(g)
 
         val boardSize = boardSize
-        val screenSize = Math.min(width, height).toFloat()
+        val screenSize = min(width, height).toFloat()
 
-        fun boardToScreen(bc: Double) = Math.round(screenSize * (bc + 1) / (boardSize + 1)).toFloat()
+        fun boardToScreen(bc: Double) = (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
 
-        val lineWidth = Math.max(1.0, Math.floor((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0)).toFloat()
+        val lineWidth = max(1.0, floor((boardToScreen(1.0) - boardToScreen(0.0)) / 20.0)).toFloat()
 
         fun linePaint(color: Long) = Paint().also { it.color = color.toInt(); it.strokeWidth = lineWidth }
         fun fillPaint(color: Long) = Paint().also { it.color = color.toInt(); it.isAntiAlias = true }
