@@ -97,6 +97,14 @@ abstract class AbstractBoardView : View {
 
     private inner class Drawer {
 
+        fun fillPaint(color: Long) = Paint().also { it.color = color.toInt(); it.isAntiAlias = true }
+
+        val boardPaint = fillPaint(0xFFD48E00)
+        val blackPaint = fillPaint(0xFF000000)
+        val whitePaint = fillPaint(0xFFFFFFFF)
+        val blackTranslucentPaint = fillPaint(0x55000000)
+        val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
+
         fun draw(g: Canvas) {
             g.save()
 
@@ -109,15 +117,9 @@ abstract class AbstractBoardView : View {
             val lineWidth = floor(lineDistance / 20.0F).coerceAtLeast(1.0F)
 
             fun linePaint(color: Long) = Paint().also { it.color = color.toInt(); it.strokeWidth = lineWidth }
-            fun fillPaint(color: Long) = Paint().also { it.color = color.toInt(); it.isAntiAlias = true }
 
             val linePaint = linePaint(0xFF000000)
             val currentLinePaint = linePaint(0xFFFF9900)
-            val boardPaint = fillPaint(0xFFD48E00)
-            val blackPaint = fillPaint(0xFF000000)
-            val whitePaint = fillPaint(0xFFFFFFFF)
-            val blackTranslucentPaint = fillPaint(0x55000000)
-            val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
 
             g.drawRect(RectF(0.0F, 0.0F, width.toFloat(), height.toFloat()), boardPaint)
 
