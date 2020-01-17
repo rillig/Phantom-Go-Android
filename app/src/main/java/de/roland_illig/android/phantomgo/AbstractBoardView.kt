@@ -50,39 +50,42 @@ abstract class AbstractBoardView : View {
     }
 
     private fun init() {
-        setOnTouchListener { _, e ->
-            val size = min(width, height)
-            fun screenToBoard(sc: Double) = (sc * (boardSize + 1) / size - 1).roundToInt()
-            val x = screenToBoard(e.x.toDouble())
-            val y = screenToBoard(e.y.toDouble())
-            when {
-                e.action == MotionEvent.ACTION_DOWN -> {
-                    clickStart.set(x, y)
-                    cross.set(x, y)
-                    if (highlightCross) {
-                        invalidate()
-                    }
-                }
-                e.action == MotionEvent.ACTION_UP -> {
-                    clickEnd.set(x, y)
-                    cross.set(-1, -1)
-                    if (highlightCross) {
-                        invalidate()
-                    }
-                }
-                Point(x, y) != cross -> {
-                    cross.set(x, y)
-                    if (highlightCross) {
-                        invalidate()
-                    }
+        setOnTouchListener { _, e -> onTouch(e); false }
+        setOnClickListener { onClick() }
+    }
+
+    private fun onTouch(e: MotionEvent) {
+        val size = min(width, height)
+        fun screenToBoard(sc: Double) = (sc * (boardSize + 1) / size - 1).roundToInt()
+        val x = screenToBoard(e.x.toDouble())
+        val y = screenToBoard(e.y.toDouble())
+        when {
+            e.action == MotionEvent.ACTION_DOWN -> {
+                clickStart.set(x, y)
+                cross.set(x, y)
+                if (highlightCross) {
+                    invalidate()
                 }
             }
-            false
+            e.action == MotionEvent.ACTION_UP -> {
+                clickEnd.set(x, y)
+                cross.set(-1, -1)
+                if (highlightCross) {
+                    invalidate()
+                }
+            }
+            Point(x, y) != cross -> {
+                cross.set(x, y)
+                if (highlightCross) {
+                    invalidate()
+                }
+            }
         }
-        setOnClickListener {
-            if (clickEnd.x in 0 until boardSize && clickEnd.y in 0 until boardSize && clickEnd == clickStart) {
-                onBoardClicked(clickEnd.x, clickEnd.y)
-            }
+    }
+
+    private fun onClick() {
+        if (clickEnd.x in 0 until boardSize && clickEnd.y in 0 until boardSize && clickEnd == clickStart) {
+            onBoardClicked(clickEnd.x, clickEnd.y)
         }
     }
 
