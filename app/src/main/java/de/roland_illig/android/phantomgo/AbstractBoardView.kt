@@ -45,7 +45,8 @@ abstract class AbstractBoardView : View {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
+            : super(context, attrs, defStyleAttr) {
         init()
     }
 
@@ -98,45 +99,55 @@ abstract class AbstractBoardView : View {
 
     private inner class Drawer {
 
-        fun fillPaint(color: Long) = Paint().also { it.color = color.toInt(); it.isAntiAlias = true }
-
         val boardPaint = fillPaint(0xFFD48E00)
         val blackPaint = fillPaint(0xFF000000)
         val whitePaint = fillPaint(0xFFFFFFFF)
         val blackTranslucentPaint = fillPaint(0x55000000)
         val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
 
+        var screenSize = 0.0F
+        val linePaint = linePaint(0xFF000000)
+        val currentLinePaint = linePaint(0xFFFF9900)
+
         fun draw(g: Canvas) {
             g.save()
 
-            val boardSize = boardSize
-            val screenSize = min(width, height).toFloat()
+            screenSize = min(width, height).toFloat()
 
-            fun boardToScreen(bc: Float) = (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
-            val lineDistance = (boardToScreen(1.0F) - boardToScreen(0.0F))
-
-            val lineWidth = floor(lineDistance / 20.0F).coerceAtLeast(1.0F)
-
-            fun linePaint(color: Long) = Paint().also { it.color = color.toInt(); it.strokeWidth = lineWidth }
-
-            val linePaint = linePaint(0xFF000000)
-            val currentLinePaint = linePaint(0xFFFF9900)
-
-            g.drawRect(RectF(0.0F, 0.0F, width.toFloat(), height.toFloat()), boardPaint)
+            drawBackground(g)
 
             g.translate(
                 ((width - screenSize.toInt()) / 2).toFloat(),
                 ((height - screenSize.toInt()) / 2).toFloat()
             )
 
+            drawLines(g)
+            drawStones(g)
+
+            g.restore()
+        }
+
+        private fun drawBackground(g: Canvas) {
+            g.drawRect(RectF(0.0F, 0.0F, width.toFloat(), height.toFloat()), boardPaint)
+        }
+
+        private fun drawLines(g: Canvas) {
+            val lineDistance = boardToScreen(1) - boardToScreen(0)
+            val lineWidth = floor(lineDistance / 20.0F).coerceAtLeast(1.0F)
+
+            linePaint.strokeWidth = lineWidth
+            currentLinePaint.strokeWidth = lineWidth
+
             val crossX = cross.x
             val crossY = cross.y
-            val highlightCross = highlightCross && crossX in 0 until boardSize && crossY in 0 until boardSize
+            val highlightCross =
+                highlightCross && crossX in 0 until boardSize && crossY in 0 until boardSize
 
-            for (i in (0 until boardSize)) {
-                val start = boardToScreen(0.0F) - lineWidth / 2.0F
-                val end = boardToScreen((boardSize - 1).toFloat()) + lineWidth / 2.0F
-                val fixed = boardToScreen(i.toFloat())
+            for (i in 0 until boardSize) {
+                val start = boardToScreen(0) - lineWidth / 2.0F
+                val end = boardToScreen(boardSize - 1) + lineWidth / 2.0F
+                val fixed = boardToScreen(i)
+
                 if (!(highlightCross && i == crossY)) {
                     g.drawLine(start, fixed, end, fixed, linePaint)
                 }
@@ -146,63 +157,66 @@ abstract class AbstractBoardView : View {
             }
 
             if (highlightCross) {
-                drawCross(
-                    lineWidth,
-                    boardSize,
-                    crossX,
-                    g,
-                    currentLinePaint,
-                    crossY,
-                    ::boardToScreen
-                )
+                val startY = boardToScreen(0) + lineWidth / 2.0F
+                val endY = boardToScreen(boardSize - 1) - lineWidth / 2.0F
+                val screenX = boardToScreen(crossX)
+                g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+
+                val startX = boardToScreen(0) + lineWidth / 2.0F
+                val endX = boardToScreen(boardSize - 1) - lineWidth / 2.0F
+                val screenY = boardToScreen(crossY)
+                g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
             }
-
-            fun fillCircle(g: Canvas, x: Int, y: Int, radius: Float, paint: Paint) {
-                val top = boardToScreen(y - radius)
-                val left = boardToScreen(x - radius)
-                val bottom = boardToScreen(y + radius)
-                val right = boardToScreen(x + radius)
-                g.drawOval(RectF(left, top, right, bottom), paint)
-            }
-
-            for (y in 0 until boardSize) {
-                for (x in 0 until boardSize) {
-
-                    val cell = getBoard(x, y)
-                    if (cell.dead || cell.territory != null) {
-                        if (cell.dead) {
-                            fillCircle(g, x, y, 0.48F, if (cell.color == Player.BLACK) blackTranslucentPaint else whiteTranslucentPaint)
-                        }
-                        if (cell.territory != null) {
-                            fillCircle(g, x, y, 0.16F, if (cell.territory == Player.BLACK) blackPaint else whitePaint)
-                        }
-                    } else if (cell.color != null) {
-                        fillCircle(g, x, y, 0.48F, if (cell.color == Player.BLACK) blackPaint else whitePaint)
-                    }
-                }
-            }
-
-            g.restore()
         }
 
-        private fun drawCross(
-            lineWidth: Float,
-            boardSize: Int,
-            crossX: Int,
-            g: Canvas,
-            currentLinePaint: Paint,
-            crossY: Int,
-            boardToScreen: (Float) -> Float
-        ) {
-            val startY = boardToScreen(0.0F) + lineWidth / 2.0F
-            val endY = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
-            val screenX = boardToScreen(crossX.toFloat())
-            g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+        private fun drawStones(g: Canvas) {
+            for (y in 0 until boardSize) {
+                for (x in 0 until boardSize) {
+                    drawStone(g, x, y)
+                }
+            }
+        }
 
-            val startX = boardToScreen(0.0F) + lineWidth / 2.0F
-            val endX = boardToScreen((boardSize - 1).toFloat()) - lineWidth / 2.0F
-            val screenY = boardToScreen(crossY.toFloat())
-            g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
+        private fun drawStone(g: Canvas, x: Int, y: Int) {
+            val cell = getBoard(x, y)
+            if (cell.dead || cell.territory != null) {
+                if (cell.dead) {
+                    val paint =
+                        if (cell.color == Player.BLACK) blackTranslucentPaint else whiteTranslucentPaint
+                    fillCircle(g, x, y, 0.48F, paint)
+                }
+                if (cell.territory != null) {
+                    val paint =
+                        if (cell.territory == Player.BLACK) blackPaint else whitePaint
+                    fillCircle(g, x, y, 0.16F, paint)
+                }
+            } else if (cell.color != null) {
+                val paint = if (cell.color == Player.BLACK) blackPaint else whitePaint
+                fillCircle(g, x, y, 0.48F, paint)
+            }
+        }
+
+        private fun fillCircle(g: Canvas, x: Int, y: Int, radius: Float, paint: Paint) {
+            val top = boardToScreenF(y - radius)
+            val left = boardToScreenF(x - radius)
+            val bottom = boardToScreenF(y + radius)
+            val right = boardToScreenF(x + radius)
+            g.drawOval(RectF(left, top, right, bottom), paint)
+        }
+
+        private fun boardToScreen(bc: Int) =
+            (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
+
+        private fun boardToScreenF(bc: Float) =
+            (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
+
+        private fun fillPaint(argb: Long) = Paint().apply {
+            color = argb.toInt()
+            isAntiAlias = true
+        }
+
+        private fun linePaint(argb: Long) = Paint().apply {
+            color = argb.toInt()
         }
     }
 }
