@@ -99,15 +99,15 @@ abstract class AbstractBoardView : View {
 
     private inner class Drawer {
 
-        val boardPaint = fillPaint(0xFFD48E00)
-        val blackPaint = fillPaint(0xFF000000)
-        val whitePaint = fillPaint(0xFFFFFFFF)
-        val blackTranslucentPaint = fillPaint(0x55000000)
-        val whiteTranslucentPaint = fillPaint(0x55FFFFFF)
+        val board = fillPaint(0xFFD48E00)
+        val black = fillPaint(0xFF000000)
+        val white = fillPaint(0xFFFFFFFF)
+        val softBlack = fillPaint(0x55000000)
+        val softWhite = fillPaint(0x55FFFFFF)
 
         var screenSize = 0.0F
-        val linePaint = linePaint(0xFF000000)
-        val currentLinePaint = linePaint(0xFFFF9900)
+        val line = linePaint(0xFF000000)
+        val currentLine = linePaint(0xFFFF9900)
 
         fun draw(g: Canvas) {
             g.save()
@@ -128,15 +128,15 @@ abstract class AbstractBoardView : View {
         }
 
         private fun drawBackground(g: Canvas) {
-            g.drawRect(RectF(0.0F, 0.0F, width.toFloat(), height.toFloat()), boardPaint)
+            g.drawRect(RectF(0.0F, 0.0F, width.toFloat(), height.toFloat()), board)
         }
 
         private fun drawLines(g: Canvas) {
             val lineDistance = boardToScreen(1) - boardToScreen(0)
             val lineWidth = floor(lineDistance / 20.0F).coerceAtLeast(1.0F)
 
-            linePaint.strokeWidth = lineWidth
-            currentLinePaint.strokeWidth = lineWidth
+            line.strokeWidth = lineWidth
+            currentLine.strokeWidth = lineWidth
 
             val crossX = cross.x
             val crossY = cross.y
@@ -149,10 +149,10 @@ abstract class AbstractBoardView : View {
                 val fixed = boardToScreen(i)
 
                 if (!(highlightCross && i == crossY)) {
-                    g.drawLine(start, fixed, end, fixed, linePaint)
+                    g.drawLine(start, fixed, end, fixed, line)
                 }
                 if (!(highlightCross && i == crossX)) {
-                    g.drawLine(fixed, start, fixed, end, linePaint)
+                    g.drawLine(fixed, start, fixed, end, line)
                 }
             }
 
@@ -160,12 +160,12 @@ abstract class AbstractBoardView : View {
                 val startY = boardToScreen(0) + lineWidth / 2.0F
                 val endY = boardToScreen(boardSize - 1) - lineWidth / 2.0F
                 val screenX = boardToScreen(crossX)
-                g.drawLine(screenX, startY, screenX, endY, currentLinePaint)
+                g.drawLine(screenX, startY, screenX, endY, currentLine)
 
                 val startX = boardToScreen(0) + lineWidth / 2.0F
                 val endX = boardToScreen(boardSize - 1) - lineWidth / 2.0F
                 val screenY = boardToScreen(crossY)
-                g.drawLine(startX, screenY, endX, screenY, currentLinePaint)
+                g.drawLine(startX, screenY, endX, screenY, currentLine)
             }
         }
 
@@ -181,17 +181,15 @@ abstract class AbstractBoardView : View {
             val cell = getBoard(x, y)
             if (cell.dead || cell.territory != null) {
                 if (cell.dead) {
-                    val paint =
-                        if (cell.color == Player.BLACK) blackTranslucentPaint else whiteTranslucentPaint
+                    val paint = if (cell.color == Player.BLACK) softBlack else softWhite
                     fillCircle(g, x, y, 0.48F, paint)
                 }
                 if (cell.territory != null) {
-                    val paint =
-                        if (cell.territory == Player.BLACK) blackPaint else whitePaint
+                    val paint = if (cell.territory == Player.BLACK) black else white
                     fillCircle(g, x, y, 0.16F, paint)
                 }
             } else if (cell.color != null) {
-                val paint = if (cell.color == Player.BLACK) blackPaint else whitePaint
+                val paint = if (cell.color == Player.BLACK) black else white
                 fillCircle(g, x, y, 0.48F, paint)
             }
         }
