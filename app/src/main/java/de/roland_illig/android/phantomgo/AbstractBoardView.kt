@@ -59,34 +59,32 @@ abstract class AbstractBoardView : View {
         fun screenToBoard(sc: Double) = (sc * (boardSize + 1) / size - 1).roundToInt()
         val x = screenToBoard(e.x.toDouble())
         val y = screenToBoard(e.y.toDouble())
-        when {
-            e.action == MotionEvent.ACTION_DOWN -> {
-                clickStart.set(x, y)
-                cross.set(x, y)
-                if (highlightCross) {
-                    invalidate()
-                }
-            }
-            e.action == MotionEvent.ACTION_UP -> {
-                clickEnd.set(x, y)
-                cross.set(-1, -1)
-                if (highlightCross) {
-                    invalidate()
-                }
-            }
-            Point(x, y) != cross -> {
-                cross.set(x, y)
-                if (highlightCross) {
-                    invalidate()
-                }
-            }
+
+        if (e.action == MotionEvent.ACTION_DOWN) {
+            clickStart.set(x, y)
+            cross.set(x, y)
+            if (highlightCross) invalidate()
+            return
+        }
+
+        if (e.action == MotionEvent.ACTION_UP) {
+            clickEnd.set(x, y)
+            cross.set(-1, -1)
+            if (highlightCross) invalidate()
+            return
+        }
+
+        if (Point(x, y) != cross) {
+            cross.set(x, y)
+            if (highlightCross) invalidate()
         }
     }
 
     private fun onClick() {
-        if (clickEnd.x in 0 until boardSize && clickEnd.y in 0 until boardSize && clickEnd == clickStart) {
-            onBoardClicked(clickEnd.x, clickEnd.y)
-        }
+        if (clickEnd.x !in 0 until boardSize) return
+        if (clickEnd.y !in 0 until boardSize) return
+        if (clickEnd != clickStart) return
+        onBoardClicked(clickEnd.x, clickEnd.y)
     }
 
     @SuppressLint("DrawAllocation")
