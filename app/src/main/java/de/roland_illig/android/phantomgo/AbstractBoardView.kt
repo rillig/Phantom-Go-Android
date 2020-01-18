@@ -56,10 +56,15 @@ abstract class AbstractBoardView : View {
     }
 
     private fun onTouch(e: MotionEvent) {
-        val size = min(width, height)
+        val unit = min(width, height) / (boardSize + 1)
+        val size = unit * (boardSize + 1)
+
+        val dx = ((width - size) / 2).toFloat()
+        val dy = ((height - size) / 2).toFloat()
+
         fun screenToBoard(sc: Double) = (sc * (boardSize + 1) / size - 1).roundToInt()
-        val x = screenToBoard(e.x.toDouble())
-        val y = screenToBoard(e.y.toDouble())
+        val x = screenToBoard(e.x.toDouble() - dx)
+        val y = screenToBoard(e.y.toDouble() - dy)
 
         if (e.action == MotionEvent.ACTION_DOWN) {
             clickStart.set(x, y)
