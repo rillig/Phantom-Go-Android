@@ -87,7 +87,6 @@ class PlayerActivity : AppCompatActivity() {
             AlertDialog.Builder(activity!!).run {
                 setMessage(getString(R.string.resign_question))
                 setPositiveButton(R.string.resign_button) { _, _ -> ctx.resign() }
-                setNegativeButton(android.R.string.cancel, null)
                 create()!!
             }
     }
