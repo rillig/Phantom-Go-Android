@@ -159,6 +159,8 @@ abstract class AbstractBoardView : View {
                 }
             }
 
+            drawHoshis(g)
+
             if (highlightCross) {
                 val startY = boardToScreen(0) + lineWidth / 2.0F
                 val endY = boardToScreen(boardSize - 1) - lineWidth / 2.0F
@@ -169,6 +171,29 @@ abstract class AbstractBoardView : View {
                 val endX = boardToScreen(boardSize - 1) - lineWidth / 2.0F
                 val screenY = boardToScreen(crossY)
                 g.drawLine(startX, screenY, endX, screenY, currentLine)
+            }
+        }
+
+        /** [https://senseis.xmp.net/?Hoshi] */
+        private fun drawHoshis(g: Canvas) {
+            fun drawHoshi(x: Int, y: Int) = fillCircle(g, x, y, 0.1F, black)
+
+            val small = if (boardSize < 13) 2 else 3
+            val center = boardSize / 2
+            val large = boardSize - 1 - small
+
+            if (boardSize % 2 != 0) drawHoshi(center, center)
+            if (boardSize >= 9) {
+                drawHoshi(small, small)
+                drawHoshi(large, small)
+                drawHoshi(small, large)
+                drawHoshi(large, large)
+            }
+            if (boardSize >= 19) {
+                drawHoshi(center, small)
+                drawHoshi(small, center)
+                drawHoshi(large, center)
+                drawHoshi(center, large)
             }
         }
 
