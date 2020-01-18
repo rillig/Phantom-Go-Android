@@ -2,6 +2,7 @@ package de.roland_illig.android.phantomgo
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import de.roland_illig.phantomgo.Intersection
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 import de.roland_illig.phantomgo.RefereeResult
@@ -74,10 +75,10 @@ class RefereeTest {
         assertReferee(
                 Locale.GERMAN,
 
-                "Schwarz zieht, Weiß ist dran.",
-                "Weiß zieht, Schwarz ist dran.",
+                "Schwarz hat gezogen, Weiß ist dran.",
+                "Weiß hat gezogen, Schwarz ist dran.",
 
-                "Schwarz zieht, Weiß ist dran.",
+                "Schwarz hat gezogen, Weiß ist dran.",
                 "Schwarz fängt einen Stein.",
                 "Schwarz fängt 3 Steine.",
                 "Schwarz setzt sich selbst ins Atari.",
@@ -129,22 +130,27 @@ class RefereeTest {
         val res = InstrumentationRegistry.getTargetContext().resources
         res.updateConfiguration(res.configuration.also { it.locale = locale }, res.displayMetrics)
 
-        val actuals = listOf(
-                Referee.comment(RefereeResult.Ok(false, false, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(false, false, 0), Player.WHITE, res),
+        val captured0 = listOf<Intersection>()
+        val captured1 = listOf(Intersection(1, 1))
+        val captured3 =
+            listOf(Intersection(1, 1), Intersection(1, 2), Intersection(2, 2))
 
-                Referee.comment(RefereeResult.Ok(false, false, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(false, false, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(false, false, 3), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(false, true, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(false, true, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(false, true, 3), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(true, false, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(true, false, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(true, false, 3), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(true, true, 0), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(true, true, 1), Player.BLACK, res),
-                Referee.comment(RefereeResult.Ok(true, true, 3), Player.BLACK, res),
+        val actuals = listOf(
+                Referee.comment(RefereeResult.Ok(false, false, captured0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, captured0), Player.WHITE, res),
+
+                Referee.comment(RefereeResult.Ok(false, false, captured0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, captured1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, false, captured3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, true, captured0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, true, captured1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(false, true, captured3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, false, captured0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, false, captured1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, false, captured3), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, true, captured0), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, true, captured1), Player.BLACK, res),
+                Referee.comment(RefereeResult.Ok(true, true, captured3), Player.BLACK, res),
 
                 Referee.comment(RefereeResult.OwnStone, Player.BLACK, res),
                 Referee.comment(RefereeResult.OtherStone, Player.BLACK, res),
