@@ -2,7 +2,7 @@ package de.roland_illig.phantomgo
 
 sealed class RefereeResult : java.io.Serializable {
 
-    abstract class Invalid(val reason: String) : RefereeResult() {
+    abstract class Invalid(private val reason: String) : RefereeResult() {
         override fun toString() = reason
     }
 
