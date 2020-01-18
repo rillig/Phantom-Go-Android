@@ -11,6 +11,7 @@
     <string name="white_button_description">Poser des pierres blancs</string>
     <string name="eraser_button_description">Enlever des pierres</string>
     <string name="resign_button">Résigner</string>
+    <string name="resign_question">Résigner vraiment\u00A0?</string>
     <string name="pass_button">Passer</string>
     <string name="not_your_turn">C’est pas à toi.</string>
 
@@ -19,7 +20,7 @@
     <string name="continue_button">Continuer</string>
 
     <string name="counting_title">Décompte</string>
-    <string name="result_summary">Noir: %d + %d = %d\nBlanc: %d + %d = %d</string>
+    <string name="result_summary">Noir\u00A0: %d + %d = %d\nBlanc\u00A0: %d + %d = %d</string>
     <string name="finish_button">Nouvelle partie</string>
 
     <string name="referee_black">Noir</string>

@@ -11,6 +11,7 @@
     <string name="white_button_description">Poner piedras blancas</string>
     <string name="eraser_button_description">Remover piedras</string>
     <string name="resign_button">Rendirse</string>
+    <string name="resign_question">¿Rendirse de veras?</string>
     <string name="pass_button">Pasar el turno</string>
     <string name="not_your_turn">No es tu turno.</string>
 

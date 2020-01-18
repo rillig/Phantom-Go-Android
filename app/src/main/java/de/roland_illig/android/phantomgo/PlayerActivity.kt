@@ -1,8 +1,10 @@
 package de.roland_illig.android.phantomgo
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import de.roland_illig.phantomgo.Game
@@ -40,8 +42,12 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     fun onResignClick(view: View) {
+        ResignDialogFragment().show(supportFragmentManager, "")
+    }
+
+    internal fun resign() {
         game = Game()
-        PlayerActivity.start(this)
+        start(this)
         finish()
     }
 
@@ -66,5 +72,23 @@ class PlayerActivity : AppCompatActivity() {
         fun start(ctx: Context) {
             ctx.startActivity(Intent(ctx, PlayerActivity::class.java))
         }
+    }
+
+    class ResignDialogFragment : DialogFragment() {
+
+        private lateinit var ctx: PlayerActivity
+
+        override fun onAttach(context: Context?) {
+            super.onAttach(context)
+            ctx = context as PlayerActivity
+        }
+
+        override fun onCreateDialog(savedInstanceState: Bundle?) =
+            AlertDialog.Builder(activity!!).run {
+                setMessage(getString(R.string.resign_question))
+                setPositiveButton(R.string.resign_button) { _, _ -> ctx.resign() }
+                setNegativeButton(android.R.string.cancel, null)
+                create()!!
+            }
     }
 }
