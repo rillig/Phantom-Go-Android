@@ -24,11 +24,11 @@ class CountingBoardView : AbstractBoardView {
 
     override val highlightCross get() = false
 
-    override fun getBoard(x: Int, y: Int): AbstractBoardView.Cell {
+    override fun getBoard(x: Int, y: Int): Cell {
         val stone = game.getRefereeBoard(x, y)
         val territory = countingBoard.getTerritory(x, y)
         val dead = countingBoard.isDead(x, y)
-        return AbstractBoardView.Cell(stone, territory, dead)
+        return Cell(stone, territory, dead)
     }
 
     override fun onBoardClicked(x: Int, y: Int) {
