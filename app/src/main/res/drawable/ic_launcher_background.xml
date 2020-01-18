@@ -6,14 +6,14 @@
     android:viewportHeight="108">
 
     <!--
-    Omitting the h6 below makes Samsung Experience-Start crash repeatedly,
-    which in turn makes the phone unusable because the Home screen cannot be
-    rendered anymore.
+    Replacing the "M0 0" with "M0z" in the below path makes Samsung
+    Experience-Start crash repeatedly, which in turn makes the phone
+    unusable because the Home screen cannot be rendered anymore.
 
     Omitting the whole path element makes several Android phones fall back
-    to the Android default app icon, the robot.
+    to the Android default app icon, showing a robot head.
     -->
     <path
         android:fillColor="@android:color/transparent"
-        android:pathData="M0h6z" />
+        android:pathData="M0 0" />
 </vector>
