@@ -1,7 +1,19 @@
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportHeight="108.0"
-    android:viewportWidth="108.0">
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!--
+    Omitting the h6 below makes Samsung Experience-Start crash repeatedly,
+    which in turn makes the phone unusable because the Home screen cannot be
+    rendered anymore.
+
+    Omitting the whole path element makes several Android phones fall back
+    to the Android default app icon, the robot.
+    -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M0h6z" />
 </vector>
