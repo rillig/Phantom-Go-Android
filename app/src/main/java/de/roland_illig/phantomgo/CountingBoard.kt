@@ -50,7 +50,7 @@ class CountingBoard(board: Board) : java.io.Serializable {
     }
 
     private fun floodFillStep(input: Array<Array<Player?>>, output: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
-        if (x in 0 until output.size && y in 0 until output.size) {
+        if (x in output.indices && y in output.indices) {
             if (!done[x][y] && (output[x][y] || input[x][y] == from)) {
                 done[x][y] = true
                 output[x][y] = true
