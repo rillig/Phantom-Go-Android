@@ -8,7 +8,7 @@ sealed class RefereeResult : java.io.Serializable {
 
     object OwnStone : Invalid("ownStone")
     object OtherStone : Invalid("otherStone")
-    object Suicide: Invalid("suicide")
+    object Suicide : Invalid("suicide")
     object Ko : Invalid("ko")
 
     object Pass : RefereeResult() {
@@ -16,18 +16,15 @@ sealed class RefereeResult : java.io.Serializable {
     }
 
     data class Ok(
-            val atari: Boolean,
-            val selfAtari: Boolean,
-            val capturedStones: List<Intersection>) : RefereeResult() {
+        val atari: Boolean,
+        val selfAtari: Boolean,
+        val capturedStones: List<Intersection>
+    ) : RefereeResult() {
 
-        override fun toString(): String {
-            if (!atari && !selfAtari && capturedStones.isEmpty()) {
-                return "ok"
-            }
-            val atariStr = if (atari) "atari" else ""
-            val selfAtariStr = if (selfAtari) "selfAtari" else ""
-            val capturedStr = if (capturedStones.isNotEmpty()) "captured ${capturedStones.size}" else ""
-            return listOf(atariStr, selfAtariStr, capturedStr).filter { it != "" }.joinToString()
-        }
+        override fun toString() = listOf(
+            if (atari) "atari" else "",
+            if (selfAtari) "selfAtari" else "",
+            if (capturedStones.isNotEmpty()) "captured ${capturedStones.size}" else ""
+        ).filter(String::isNotEmpty).joinToString().ifEmpty { "ok" }
     }
 }
