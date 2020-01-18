@@ -105,21 +105,19 @@ abstract class AbstractBoardView : View {
         val softBlack = fillPaint(0x55000000)
         val softWhite = fillPaint(0x55FFFFFF)
 
-        var screenSize = 0.0F
+        var unit = 0
         val line = linePaint(0xFF000000)
         val currentLine = linePaint(0xFFFF9900)
 
         fun draw(g: Canvas) {
             g.save()
 
-            screenSize = min(width, height).toFloat()
+            unit = min(width, height) / (boardSize + 1)
+            val size = unit * (boardSize + 1)
 
             drawBackground(g)
 
-            g.translate(
-                ((width - screenSize.toInt()) / 2).toFloat(),
-                ((height - screenSize.toInt()) / 2).toFloat()
-            )
+            g.translate(((width - size) / 2).toFloat(), ((height - size) / 2).toFloat())
 
             drawLines(g)
             drawStones(g)
@@ -202,11 +200,9 @@ abstract class AbstractBoardView : View {
             g.drawOval(RectF(left, top, right, bottom), paint)
         }
 
-        private fun boardToScreen(bc: Int) =
-            (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
+        private fun boardToScreen(bc: Int) = (unit * (bc + 1)).toFloat()
 
-        private fun boardToScreenF(bc: Float) =
-            (screenSize * (bc + 1) / (boardSize + 1)).roundToInt().toFloat()
+        private fun boardToScreenF(bc: Float) = unit * (bc + 1)
 
         private fun fillPaint(argb: Long) = Paint().apply {
             color = argb.toInt()
@@ -215,6 +211,7 @@ abstract class AbstractBoardView : View {
 
         private fun linePaint(argb: Long) = Paint().apply {
             color = argb.toInt()
+            style = Paint.Style.STROKE
         }
     }
 }
