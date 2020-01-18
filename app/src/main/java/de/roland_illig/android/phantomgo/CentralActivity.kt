@@ -1,8 +1,8 @@
 package de.roland_illig.android.phantomgo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import de.roland_illig.phantomgo.Game
 
 class CentralActivity : AppCompatActivity() {

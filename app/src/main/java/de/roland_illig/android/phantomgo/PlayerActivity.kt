@@ -4,9 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import de.roland_illig.phantomgo.Game
 import de.roland_illig.phantomgo.Player
 
@@ -78,7 +78,7 @@ class PlayerActivity : AppCompatActivity() {
 
         private lateinit var ctx: PlayerActivity
 
-        override fun onAttach(context: Context?) {
+        override fun onAttach(context: Context) {
             super.onAttach(context)
             ctx = context as PlayerActivity
         }

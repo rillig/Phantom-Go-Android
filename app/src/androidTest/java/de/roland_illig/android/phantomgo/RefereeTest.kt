@@ -1,7 +1,7 @@
 package de.roland_illig.android.phantomgo
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import de.roland_illig.phantomgo.Intersection
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
@@ -9,9 +9,9 @@ import de.roland_illig.phantomgo.RefereeResult
 import org.junit.ComparisonFailure
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.Locale
+import java.util.*
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(AndroidJUnit4ClassRunner::class)
 class RefereeTest {
 
     @Test
@@ -127,7 +127,7 @@ class RefereeTest {
     }
 
     private fun assertReferee(locale: Locale, vararg results: String) {
-        val res = InstrumentationRegistry.getTargetContext().resources
+        val res = InstrumentationRegistry.getInstrumentation().targetContext.resources
         res.updateConfiguration(res.configuration.also { it.locale = locale }, res.displayMetrics)
 
         val captured0 = listOf<Intersection>()
