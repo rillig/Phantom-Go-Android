@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import de.roland_illig.phantomgo.Game
@@ -22,6 +23,8 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+
+        onToolClick(findViewById(R.id.playButton))
     }
 
     override fun onResume() {
@@ -39,6 +42,16 @@ class PlayerActivity : AppCompatActivity() {
 
     fun onToolClick(view: View) {
         boardView().mode = view.id
+
+        // This is a brute-force approach at making the currently selected
+        // tool button visible. For sure there is a better approach than
+        // defining the colors here and looping manually over the buttons.
+        val group = view.parent as RadioGroup
+        for (i in 0 until group.childCount) {
+            val box = group.getChildAt(i)
+            val color = if (box == view) 0x55000000 else 0x33000000
+            box.setBackgroundColor(color)
+        }
     }
 
     fun onResignClick(view: View) {
