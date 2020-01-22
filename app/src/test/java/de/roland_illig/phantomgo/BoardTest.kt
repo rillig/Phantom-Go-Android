@@ -10,15 +10,16 @@ class BoardTest {
     fun testAtari() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + X + + + +",
-                "+ + + X O + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + X + + + +",
+            "+ + + X O + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(5, 3)
 
@@ -29,15 +30,16 @@ class BoardTest {
     fun testSuicide() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + O + + + +",
-                "+ + + O + O + + +",
-                "+ + + + O + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + O + + + +",
+            "+ + + O + O + + +",
+            "+ + + + O + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(4, 3)
 
@@ -48,15 +50,16 @@ class BoardTest {
     fun testGetLiberties() {
         val board = Board(9)
         board.setup(
-                "X + + X + + X + +",
-                "+ + + + + X + + +",
-                "+ + + + + + + + +",
-                "+ + X X + X X X +",
-                "X + + + + X + X +",
-                "X X + + + X X X +",
-                "+ X X + + + + + +",
-                "+ + X X + + O + +",
-                "+ + + X + O X + +")
+            "X + + X + + X + +",
+            "+ + + + + X + + +",
+            "+ + + + + + + + +",
+            "+ + X X + X X X +",
+            "X + + + + X + X +",
+            "X X + + + X X X +",
+            "+ X X + + + + + +",
+            "+ + X X + + O + +",
+            "+ + + X + O X + +"
+        )
 
         assertThat(board.getLiberties(0, 0)).isEqualTo(2)
         assertThat(board.getLiberties(3, 0)).isEqualTo(3)
@@ -67,89 +70,94 @@ class BoardTest {
         assertThat(board.getLiberties(6, 8)).isEqualTo(1)
 
         assertThatThrownBy { board.getLiberties(1, 0) }
-                .isInstanceOf(KotlinNullPointerException::class.java)
+            .isInstanceOf(KotlinNullPointerException::class.java)
     }
 
     @Test
     fun testCaptureOneStone() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + X + + + +",
-                "+ + + X O + + + +",
-                "+ + + + X + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + X + + + +",
+            "+ + + X O + + + +",
+            "+ + + + X + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(5, 4)
 
         assertThat(result.toString()).isEqualTo("captured 1")
         assertThat(board.getCaptured(Player.BLACK)).isEqualTo(1)
         assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
-        assertThat(board.toString()).isEqualTo(""
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + X + + + +\n"
-                + "+ + + X + X + + +\n"
-                + "+ + + + X + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n")
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + X + + + +",
+            "+ + + X + X + + +",
+            "+ + + + X + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
     }
 
     @Test
     fun testCaptureSnake() {
         val board = Board(9)
         board.setup(
-                "O O O O O O O O O",
-                "X X X X X X X X O",
-                "O O O O O O O X O",
-                "O X X X X X O X O",
-                "O X O O + X O X O",
-                "O X O X X X O X O",
-                "O X O O O O O X O",
-                "O X X X X X X X O",
-                "O O O O O O O O O")
+            "O O O O O O O O O",
+            "X X X X X X X X O",
+            "O O O O O O O X O",
+            "O X X X X X O X O",
+            "O X O O + X O X O",
+            "O X O X X X O X O",
+            "O X O O O O O X O",
+            "O X X X X X X X O",
+            "O O O O O O O O O"
+        )
 
-        board.copy().also { board ->
-            val result = board.play(4, 4)
+        board.copy().apply {
+            val result = play(4, 4)
 
             assertThat(result.toString()).isEqualTo("captured 48")
-            assertThat(board.getCaptured(Player.BLACK)).isEqualTo(48)
-            assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
-            assertThat(board.toString()).isEqualTo(""
-                    + "+ + + + + + + + +\n"
-                    + "X X X X X X X X +\n"
-                    + "+ + + + + + + X +\n"
-                    + "+ X X X X X + X +\n"
-                    + "+ X + + X X + X +\n"
-                    + "+ X + X X X + X +\n"
-                    + "+ X + + + + + X +\n"
-                    + "+ X X X X X X X +\n"
-                    + "+ + + + + + + + +\n")
+            assertThat(getCaptured(Player.BLACK)).isEqualTo(48)
+            assertThat(getCaptured(Player.WHITE)).isEqualTo(0)
+            assertThat(toStringLines()).containsExactly(
+                "+ + + + + + + + +",
+                "X X X X X X X X +",
+                "+ + + + + + + X +",
+                "+ X X X X X + X +",
+                "+ X + + X X + X +",
+                "+ X + X X X + X +",
+                "+ X + + + + + X +",
+                "+ X X X X X X X +",
+                "+ + + + + + + + +"
+            )
         }
 
-        board.copy().also { board ->
-            board.turn = Player.WHITE
-            val result = board.play(4, 4)
+        board.copy().apply {
+            turn = Player.WHITE
+            val result = play(4, 4)
 
             assertThat(result.toString()).isEqualTo("captured 32")
-            assertThat(board.getCaptured(Player.BLACK)).isEqualTo(0)
-            assertThat(board.getCaptured(Player.WHITE)).isEqualTo(32)
-            assertThat(board.toString()).isEqualTo(""
-                    + "O O O O O O O O O\n"
-                    + "+ + + + + + + + O\n"
-                    + "O O O O O O O + O\n"
-                    + "O + + + + + O + O\n"
-                    + "O + O O O + O + O\n"
-                    + "O + O + + + O + O\n"
-                    + "O + O O O O O + O\n"
-                    + "O + + + + + + + O\n"
-                    + "O O O O O O O O O\n")
+            assertThat(getCaptured(Player.BLACK)).isEqualTo(0)
+            assertThat(getCaptured(Player.WHITE)).isEqualTo(32)
+            assertThat(toStringLines()).containsExactly(
+                "O O O O O O O O O",
+                "+ + + + + + + + O",
+                "O O O O O O O + O",
+                "O + + + + + O + O",
+                "O + O O O + O + O",
+                "O + O + + + O + O",
+                "O + O O O O O + O",
+                "O + + + + + + + O",
+                "O O O O O O O O O"
+            )
         }
     }
 
@@ -157,15 +165,16 @@ class BoardTest {
     fun testCaptureInKo() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + X + + +",
-                "+ + + + X O + + +",
-                "+ + + X O + O + +",
-                "+ + + + X O + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + X + + +",
+            "+ + + + X O + + +",
+            "+ + + X O + O + +",
+            "+ + + + X O + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(5, 4)
 
@@ -176,15 +185,16 @@ class BoardTest {
     fun testSelfAtari() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + O +",
-                "+ + + + + + O X O",
-                "+ + + + + + O X X",
-                "+ + + + + + + O +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + O +",
+            "+ + + + + + O X O",
+            "+ + + + + + O X X",
+            "+ + + + + + + O +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(8, 0)
 
@@ -195,15 +205,16 @@ class BoardTest {
     fun testKo() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + O X + + + +",
-                "+ + O + + X + + +",
-                "+ + + O X + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + O X + + + +",
+            "+ + O + + X + + +",
+            "+ + + O X + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(3, 4)
 
@@ -222,15 +233,16 @@ class BoardTest {
     fun testStayInAtari() {
         val board = Board(9)
         board.setup(
-                "+ + + + + + + O X",
-                "+ + + + + + + O +",
-                "+ + + + + + + O +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +",
-                "+ + + + + + + + +")
+            "+ + + + + + + O X",
+            "+ + + + + + + O +",
+            "+ + + + + + + O +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +"
+        )
 
         val result = board.play(8, 1)
 

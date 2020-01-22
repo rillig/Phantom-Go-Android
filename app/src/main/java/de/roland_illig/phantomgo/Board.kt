@@ -1,8 +1,8 @@
 package de.roland_illig.phantomgo
 
-class Board(val size: Int) : java.io.Serializable {
+open class Board(val size: Int) : java.io.Serializable {
 
-    private val nowhere = Point(-1, -1)
+    private val nowhere = Intersection(-1, -1)
 
     private val pieces = Array(size) { Array<Player?>(size) { null } }
     private val captured = IntArray(2)
@@ -18,11 +18,13 @@ class Board(val size: Int) : java.io.Serializable {
             System.arraycopy(pieces[x], 0, copy.pieces[x], 0, size)
         }
         System.arraycopy(captured, 0, copy.captured, 0, captured.size)
+
         copy.turn = turn
         copy.prevMove = prevMove
         copy.passed = passed
         copy.gameOver = gameOver
         copy.empty = empty
+
         return copy
     }
 
@@ -34,14 +36,13 @@ class Board(val size: Int) : java.io.Serializable {
         if (x in 0 until size && y in 0 until size) {
             if (get(x, y) == turn && getLiberties(x, y) == 0) {
 
-                fun capture(x: Int, y: Int) {
-                    if (x in 0 until size && y in 0 until size && pieces[x][y] == turn) {
-                        pieces[x][y] = null
-                        captured += Intersection(x, y)
-                        capture(x - 1, y)
-                        capture(x + 1, y)
-                        capture(x, y - 1)
-                        capture(x, y + 1)
+                fun capture(cx: Int, cy: Int) {
+                    if (cx in 0 until size && cy in 0 until size && pieces[cx][cy] == turn) {
+                        pieces[cx][cy] = null
+                        captured += Intersection(cx, cy)
+                        for (n in neighbors(cx, cy)) {
+                            capture(n.x, n.y)
+                        }
                     }
                 }
 
@@ -105,15 +106,14 @@ class Board(val size: Int) : java.io.Serializable {
                     || !belowBefore && atari(x, y + 1, other)
 
             val capturedStones = mutableListOf<Intersection>()
-            captureCount(x - 1, y, other, capturedStones)
-            captureCount(x + 1, y, other, capturedStones)
-            captureCount(x, y - 1, other, capturedStones)
-            captureCount(x, y + 1, other, capturedStones)
+            for (n in neighbors(x, y)) {
+                captureCount(n.x, n.y, other, capturedStones)
+            }
 
             val selfAtari = atari(x, y, turn) && !selfAtariBefore
 
             captured[turn.ordinal] += capturedStones.size
-            prevMove = if (capturedStones.size == 1 && selfAtari) Point(x, y) else nowhere
+            prevMove = if (capturedStones.size == 1 && selfAtari) Intersection(x, y) else nowhere
             this.turn = other
             undo = false
             empty = false
@@ -147,37 +147,42 @@ class Board(val size: Int) : java.io.Serializable {
     }
 
     override fun toString(): String {
+        return toStringLines().joinToString("") { it + "\n" }
+    }
+
+    fun toStringLines(): List<String> {
+        val lines = mutableListOf<String>()
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
                 val player = get(x, y)
                 sb.append(if (player != null) "XO"[player.ordinal] else '+')
-                sb.append(if (x == size - 1) "\n" else " ")
+                if (x < size - 1) sb.append(" ") else {
+                    lines += sb.toString()
+                    sb.setLength(0)
+                }
             }
         }
-        return sb.toString()
+        return lines
     }
 
     fun getLiberties(x: Int, y: Int): Int {
         val color = get(x, y)!!
-        val todo = mutableSetOf<Point>()
-        val done = mutableSetOf<Point>()
-        val liberties = mutableSetOf<Point>()
+        val todo = mutableSetOf<Intersection>()
+        val done = mutableSetOf<Intersection>()
+        val liberties = mutableSetOf<Intersection>()
 
-        fun countInternal(nx: Int, ny: Int) {
-            if (nx in 0 until size && ny in 0 until size) {
-                val np = Point(nx, ny)
-                val neighbor = get(nx, ny)
-                if (neighbor == color && !done.contains(np)) {
-                    todo.add(np)
-                }
-                if (neighbor == null) {
-                    liberties.add(np)
-                }
+        fun countInternal(np: Intersection) {
+            val neighbor = get(np.x, np.y)
+            if (neighbor == color && !done.contains(np)) {
+                todo.add(np)
+            }
+            if (neighbor == null) {
+                liberties.add(np)
             }
         }
 
-        todo.add(Point(x, y))
+        todo.add(Intersection(x, y))
 
         while (todo.isNotEmpty()) {
             val it = todo.iterator()
@@ -185,16 +190,20 @@ class Board(val size: Int) : java.io.Serializable {
             it.remove()
             done.add(point)
 
-            val px = point.x
-            val py = point.y
-            countInternal(px - 1, py)
-            countInternal(px + 1, py)
-            countInternal(px, py - 1)
-            countInternal(px, py + 1)
+            for (n in neighbors(point.x, point.y)) {
+                countInternal(n)
+            }
         }
 
         return liberties.size
     }
 
-    internal data class Point(val x: Int, val y: Int) : java.io.Serializable
+    private fun neighbors(x: Int, y: Int): List<Intersection> {
+        val neighbors = mutableListOf<Intersection>()
+        if (y > 0) neighbors += Intersection(x, y - 1)
+        if (x > 0) neighbors += Intersection(x - 1, y)
+        if (x < size - 1) neighbors += Intersection(x + 1, y)
+        if (y < size - 1) neighbors += Intersection(x, y + 1)
+        return neighbors
+    }
 }
