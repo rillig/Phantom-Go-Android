@@ -248,6 +248,27 @@ class BoardTest {
 
         assertThat(result.toString()).isEqualTo("ok")
     }
+
+    @Test
+    fun testToroidal() {
+        val board = Board(9)
+        board.rules.toroidal = true
+        board.setup(
+            "O + + + + + + + X",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "O + + + + + + + X",
+            "+ O + + + + + X O"
+        )
+
+        val result = board.play(0, 8)
+
+        assertThat(result.toString()).isEqualTo("selfAtari, captured 1")
+    }
 }
 
 fun Board.setup(vararg rows: String) {
