@@ -73,23 +73,14 @@ open class Board(val size: Int) : java.io.Serializable {
                     && get(x, y) == color && getLiberties(x, y) == 1
         }
 
-        val selfAtariBefore = atari(x - 1, y, turn)
-                || atari(x + 1, y, turn)
-                || atari(x, y - 1, turn)
-                || atari(x, y + 1, turn)
+        val neighbors = neighbors(x, y)
+        val selfAtariBefore = neighbors.any { n -> atari(n.x, n.y, turn) }
 
-        val leftBefore = atari(x - 1, y, other)
-        val rightBefore = atari(x + 1, y, other)
-        val aboveBefore = atari(x, y - 1, other)
-        val belowBefore = atari(x, y + 1, other)
-        val capturesSomething = leftBefore || rightBefore || aboveBefore || belowBefore
+        val before = neighbors.map { atari(it.x, it.y, other) }
+        val capturesSomething = before.any { it }
 
-        val dx = x - prevMove.x
-        val dy = y - prevMove.y
-        if (dx * dx + dy * dy == 1) {
-            if (atari(prevMove.x, prevMove.y, other)) {
-                return RefereeResult.Ko
-            }
+        if (prevMove in neighbors && atari(prevMove.x, prevMove.y, other)) {
+            return RefereeResult.Ko
         }
 
         pieces[x][y] = turn
@@ -100,13 +91,11 @@ open class Board(val size: Int) : java.io.Serializable {
                 return RefereeResult.Suicide
             }
 
-            val atari = !leftBefore && atari(x - 1, y, other)
-                    || !rightBefore && atari(x + 1, y, other)
-                    || !aboveBefore && atari(x, y - 1, other)
-                    || !belowBefore && atari(x, y + 1, other)
+            val after = neighbors.map { atari(it.x, it.y, other) }
+            val atari = neighbors.indices.any { !before[it] && after[it] }
 
             val capturedStones = mutableListOf<Intersection>()
-            for (n in neighbors(x, y)) {
+            for (n in neighbors) {
                 captureCount(n.x, n.y, other, capturedStones)
             }
 
@@ -199,11 +188,12 @@ open class Board(val size: Int) : java.io.Serializable {
     }
 
     private fun neighbors(x: Int, y: Int): List<Intersection> {
+        val max = size - 1
         val neighbors = mutableListOf<Intersection>()
         if (y > 0) neighbors += Intersection(x, y - 1)
         if (x > 0) neighbors += Intersection(x - 1, y)
-        if (x < size - 1) neighbors += Intersection(x + 1, y)
-        if (y < size - 1) neighbors += Intersection(x, y + 1)
+        if (x < max) neighbors += Intersection(x + 1, y)
+        if (y < max) neighbors += Intersection(x, y + 1)
         return neighbors
     }
 }
