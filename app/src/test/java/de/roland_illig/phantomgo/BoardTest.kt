@@ -252,7 +252,7 @@ class BoardTest {
     @Test
     fun testToroidal() {
         val board = Board(9)
-        board.rules.toroidal = true
+        board.rules = Rules.Toroidal
         board.setup(
             "O + + + + + + + X",
             "+ + + + + + + + +",

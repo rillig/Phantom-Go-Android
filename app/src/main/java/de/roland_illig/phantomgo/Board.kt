@@ -3,7 +3,7 @@ package de.roland_illig.phantomgo
 open class Board(val size: Int) : java.io.Serializable {
 
     private val nowhere = Intersection(-1, -1)
-    var rules = Rules()
+    var rules = Rules.Normal
 
     private val pieces = Array(size) { Array<Player?>(size) { null } }
     private val captured = IntArray(2)
@@ -188,10 +188,8 @@ open class Board(val size: Int) : java.io.Serializable {
         return liberties.size
     }
 
-    private fun neighbors(x: Int, y: Int) = when {
-        rules.toroidal -> neighborsToroidal(x, y)
-        else -> neighborsDefault(x, y)
-    }
+    private fun neighbors(x: Int, y: Int) =
+        if (rules == Rules.Toroidal) neighborsToroidal(x, y) else neighborsDefault(x, y)
 
     private fun neighborsDefault(x: Int, y: Int): List<Intersection> {
         val max = size - 1

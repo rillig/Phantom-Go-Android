@@ -1,8 +1,8 @@
 package de.roland_illig.phantomgo
 
-data class Rules(
+enum class Rules {
+    Normal,
+
     /** See [toroidal go](https://senseis.xmp.net/?ToroidalGo). */
-    var toroidal: Boolean
-) {
-    constructor() : this(false)
+    Toroidal
 }
