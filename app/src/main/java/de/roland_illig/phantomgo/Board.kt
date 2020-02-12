@@ -25,26 +25,48 @@ open class Board(val size: Int) : java.io.Serializable {
 
     operator fun get(x: Int, y: Int) = pieces[x][y]
 
+    override fun toString() = toStringLines().joinToString("") { it + "\n" }
+
+    fun toStringLines(): List<String> {
+        val lines = mutableListOf<String>()
+        val sb = StringBuilder()
+        for (y in 0 until size) {
+            for (x in 0 until size) {
+                val player = get(x, y)
+                sb.append(if (player != null) "XO"[player.ordinal] else '+')
+                if (x < size - 1) sb.append(" ")
+                else {
+                    lines += sb.toString()
+                    sb.setLength(0)
+                }
+            }
+        }
+        return lines
+    }
+
     fun getCaptured(player: Player) = captured[player.ordinal]
 
-    private fun captureCount(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
-        if (!(x in 0 until size && y in 0 until size)) return
-        if (!(get(x, y) == turn && getLiberties(x, y) == 0)) return
-
-        fun capture(cx: Int, cy: Int) {
-            if (!(cx in 0 until size && cy in 0 until size)) return
-            if (pieces[cx][cy] != turn) return
-
-            pieces[cx][cy] = null
-            captured += Intersection(cx, cy)
-            for (n in neighbors(cx, cy)) capture(n.x, n.y)
+    fun edit(x: Int, y: Int, color: Player) {
+        turn = color
+        val result = play(x, y)
+        if (result is RefereeResult.Invalid) {
+            val newColor = if (result is RefereeResult.OwnStone) null else color
+            set(x, y, newColor)
         }
-
-        capture(x, y)
     }
 
     operator fun set(x: Int, y: Int, color: Player?) {
         pieces[x][y] = color
+    }
+
+    fun pass(): RefereeResult {
+        check(!gameOver) { "GameOver" }
+
+        empty = false
+        gameOver = passed
+        passed = true
+        turn = turn.other()
+        return RefereeResult.Pass
     }
 
     fun play(x: Int, y: Int): RefereeResult {
@@ -99,42 +121,20 @@ open class Board(val size: Int) : java.io.Serializable {
         }
     }
 
-    fun pass(): RefereeResult {
-        check(!gameOver) { "GameOver" }
+    private fun captureCount(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
+        if (!(x in 0 until size && y in 0 until size)) return
+        if (!(get(x, y) == turn && getLiberties(x, y) == 0)) return
 
-        empty = false
-        gameOver = passed
-        passed = true
-        turn = turn.other()
-        return RefereeResult.Pass
-    }
+        fun capture(cx: Int, cy: Int) {
+            if (!(cx in 0 until size && cy in 0 until size)) return
+            if (pieces[cx][cy] != turn) return
 
-    fun edit(x: Int, y: Int, color: Player) {
-        turn = color
-        val result = play(x, y)
-        if (result is RefereeResult.Invalid) {
-            val newColor = if (result is RefereeResult.OwnStone) null else color
-            set(x, y, newColor)
+            pieces[cx][cy] = null
+            captured += Intersection(cx, cy)
+            for (n in neighbors(cx, cy)) capture(n.x, n.y)
         }
-    }
 
-    override fun toString() = toStringLines().joinToString("") { it + "\n" }
-
-    fun toStringLines(): List<String> {
-        val lines = mutableListOf<String>()
-        val sb = StringBuilder()
-        for (y in 0 until size) {
-            for (x in 0 until size) {
-                val player = get(x, y)
-                sb.append(if (player != null) "XO"[player.ordinal] else '+')
-                if (x < size - 1) sb.append(" ")
-                else {
-                    lines += sb.toString()
-                    sb.setLength(0)
-                }
-            }
-        }
-        return lines
+        capture(x, y)
     }
 
     fun getLiberties(x: Int, y: Int): Int {
