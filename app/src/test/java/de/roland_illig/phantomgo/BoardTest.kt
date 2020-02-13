@@ -297,19 +297,3 @@ class BoardTest {
         assertThat(result.toString()).isEqualTo("selfAtari, captured 1")
     }
 }
-
-fun Board.setup(vararg rows: String) {
-    fun parseChar(ch: Char) = when (ch) {
-        'O' -> Player.WHITE
-        'X' -> Player.BLACK
-        '+' -> null
-        else -> throw IllegalArgumentException(ch.toString())
-    }
-
-    for (y in 0 until size) {
-        for (x in 0 until size) {
-            val ch = rows[y][2 * x]
-            this[x, y] = parseChar(ch)
-        }
-    }
-}
