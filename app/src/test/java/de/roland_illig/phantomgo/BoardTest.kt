@@ -7,7 +7,7 @@ import org.junit.Test
 class BoardTest {
 
     @Test
-    fun testAtari() {
+    fun atari() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + + +",
@@ -27,7 +27,7 @@ class BoardTest {
     }
 
     @Test
-    fun testSuicide() {
+    fun suicide() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + + +",
@@ -47,7 +47,7 @@ class BoardTest {
     }
 
     @Test
-    fun testGetLiberties() {
+    fun getLiberties() {
         val board = Board(9)
         board.setup(
             "X + + X + + X + +",
@@ -74,7 +74,7 @@ class BoardTest {
     }
 
     @Test
-    fun testCaptureOneStone() {
+    fun `capture one stone`() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + + +",
@@ -107,7 +107,7 @@ class BoardTest {
     }
 
     @Test
-    fun testCaptureSnake() {
+    fun `capture snake`() {
         val board = Board(9)
         board.setup(
             "O O O O O O O O O",
@@ -162,7 +162,7 @@ class BoardTest {
     }
 
     @Test
-    fun testCaptureInKo() {
+    fun `capture in ko`() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + + +",
@@ -182,7 +182,7 @@ class BoardTest {
     }
 
     @Test
-    fun testSelfAtari() {
+    fun `self-atari`() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + O +",
@@ -202,7 +202,7 @@ class BoardTest {
     }
 
     @Test
-    fun testKo() {
+    fun ko() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + + +",
@@ -230,7 +230,7 @@ class BoardTest {
     }
 
     @Test
-    fun testStayInAtari() {
+    fun `stay in atari`() {
         val board = Board(9)
         board.setup(
             "+ + + + + + + O X",
@@ -277,7 +277,7 @@ class BoardTest {
     }
 
     @Test
-    fun testToroidal() {
+    fun `toroidal, wrap-around at the edges`() {
         val board = Board(9)
         board.rules = Rules.Toroidal
         board.setup(
