@@ -14,7 +14,7 @@ open class Board(val size: Int) : java.io.Serializable {
     private val captured = IntArray(2)
     var turn = Player.BLACK
     private var prevMove = nowhere
-    private var passed = false
+    private var passed = 0
     var gameOver = false; private set
     var empty = true; private set
 
@@ -63,8 +63,8 @@ open class Board(val size: Int) : java.io.Serializable {
         check(!gameOver) { "GameOver" }
 
         empty = false
-        gameOver = passed
-        passed = true
+        passed ++
+        gameOver = passed>=2
         turn = turn.other()
         return RefereeResult.Pass
     }
@@ -109,11 +109,12 @@ open class Board(val size: Int) : java.io.Serializable {
 
             val selfAtari = atari(x, y, turn) && !selfAtariBefore
 
+            undo = false
             captured[turn.ordinal] += stones.size
             prevMove = if (stones.size == 1 && selfAtari) Intersection(x, y) else nowhere
             this.turn = other
-            undo = false
             empty = false
+            passed = 0
 
             return RefereeResult.Ok(atari, selfAtari, stones.toList())
         } finally {

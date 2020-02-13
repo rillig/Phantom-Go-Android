@@ -250,14 +250,18 @@ class BoardTest {
     }
 
     @Test
-    fun passThenContinuePlaying() {
+    fun `pass then continue playing`() {
         val board = Board(9)
         board.play(0, 0)
         board.pass()
         board.play(1, 1)
         board.pass()
 
-        assertThat(board.gameOver).isTrue() // FIXME
+        assertThat(board.gameOver).isFalse()
+
+        board.pass()
+
+        assertThat(board.gameOver).isTrue()
     }
 
     @Test
