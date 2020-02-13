@@ -312,18 +312,62 @@ class BoardTest {
             "+ + + + + + + + +",
             "+ + + + O + + + +"
         )
-        board.play(4,4)
 
+        val result = board.play(4, 4)
+
+        assertThat(result.toString()).isEqualTo("ok")
         assertThat(board.toStringLines()).containsExactly(
             "+ + + + + + + + +",
             "+ + + + + + + + +",
-            "+ + + + O + + + +", // FIXME: attract the white stone
+            "+ + + + O + + + +", // FIXME: attract this white stone
             "+ + + + + + + + +",
-            "+ + X + X + X X +", // FIXME: move the black stone away
+            "+ + X + X + X X +", // FIXME: push the left black stone away
             "+ + + + + + + + +",
-            "+ + + + O + + + +", // FIXME: attract the white stone
+            "+ + + + O + + + +", // FIXME: attract this white stone
             "+ + + + + + + + +",
             "+ + + + O + + + +"
+        )
+    }
+
+    @Test
+    fun `electric go, capturing order and other subtleties`() {
+        val board = Board(9)
+        board.rules = Rules.Electric
+        board.setup(
+            "+ + + O X X X X X",
+            "+ + + O X O O O X",
+            "+ + + O X O + O X",
+            "+ + + O X O + O X",
+            "+ + + O + + O X O",
+            "+ + + + + X + X O",
+            "+ + + + + + + X O",
+            "+ + + + + + X X O",
+            "+ + + + X O O O O"
+        )
+
+        val result = board.play(5, 4)
+        //
+        // First, the stone at 3,4 is attracted to 4,4,
+        // and at the same time, the stone at 5,5 is pushed to 5,7.
+        //
+        // Then, all captured opponent groups (white) are removed.
+        // After that, all captured own groups (black) are removed
+        // (none in this case, since the white group has been removed before).
+
+        // FIXME: capture 8 white stones
+        //  No self-atari for the large black chain since it already was in atari before.
+        //  Self-atari for the newly placed stone.
+        assertThat(result.toString()).isEqualTo("ok")
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + O X X X X X",
+            "+ + + O X O O O X",
+            "+ + + O X O + O X",
+            "+ + + O X O + O X",
+            "+ + + O + X O X O", // FIXME: see above
+            "+ + + + + X + X O",
+            "+ + + + + + + X O",
+            "+ + + + + + X X O",
+            "+ + + + X O O O O"
         )
     }
 }
