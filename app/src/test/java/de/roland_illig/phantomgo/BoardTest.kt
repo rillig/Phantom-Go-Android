@@ -250,6 +250,17 @@ class BoardTest {
     }
 
     @Test
+    fun passThenContinuePlaying() {
+        val board = Board(9)
+        board.play(0, 0)
+        board.pass()
+        board.play(1, 1)
+        board.pass()
+
+        assertThat(board.gameOver).isTrue() // FIXME
+    }
+
+    @Test
     fun testToroidal() {
         val board = Board(9)
         board.rules = Rules.Toroidal
