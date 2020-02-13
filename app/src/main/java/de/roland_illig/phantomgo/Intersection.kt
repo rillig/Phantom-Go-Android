@@ -4,5 +4,5 @@ data class Intersection(
     val x: Int,
     val y: Int
 ) : java.io.Serializable {
-    override fun toString() = "${"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[x]}${y + 1}"
+    override fun toString() = if (x == -1) "" else "${"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[x]}${y + 1}"
 }

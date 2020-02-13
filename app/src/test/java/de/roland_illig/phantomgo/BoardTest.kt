@@ -264,6 +264,18 @@ class BoardTest {
         assertThat(board.gameOver).isTrue()
     }
 
+    /**
+     * Until 2020-02-13, saving the state had thrown a NotSerializableException
+     * because the Intersection was not serializable.
+     *
+     * Since [Board.copy] is implemented using serialization, this test ensures
+     * that all involved classes are indeed serializable.
+     */
+    @Test
+    fun `copy board via serialization`() {
+        Board(9).copy()
+    }
+
     @Test
     fun testToroidal() {
         val board = Board(9)
