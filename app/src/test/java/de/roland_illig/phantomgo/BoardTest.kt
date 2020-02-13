@@ -296,4 +296,34 @@ class BoardTest {
 
         assertThat(result.toString()).isEqualTo("selfAtari, captured 1")
     }
+
+    @Test
+    fun `electric go, basic moves`() {
+        val board = Board(9)
+        board.rules = Rules.Electric
+        board.setup(
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + O + + + +",
+            "+ + + + + + + + +",
+            "+ + X + + + X X +",
+            "+ + + + + + + + +",
+            "+ + + + O + + + +",
+            "+ + + + + + + + +",
+            "+ + + + O + + + +"
+        )
+        board.play(4,4)
+
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + + + + + + +",
+            "+ + + + + + + + +",
+            "+ + + + O + + + +", // FIXME: attract the white stone
+            "+ + + + + + + + +",
+            "+ + X + X + X X +", // FIXME: move the black stone away
+            "+ + + + + + + + +",
+            "+ + + + O + + + +", // FIXME: attract the white stone
+            "+ + + + + + + + +",
+            "+ + + + O + + + +"
+        )
+    }
 }

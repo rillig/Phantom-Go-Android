@@ -4,5 +4,8 @@ enum class Rules {
     Normal,
 
     /** See [toroidal go](https://senseis.xmp.net/?ToroidalGo). */
-    Toroidal
+    Toroidal,
+
+    /** See [electric go](https://senseis.xmp.net/?ElectricGo). */
+    Electric
 }
