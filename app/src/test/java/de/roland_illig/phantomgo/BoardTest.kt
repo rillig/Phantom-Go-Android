@@ -319,11 +319,11 @@ class BoardTest {
         assertThat(board.toStringLines()).containsExactly(
             "+ + + + + + + + +",
             "+ + + + + + + + +",
-            "+ + + + O + + + +", // FIXME: attract this white stone
             "+ + + + + + + + +",
-            "+ + X + X + X X +", // FIXME: push the left black stone away
+            "+ + + + O + + + +",
+            "X + + + X + X X +",
+            "+ + + + O + + + +",
             "+ + + + + + + + +",
-            "+ + + + O + + + +", // FIXME: attract this white stone
             "+ + + + + + + + +",
             "+ + + + O + + + +"
         )
@@ -357,16 +357,16 @@ class BoardTest {
         // FIXME: capture 8 white stones
         //  No self-atari for the large black chain since it already was in atari before.
         //  Self-atari for the newly placed stone.
-        assertThat(result.toString()).isEqualTo("ok")
+        assertThat(result.toString()).isEqualTo("selfAtari")
         assertThat(board.toStringLines()).containsExactly(
             "+ + + O X X X X X",
             "+ + + O X O O O X",
             "+ + + O X O + O X",
             "+ + + O X O + O X",
-            "+ + + O + X O X O", // FIXME: see above
-            "+ + + + + X + X O",
+            "+ + + + O X O X O",
             "+ + + + + + + X O",
-            "+ + + + + + X X O",
+            "+ + + + + + + X O",
+            "+ + + + + X X X O",
             "+ + + + X O O O O"
         )
     }

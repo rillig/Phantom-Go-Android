@@ -92,6 +92,37 @@ open class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.Suicide
         }
 
+        fun electric(dx: Int, dy: Int) {
+            val range = 0 until size
+            var ox = x + dx
+            var oy = y + dy
+            while (ox in range && oy in range) {
+                val oc = this[ox, oy]
+                if (oc == other && x + dx in range && y + dy in range) {
+                    if (!(x + dx == ox && y + dy == oy)) {
+                        this[x + dx, y + dy] = oc
+                        this[ox, oy] = null
+                    }
+                    return
+                } else if (oc == turn && ox + dx in range && oy + dy in range && this[ox + dx, oy + dy] == null) {
+                    this[ox, oy] = null
+                    this[ox + dx, oy + dy] = turn
+                } else if (oc == null) {
+                    ox += dx
+                    oy += dy
+                } else {
+                    return
+                }
+            }
+        }
+
+        if (rules == Rules.Electric) {
+            electric(0, -1)
+            electric(-1, 0)
+            electric(+1, 0)
+            electric(0, +1)
+        }
+
         val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && atari(n, other) }
 
         val captured = mutableListOf<Intersection>()
