@@ -132,7 +132,7 @@ open class Board(val size: Int) : java.io.Serializable {
         val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && isAtari(n, other) }
 
         val captured = mutableListOf<Intersection>()
-        for (n in neighbors) capture(n, other, captured)
+        for (n in neighbors) maybeCapture(n, other, captured)
 
         val selfAtari = isAtari(pos, turn) && !selfAtariBefore
 
@@ -150,7 +150,7 @@ open class Board(val size: Int) : java.io.Serializable {
                 && get(pos) == color && getLiberties(pos) == 1
     }
 
-    private fun capture(pos: Intersection, turn: Player, captured: MutableList<Intersection>) {
+    private fun maybeCapture(pos: Intersection, turn: Player, captured: MutableList<Intersection>) {
         if (!pos.ok()) return
         if (!(get(pos) == turn && getLiberties(pos) == 0)) return
 
