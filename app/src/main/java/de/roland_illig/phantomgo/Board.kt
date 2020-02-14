@@ -83,12 +83,12 @@ open class Board(val size: Int) : java.io.Serializable {
 
         val neighbors = neighbors(pos)
         val koMove = koMove
-        if (koMove != null && koMove in neighbors && atari(koMove, other)) {
+        if (koMove != null && koMove in neighbors && isAtari(koMove, other)) {
             return RefereeResult.Ko
         }
 
-        val atariBefore = neighbors.map { atari(it, other) }
-        val selfAtariBefore = neighbors.any { atari(it, turn) }
+        val atariBefore = neighbors.map { isAtari(it, other) }
+        val selfAtariBefore = neighbors.any { isAtari(it, turn) }
 
         this[pos] = turn
         if (atariBefore.all { !it } && getLiberties(pos) == 0) {
@@ -129,12 +129,12 @@ open class Board(val size: Int) : java.io.Serializable {
             electric(Direction(0, +1))
         }
 
-        val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && atari(n, other) }
+        val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && isAtari(n, other) }
 
         val captured = mutableListOf<Intersection>()
         for (n in neighbors) capture(n, other, captured)
 
-        val selfAtari = atari(pos, turn) && !selfAtariBefore
+        val selfAtari = isAtari(pos, turn) && !selfAtariBefore
 
         this.captured[turn.ordinal] += captured.size
         this.koMove = if (captured.size == 1 && selfAtari) pos else null
@@ -145,7 +145,7 @@ open class Board(val size: Int) : java.io.Serializable {
         return RefereeResult.Ok(atari, selfAtari, captured.toList())
     }
 
-    private fun atari(pos: Intersection, color: Player): Boolean {
+    private fun isAtari(pos: Intersection, color: Player): Boolean {
         return pos.x in 0 until size && pos.y in 0 until size
                 && get(pos) == color && getLiberties(pos) == 1
     }
