@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
 import de.roland_illig.phantomgo.Game
+import de.roland_illig.phantomgo.Intersection
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 
@@ -32,14 +33,14 @@ class PlayerBoardView : AbstractBoardView {
         updateViews()
     }
 
-    override fun getBoard(x: Int, y: Int) = AbstractBoardView.Cell(getBoard()[x, y], null, false)
+    override fun getBoard(x: Int, y: Int) = Cell(getBoard()[Intersection(x, y)], null, false)
 
     override fun onBoardClicked(x: Int, y: Int) {
         val board = this.getBoard()
         when (mode) {
             R.id.playButton -> onPlayModeClick(x, y)
-            R.id.blackButton -> board.edit(x, y, Player.BLACK)
-            R.id.whiteButton -> board.edit(x, y, Player.WHITE)
+            R.id.blackButton -> board.edit(Intersection(x, y), Player.BLACK)
+            R.id.whiteButton -> board.edit(Intersection(x, y), Player.WHITE)
             R.id.eraserButton -> board[x, y] = null
         }
         invalidate()

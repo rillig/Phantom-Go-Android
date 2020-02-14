@@ -218,7 +218,7 @@ class BoardPlayTest {
     /* h1. Helper Methods */
 
     private fun assertPlay(x: Int, y: Int, expectedResult: String) {
-        val result = board.play(x, y)
+        val result = board.play(Intersection(x, y))
         assertThat(result.toString()).isEqualTo(expectedResult)
     }
 

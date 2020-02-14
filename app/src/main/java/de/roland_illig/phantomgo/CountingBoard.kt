@@ -43,7 +43,7 @@ class CountingBoard(board: Board) : java.io.Serializable {
         val pieces = Array(size) { arrayOfNulls<Player?>(size) }
         for (y in 0 until size) {
             for (x in 0 until size) {
-                pieces[x][y] = board[x, y]
+                pieces[x][y] = board[Intersection(x, y)]
             }
         }
         return pieces

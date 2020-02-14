@@ -22,7 +22,11 @@ open class Board(val size: Int) : java.io.Serializable {
         return ObjectInputStream(ByteArrayInputStream(it.toByteArray())).readObject() as Board
     }
 
-    operator fun get(x: Int, y: Int) = pieces[x][y]
+    operator fun get(pos: Intersection) = pieces[pos.x][pos.y]
+
+    operator fun set(pos: Intersection, color: Player?) {
+        pieces[pos.x][pos.y] = color
+    }
 
     override fun toString() = toStringLines().joinToString("") { it + "\n" }
 
@@ -31,7 +35,7 @@ open class Board(val size: Int) : java.io.Serializable {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                val player = get(x, y)
+                val player = pieces[x][y]
                 sb.append(if (player != null) "XO"[player.ordinal] else '+')
                 if (x < size - 1) sb.append(" ")
                 else {
@@ -45,12 +49,12 @@ open class Board(val size: Int) : java.io.Serializable {
 
     fun getCaptured(player: Player) = captured[player.ordinal]
 
-    fun edit(x: Int, y: Int, color: Player) {
+    fun edit(pos: Intersection, color: Player) {
         turn = color
-        val result = play(x, y)
+        val result = play(pos)
         if (result is RefereeResult.Invalid) {
             val newColor = if (result is RefereeResult.OwnStone) null else color
-            set(x, y, newColor)
+            set(pos, newColor)
         }
     }
 
@@ -68,16 +72,16 @@ open class Board(val size: Int) : java.io.Serializable {
         return RefereeResult.Pass
     }
 
-    fun play(x: Int, y: Int): RefereeResult {
+    fun play(pos: Intersection): RefereeResult {
         check(!gameOver) { "GameOver" }
 
         val turn = turn
         val other = turn.other()
 
-        if (get(x, y) == turn) return RefereeResult.OwnStone
-        if (get(x, y) == other) return RefereeResult.OtherStone
+        if (this[pos] == turn) return RefereeResult.OwnStone
+        if (this[pos] == other) return RefereeResult.OtherStone
 
-        val neighbors = neighbors(x, y)
+        val neighbors = neighbors(pos)
         val koMove = koMove
         if (koMove != null && koMove in neighbors && atari(koMove, other)) {
             return RefereeResult.Ko
@@ -86,52 +90,54 @@ open class Board(val size: Int) : java.io.Serializable {
         val atariBefore = neighbors.map { atari(it, other) }
         val selfAtariBefore = neighbors.any { atari(it, turn) }
 
-        pieces[x][y] = turn
-        if (atariBefore.all { !it } && getLiberties(x, y) == 0) {
-            pieces[x][y] = null
+        this[pos] = turn
+        if (atariBefore.all { !it } && getLiberties(pos) == 0) {
+            this[pos] = null
             return RefereeResult.Suicide
         }
 
-        fun electric(dx: Int, dy: Int) {
-            val range = 0 until size
-            var ox = x + dx
-            var oy = y + dy
-            while (ox in range && oy in range) {
-                val oc = this[ox, oy]
-                if (oc == other && x + dx in range && y + dy in range) {
-                    if (!(x + dx == ox && y + dy == oy)) {
-                        this[x + dx, y + dy] = oc
-                        this[ox, oy] = null
-                    }
-                    return
-                } else if (oc == turn && ox + dx in range && oy + dy in range && this[ox + dx, oy + dy] == null) {
-                    this[ox, oy] = null
-                    this[ox + dx, oy + dy] = turn
-                } else if (oc == null) {
-                    ox += dx
-                    oy += dy
-                } else {
-                    return
-                }
+        data class Direction(val x: Int, val y: Int)
+
+        operator fun Intersection.plus(dir: Direction) =
+            Intersection(this.x + dir.x, this.y + dir.y)
+
+        operator fun Intersection.minus(dir: Direction) =
+            Intersection(this.x - dir.x, this.y - dir.y)
+
+        fun electric(dir: Direction) {
+            var from = pos + dir
+            while (from.ok() && this[from] == null) from += dir
+            if (!from.ok()) return
+
+            val to = if (this[from] == turn) {
+                var to = from + dir
+                while (to.ok() && this[to] == null) to += dir
+                to - dir
+            } else {
+                pos + dir
             }
+
+            if (to == from) return
+            this[to] = this[from]
+            this[from] = null
         }
 
         if (rules == Rules.Electric) {
-            electric(0, -1)
-            electric(-1, 0)
-            electric(+1, 0)
-            electric(0, +1)
+            electric(Direction(0, -1))
+            electric(Direction(-1, 0))
+            electric(Direction(+1, 0))
+            electric(Direction(0, +1))
         }
 
         val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && atari(n, other) }
 
         val captured = mutableListOf<Intersection>()
-        for (n in neighbors) capture(n.x, n.y, other, captured)
+        for (n in neighbors) capture(n, other, captured)
 
-        val selfAtari = atari(Intersection(x, y), turn) && !selfAtariBefore
+        val selfAtari = atari(pos, turn) && !selfAtariBefore
 
         this.captured[turn.ordinal] += captured.size
-        this.koMove = if (captured.size == 1 && selfAtari) Intersection(x, y) else null
+        this.koMove = if (captured.size == 1 && selfAtari) pos else null
         this.turn = other
         empty = false
         passed = 0
@@ -139,40 +145,39 @@ open class Board(val size: Int) : java.io.Serializable {
         return RefereeResult.Ok(atari, selfAtari, captured.toList())
     }
 
-    private fun atari(i: Intersection, color: Player): Boolean {
-        return i.x in 0 until size && i.y in 0 until size
-                && get(i.x, i.y) == color && getLiberties(i.x, i.y) == 1
+    private fun atari(pos: Intersection, color: Player): Boolean {
+        return pos.x in 0 until size && pos.y in 0 until size
+                && get(pos) == color && getLiberties(pos) == 1
     }
 
-    private fun capture(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
-        if (!(x in 0 until size && y in 0 until size)) return
-        if (!(get(x, y) == turn && getLiberties(x, y) == 0)) return
+    private fun capture(pos: Intersection, turn: Player, captured: MutableList<Intersection>) {
+        if (!pos.ok()) return
+        if (!(get(pos) == turn && getLiberties(pos) == 0)) return
 
-        fun takeOut(cx: Int, cy: Int) {
-            if (!(cx in 0 until size && cy in 0 until size)) return
-            if (pieces[cx][cy] != turn) return
+        fun takeOut(pos: Intersection) {
+            if (this[pos] != turn) return
 
-            pieces[cx][cy] = null
-            captured += Intersection(cx, cy)
-            for (n in neighbors(cx, cy)) takeOut(n.x, n.y)
+            this[pos] = null
+            captured += pos
+            for (n in neighbors(pos)) if (n.ok()) takeOut(n)
         }
 
-        takeOut(x, y)
+        takeOut(pos)
     }
 
-    fun getLiberties(x: Int, y: Int): Int {
-        val color = get(x, y)!!
+    fun getLiberties(pos: Intersection): Int {
+        val color = this[pos]!!
         val todo = mutableSetOf<Intersection>()
         val done = mutableSetOf<Intersection>()
         val liberties = mutableSetOf<Intersection>()
 
         fun countInternal(np: Intersection) {
-            val neighbor = get(np.x, np.y)
+            val neighbor = this[np]
             if (neighbor == color && !done.contains(np)) todo.add(np)
             if (neighbor == null) liberties.add(np)
         }
 
-        todo.add(Intersection(x, y))
+        todo.add(pos)
 
         while (todo.isNotEmpty()) {
             val it = todo.iterator()
@@ -180,14 +185,15 @@ open class Board(val size: Int) : java.io.Serializable {
             it.remove()
             done.add(point)
 
-            for (n in neighbors(point.x, point.y)) countInternal(n)
+            for (n in neighbors(point)) countInternal(n)
         }
 
         return liberties.size
     }
 
-    private fun neighbors(x: Int, y: Int): List<Intersection> {
+    private fun neighbors(pos: Intersection): List<Intersection> {
         val max = size - 1
+        val (x, y) = pos
         return if (rules == Rules.Toroidal) {
             listOf(
                 Intersection(x, if (y > 0) y - 1 else max),
@@ -204,4 +210,6 @@ open class Board(val size: Int) : java.io.Serializable {
             neighbors
         }
     }
+
+    private fun Intersection.ok() = this.x in 0 until size && this.y in 0 until size
 }

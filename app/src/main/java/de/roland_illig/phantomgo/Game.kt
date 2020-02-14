@@ -24,8 +24,9 @@ class Game(val size: Int = 9) : java.io.Serializable {
     }
 
     fun play(x: Int, y: Int): RefereeResult {
+        val pos = Intersection(x, y)
         val board = playerBoard()
-        val result = refereeBoard.play(x, y)
+        val result = refereeBoard.play(pos)
         refereeHistory.add(RefereeHistoryEntry(turn, result))
 
         when (result) {
@@ -34,10 +35,10 @@ class Game(val size: Int = 9) : java.io.Serializable {
             is RefereeResult.Suicide,
             is RefereeResult.Ko -> board[x, y] = null
             is RefereeResult.Ok -> {
-                val playerResult = board.copy().also { it.turn = turn }.play(x, y)
+                val playerResult = board.copy().also { it.turn = turn }.play(pos)
                 if (playerResult.toString() == result.toString()) {
                     board.turn = turn
-                    board.play(x, y)
+                    board.play(pos)
                 } else {
                     board[x, y] = turn
                 }
@@ -55,7 +56,7 @@ class Game(val size: Int = 9) : java.io.Serializable {
     val isGameOver get() = refereeBoard.gameOver
     val isInitial get() = refereeBoard.empty
 
-    fun getRefereeBoard(x: Int, y: Int) = refereeBoard[x, y]
+    fun getRefereeBoard(x: Int, y: Int) = refereeBoard[Intersection(x, y)]
 
     class RefereeHistoryEntry(val player: Player, val result: RefereeResult) : java.io.Serializable
 }

@@ -61,15 +61,17 @@ class BoardTest {
             "+ + + X + O X + +"
         )
 
-        assertThat(board.getLiberties(0, 0)).isEqualTo(2)
-        assertThat(board.getLiberties(3, 0)).isEqualTo(3)
-        assertThat(board.getLiberties(5, 1)).isEqualTo(4)
-        assertThat(board.getLiberties(2, 3)).isEqualTo(6)
-        assertThat(board.getLiberties(5, 3)).isEqualTo(13)
-        assertThat(board.getLiberties(3, 8)).isEqualTo(9)
-        assertThat(board.getLiberties(6, 8)).isEqualTo(1)
+        fun liberties(x: Int, y: Int) = board.getLiberties(Intersection(x, y))
 
-        assertThatThrownBy { board.getLiberties(1, 0) }
+        assertThat(liberties(0, 0)).isEqualTo(2)
+        assertThat(liberties(3, 0)).isEqualTo(3)
+        assertThat(liberties(5, 1)).isEqualTo(4)
+        assertThat(liberties(2, 3)).isEqualTo(6)
+        assertThat(liberties(5, 3)).isEqualTo(13)
+        assertThat(liberties(3, 8)).isEqualTo(9)
+        assertThat(liberties(6, 8)).isEqualTo(1)
+
+        assertThatThrownBy { liberties(1, 0) }
             .isInstanceOf(KotlinNullPointerException::class.java)
     }
 
@@ -370,4 +372,8 @@ class BoardTest {
             "+ + + + X O O O O"
         )
     }
+
+    operator fun Board.get(x: Int, y: Int) = this[Intersection(x, y)]
+
+    private fun Board.play(x: Int, y: Int): RefereeResult = play(Intersection(x, y))
 }
