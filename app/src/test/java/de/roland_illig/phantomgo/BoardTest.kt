@@ -185,20 +185,15 @@ class BoardTest {
 
     @Test
     fun `self-atari`() {
-        val board = Board(9)
+        val board = Board(4)
         board.setup(
-            "+ + + + + + + O +",
-            "+ + + + + + O X O",
-            "+ + + + + + O X X",
-            "+ + + + + + + O +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            "+ + O +",
+            "+ O X O",
+            "+ O X X",
+            "+ + O +"
         )
 
-        val result = board.play(8, 0)
+        val result = board.play(3, 0)
 
         assertThat("$result").isEqualTo("atari, selfAtari, captured 1")
     }
@@ -233,20 +228,14 @@ class BoardTest {
 
     @Test
     fun `stay in atari`() {
-        val board = Board(9)
+        val board = Board(3)
         board.setup(
-            "+ + + + + + + O X",
-            "+ + + + + + + O +",
-            "+ + + + + + + O +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            "+ O X",
+            "+ O +",
+            "+ O +"
         )
 
-        val result = board.play(8, 1)
+        val result = board.play(2, 1)
 
         assertThat("$result").isEqualTo("ok")
     }
@@ -297,6 +286,70 @@ class BoardTest {
         val result = board.play(0, 8)
 
         assertThat("$result").isEqualTo("selfAtari, captured 1")
+    }
+
+    @Test
+    fun `electric go, equal stones get pushed away`() {
+        val board = Board(5)
+        board.rules = Rules.Electric
+        board.setup(
+            "+ + + + +",
+            "+ + + X +",
+            "+ + X + +",
+            "+ X + + +",
+            "X + + + +"
+        )
+
+        fun playBlack(x: Int, y: Int) {
+            board.turn = Player.BLACK
+            board.play(x, y)
+        }
+
+        playBlack(4, 0)
+        playBlack(4, 1)
+        playBlack(4, 2)
+        playBlack(4, 3)
+        playBlack(4, 4)
+
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + + X",
+            "X + + + X",
+            "X + + + X",
+            "X + + + X",
+            "X + + + X"
+        )
+    }
+
+    @Test
+    fun `electric go, opponent stones get attracted`() {
+        val board = Board(5)
+        board.rules = Rules.Electric
+        board.setup(
+            "+ + + + +",
+            "+ + + O +",
+            "+ + O + +",
+            "+ O + + +",
+            "O + + + +"
+        )
+
+        fun playBlack(x: Int, y: Int) {
+            board.turn = Player.BLACK
+            board.play(x, y)
+        }
+
+        playBlack(4, 0)
+        playBlack(4, 1)
+        playBlack(4, 2)
+        playBlack(4, 3)
+        playBlack(4, 4)
+
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + + X",
+            "+ + + O X",
+            "+ + + O X",
+            "+ + + O X",
+            "+ + + O X"
+        )
     }
 
     @Test

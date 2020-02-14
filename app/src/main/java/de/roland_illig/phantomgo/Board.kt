@@ -87,11 +87,10 @@ open class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.Ko
         }
 
-        val atariBefore = neighbors.map { isAtari(it, other) }
-        val selfAtariBefore = neighbors.any { isAtari(it, turn) }
+        val prevBoard = copy()
 
         this[pos] = turn
-        if (atariBefore.all { !it } && getLiberties(pos) == 0) {
+        if (neighbors.none { prevBoard.isAtari(it, other) } && getLiberties(pos) == 0) {
             this[pos] = null
             return RefereeResult.Suicide
         }
@@ -132,20 +131,26 @@ open class Board(val size: Int) : java.io.Serializable {
             electric(Direction(0, +1))
         }
 
-        var atari = false
-
         val captured = mutableListOf<Intersection>()
+
+        var atari = false
         for (p in placed) {
             for ((i, n) in neighbors(p).withIndex()) {
                 maybeCapture(n, other, captured)
-                atari = atari || !atariBefore[i] && isAtari(n, other)
+                if (isAtari(n, other) && !prevBoard.isAtari(n, other)) {
+                    atari = true
+                }
             }
         }
 
         var selfAtari = false
         for (p in placed) {
             maybeCapture(p, turn, captured)
-            selfAtari = selfAtari || !selfAtariBefore && isAtari(p, turn)
+            if (isAtari(p, turn)) {
+                if (prevBoard.neighbors(p).none { prevBoard.isAtari(it, turn) }) {
+                    selfAtari = true
+                }
+            }
         }
 
         this.captured[turn.ordinal] += captured.size
@@ -158,8 +163,7 @@ open class Board(val size: Int) : java.io.Serializable {
     }
 
     private fun isAtari(pos: Intersection, color: Player): Boolean {
-        return pos.x in 0 until size && pos.y in 0 until size
-                && get(pos) == color && getLiberties(pos) == 1
+        return pos.ok() && get(pos) == color && getLiberties(pos) == 1
     }
 
     private fun maybeCapture(
