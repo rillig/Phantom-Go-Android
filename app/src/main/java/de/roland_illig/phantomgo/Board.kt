@@ -7,13 +7,12 @@ import java.io.ObjectOutputStream
 
 open class Board(val size: Int) : java.io.Serializable {
 
-    private val nowhere = Intersection(-1, -1)
     var rules = Rules.Normal
 
     private val pieces = Array(size) { Array<Player?>(size) { null } }
     private val captured = IntArray(2)
     var turn = Player.BLACK
-    private var koMove = nowhere
+    private var koMove: Intersection? = null
     private var passed = 0
     var gameOver = false; private set
     var empty = true; private set
@@ -79,7 +78,8 @@ open class Board(val size: Int) : java.io.Serializable {
         if (get(x, y) == other) return RefereeResult.OtherStone
 
         val neighbors = neighbors(x, y)
-        if (koMove in neighbors && atari(koMove, other)) {
+        val koMove = koMove
+        if (koMove != null && koMove in neighbors && atari(koMove, other)) {
             return RefereeResult.Ko
         }
 
@@ -100,7 +100,7 @@ open class Board(val size: Int) : java.io.Serializable {
         val selfAtari = atari(Intersection(x, y), turn) && !selfAtariBefore
 
         this.captured[turn.ordinal] += captured.size
-        koMove = if (captured.size == 1 && selfAtari) Intersection(x, y) else nowhere
+        this.koMove = if (captured.size == 1 && selfAtari) Intersection(x, y) else null
         this.turn = other
         empty = false
         passed = 0
@@ -117,16 +117,16 @@ open class Board(val size: Int) : java.io.Serializable {
         if (!(x in 0 until size && y in 0 until size)) return
         if (!(get(x, y) == turn && getLiberties(x, y) == 0)) return
 
-        fun capture(cx: Int, cy: Int) {
+        fun takeOut(cx: Int, cy: Int) {
             if (!(cx in 0 until size && cy in 0 until size)) return
             if (pieces[cx][cy] != turn) return
 
             pieces[cx][cy] = null
             captured += Intersection(cx, cy)
-            for (n in neighbors(cx, cy)) capture(n.x, n.y)
+            for (n in neighbors(cx, cy)) takeOut(n.x, n.y)
         }
 
-        capture(x, y)
+        takeOut(x, y)
     }
 
     fun getLiberties(x: Int, y: Int): Int {
