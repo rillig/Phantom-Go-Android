@@ -102,18 +102,18 @@ open class Board(val size: Int) : java.io.Serializable {
         val after = neighbors.map { atari(it.x, it.y, other) }
         val atari = neighbors.indices.any { !before[it] && after[it] }
 
-        val stones = mutableListOf<Intersection>()
-        for (n in neighbors) captureCount(n.x, n.y, other, stones)
+        val captured = mutableListOf<Intersection>()
+        for (n in neighbors) captureCount(n.x, n.y, other, captured)
 
         val selfAtari = atari(x, y, turn) && !selfAtariBefore
 
-        captured[turn.ordinal] += stones.size
-        prevMove = if (stones.size == 1 && selfAtari) Intersection(x, y) else nowhere
+        this.captured[turn.ordinal] += captured.size
+        prevMove = if (captured.size == 1 && selfAtari) Intersection(x, y) else nowhere
         this.turn = other
         empty = false
         passed = 0
 
-        return RefereeResult.Ok(atari, selfAtari, stones.toList())
+        return RefereeResult.Ok(atari, selfAtari, captured.toList())
     }
 
     private fun captureCount(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
