@@ -39,7 +39,7 @@ open class Board(val size: Int) : java.io.Serializable {
                 sb.append(if (player != null) "XO"[player.ordinal] else '+')
                 if (x < size - 1) sb.append(" ")
                 else {
-                    lines += sb.toString()
+                    lines += "$sb"
                     sb.setLength(0)
                 }
             }
@@ -52,10 +52,9 @@ open class Board(val size: Int) : java.io.Serializable {
     fun edit(pos: Intersection, color: Player) {
         turn = color
         val result = play(pos)
-        if (result is RefereeResult.Invalid) {
-            val newColor = if (result is RefereeResult.OwnStone) null else color
-            set(pos, newColor)
-        }
+        if (result !is RefereeResult.Invalid) return
+        val newColor = if (result is RefereeResult.OwnStone) null else color
+        set(pos, newColor)
     }
 
     operator fun set(x: Int, y: Int, color: Player?) {
@@ -95,6 +94,24 @@ open class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.Suicide
         }
 
+        val placed = mutableListOf(pos)
+        val captured = mutableListOf<Intersection>()
+        moveElectric(pos, placed)
+        val atari = captureOther(placed, other, captured, prevBoard)
+        val selfAtari = captureTurn(placed, turn, captured, prevBoard)
+
+        this.captured[turn.ordinal] += captured.size
+        this.koMove = if (captured.size == 1 && selfAtari) pos else null
+        this.turn = other
+        empty = false
+        passed = 0
+
+        return RefereeResult.Ok(atari, selfAtari, captured.toList())
+    }
+
+    private fun moveElectric(pos: Intersection, placed: MutableList<Intersection>) {
+        if (rules != Rules.Electric) return
+
         data class Direction(val x: Int, val y: Int)
 
         operator fun Intersection.plus(dir: Direction) =
@@ -103,9 +120,8 @@ open class Board(val size: Int) : java.io.Serializable {
         operator fun Intersection.minus(dir: Direction) =
             Intersection(this.x - dir.x, this.y - dir.y)
 
-        val placed = mutableListOf(pos)
-
-        fun electric(dir: Direction) {
+        fun move(dx: Int, dy: Int) {
+            val dir = Direction(dx, dy)
             var from = pos + dir
             while (from.ok() && this[from] == null) from += dir
             if (!from.ok()) return
@@ -124,47 +140,46 @@ open class Board(val size: Int) : java.io.Serializable {
             placed += to
         }
 
-        if (rules == Rules.Electric) {
-            electric(Direction(0, -1))
-            electric(Direction(-1, 0))
-            electric(Direction(+1, 0))
-            electric(Direction(0, +1))
-        }
+        move(0, -1)
+        move(-1, 0)
+        move(+1, 0)
+        move(0, +1)
+    }
 
-        val captured = mutableListOf<Intersection>()
-
+    private fun captureOther(
+        placed: List<Intersection>,
+        other: Player,
+        captured: MutableList<Intersection>,
+        prevBoard: Board
+    ): Boolean {
         var atari = false
         for (p in placed) {
-            for ((i, n) in neighbors(p).withIndex()) {
+            for (n in neighbors(p)) {
                 maybeCapture(n, other, captured)
-                if (isAtari(n, other) && !prevBoard.isAtari(n, other)) {
-                    atari = true
-                }
+                if (isAtari(n, other) && !prevBoard.isAtari(n, other)) atari = true
             }
         }
+        return atari
+    }
 
+    private fun captureTurn(
+        placed: List<Intersection>,
+        turn: Player,
+        captured: MutableList<Intersection>,
+        prevBoard: Board
+    ): Boolean {
         var selfAtari = false
         for (p in placed) {
             maybeCapture(p, turn, captured)
-            if (isAtari(p, turn)) {
-                if (prevBoard.neighbors(p).none { prevBoard.isAtari(it, turn) }) {
-                    selfAtari = true
-                }
-            }
+            if (!isAtari(p, turn)) continue
+            if (prevBoard.neighbors(p).any { prevBoard.isAtari(it, turn) }) continue
+            selfAtari = true
         }
-
-        this.captured[turn.ordinal] += captured.size
-        this.koMove = if (captured.size == 1 && selfAtari) pos else null
-        this.turn = other
-        empty = false
-        passed = 0
-
-        return RefereeResult.Ok(atari, selfAtari, captured.toList())
+        return selfAtari
     }
 
-    private fun isAtari(pos: Intersection, color: Player): Boolean {
-        return pos.ok() && get(pos) == color && getLiberties(pos) == 1
-    }
+    private fun isAtari(pos: Intersection, color: Player) =
+        pos.ok() && get(pos) == color && getLiberties(pos) == 1
 
     private fun maybeCapture(
         pos: Intersection,
