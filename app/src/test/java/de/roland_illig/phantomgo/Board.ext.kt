@@ -5,7 +5,7 @@ fun Board.setup(vararg rows: String) {
         'O' -> Player.WHITE
         'X' -> Player.BLACK
         '+' -> null
-        else -> throw IllegalArgumentException(ch.toString())
+        else -> throw IllegalArgumentException("$ch")
     }
 
     for (y in 0 until size) {

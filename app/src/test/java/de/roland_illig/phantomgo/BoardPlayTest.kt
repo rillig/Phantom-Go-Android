@@ -219,12 +219,12 @@ class BoardPlayTest {
 
     private fun assertPlay(x: Int, y: Int, expectedResult: String) {
         val result = board.play(Intersection(x, y))
-        assertThat(result.toString()).isEqualTo(expectedResult)
+        assertThat("$result").isEqualTo(expectedResult)
     }
 
     private fun assertBoard(vararg expectedRows: String) {
-        assertThat(board.toString())
-                .isEqualTo(expectedRows.reduce { acc, s -> acc + "\n" + s } + "\n")
+        assertThat("$board")
+                .isEqualTo(expectedRows.asList().joinToString("") { it + "\n" })
     }
 
     private fun setupBoard(vararg setupRows: String) {

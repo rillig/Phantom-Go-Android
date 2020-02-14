@@ -36,7 +36,7 @@ class Game(val size: Int = 9) : java.io.Serializable {
             is RefereeResult.Ko -> board[x, y] = null
             is RefereeResult.Ok -> {
                 val playerResult = board.copy().also { it.turn = turn }.play(pos)
-                if (playerResult.toString() == result.toString()) {
+                if ("$playerResult" == "$result") {
                     board.turn = turn
                     board.play(pos)
                 } else {

@@ -2,6 +2,8 @@ package de.roland_illig.android.phantomgo
 
 import android.graphics.Bitmap
 import kotlin.math.roundToInt
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * The stripes on the stones are formed by looking at an ellipsoid 3-D stone from the top.
@@ -83,7 +85,7 @@ object StoneGenerator {
         return when {
             hypot2 > r * r -> 0
             hypot2 < ir * ir -> 255
-            else -> 255 - (255 * (Math.sqrt(hypot2.toDouble()) - ir) / (r - ir)).roundToInt()
+            else -> 255 - (255 * (sqrt(hypot2.toDouble()) - ir) / (r - ir)).roundToInt()
         }
     }
 
@@ -142,7 +144,7 @@ object StoneGenerator {
     private fun smooth(t: Double, tFrom: Double, tTo: Double, from: Int, to: Int): Int {
         val arg01 = (t - tFrom) / (tTo - tFrom)
         val argRad = (arg01 - 0.5) * Math.PI
-        val rangem11 = Math.sin(argRad)
+        val rangem11 = sin(argRad)
         val range01 = rangem11 / 2.0 + 0.5
         return from + ((to - from) * range01).toInt()
     }

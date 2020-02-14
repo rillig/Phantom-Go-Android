@@ -168,6 +168,6 @@ class CountingBoard(board: Board) : java.io.Serializable {
                 sb.append(if (x == size - 1) "\n" else " ")
             }
         }
-        return sb.toString()
+        return "$sb"
     }
 }

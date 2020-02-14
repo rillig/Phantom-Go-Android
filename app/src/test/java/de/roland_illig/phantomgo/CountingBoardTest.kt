@@ -21,7 +21,7 @@ class CountingBoardTest {
 
         val countingBoard = CountingBoard(board)
 
-        assertThat(countingBoard.toString()).isEqualTo(""
+        assertThat("$countingBoard").isEqualTo(""
                 + "x x X + + O o o o\n"
                 + "x x X + + O o o o\n"
                 + "x x X + + O o o o\n"
@@ -55,7 +55,7 @@ class CountingBoardTest {
 
         val countingBoard = CountingBoard(board)
 
-        assertThat(countingBoard.toString()).isEqualTo(""
+        assertThat("$countingBoard").isEqualTo(""
                 + "X + + + O O X x x\n"
                 + "X O + O O X X x x\n"
                 + "X O + O X X X x x\n"
@@ -67,7 +67,7 @@ class CountingBoardTest {
                 + "x X O o o o O X +\n")
 
         val result = countingBoard.count()
-        assertThat(result.toString()).isEqualTo("black=15+0, white=5+0")
+        assertThat("$result").isEqualTo("black=15+0, white=5+0")
     }
 
     @Test
@@ -89,9 +89,9 @@ class CountingBoardTest {
         countingBoard.toggleDead(8, 6)
 
         val result = countingBoard.count()
-        assertThat(result.toString()).isEqualTo("black=19+2, white=13+3")
+        assertThat("$result").isEqualTo("black=19+2, white=13+3")
 
-        assertThat(countingBoard.toString()).isEqualTo(""
+        assertThat("$countingBoard").isEqualTo(""
                 + "# o o o O O X x x\n"
                 + "# O o O O X X x x\n"
                 + "# O o O X X X x x\n"
@@ -122,7 +122,7 @@ class CountingBoardTest {
         countingBoard.toggleDead(8, 6)
 
         val result = countingBoard.count()
-        assertThat(result.toString()).isEqualTo("black=19+2, white=13+3")
+        assertThat("$result").isEqualTo("black=19+2, white=13+3")
     }
 
     @Test
@@ -142,7 +142,7 @@ class CountingBoardTest {
 
         countingBoard.toggleDead(0, 8)
 
-        assertThat(countingBoard.toString()).isEqualTo(""
+        assertThat("$countingBoard").isEqualTo(""
                 + "O + + X x x x x #\n"
                 + "+ + X x x x x # x\n"
                 + "+ X x x x x # x x\n"
@@ -155,7 +155,7 @@ class CountingBoardTest {
 
         countingBoard.toggleDead(0, 8)
 
-        assertThat(countingBoard.toString()).isEqualTo(""
+        assertThat("$countingBoard").isEqualTo(""
                 + "O + + X + + + + O\n"
                 + "+ + X + + + + O +\n"
                 + "+ X + + + + O + +\n"

@@ -46,7 +46,7 @@ class GameTest {
         val game = Game()
         val result = playMoves(game, "c1 b1 b2 a1 c2 a2 a3")
 
-        assertThat(result.toString()).isEqualTo("captured 3")
+        assertThat("$result").isEqualTo("captured 3")
 
         // White still thinks his stones are on the board.
         assertThat(game.whiteBoard.toString()).isEqualTo(""
