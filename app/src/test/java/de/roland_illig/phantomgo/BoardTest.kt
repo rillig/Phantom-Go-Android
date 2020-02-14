@@ -23,7 +23,7 @@ class BoardTest {
 
         val result = board.play(5, 3)
 
-        assertThat(result.toString()).isEqualTo("atari")
+        assertThat("$result").isEqualTo("atari")
     }
 
     @Test
@@ -43,7 +43,7 @@ class BoardTest {
 
         val result = board.play(4, 3)
 
-        assertThat(result.toString()).isEqualTo("suicide")
+        assertThat("$result").isEqualTo("suicide")
     }
 
     @Test
@@ -92,7 +92,7 @@ class BoardTest {
 
         val result = board.play(5, 4)
 
-        assertThat(result.toString()).isEqualTo("captured 1")
+        assertThat("$result").isEqualTo("captured 1")
         assertThat(board.getCaptured(Player.BLACK)).isEqualTo(1)
         assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
         assertThat(board.toStringLines()).containsExactly(
@@ -126,7 +126,7 @@ class BoardTest {
         board.copy().apply {
             val result = play(4, 4)
 
-            assertThat(result.toString()).isEqualTo("captured 48")
+            assertThat("$result").isEqualTo("captured 48")
             assertThat(getCaptured(Player.BLACK)).isEqualTo(48)
             assertThat(getCaptured(Player.WHITE)).isEqualTo(0)
             assertThat(toStringLines()).containsExactly(
@@ -146,7 +146,7 @@ class BoardTest {
             turn = Player.WHITE
             val result = play(4, 4)
 
-            assertThat(result.toString()).isEqualTo("captured 32")
+            assertThat("$result").isEqualTo("captured 32")
             assertThat(getCaptured(Player.BLACK)).isEqualTo(0)
             assertThat(getCaptured(Player.WHITE)).isEqualTo(32)
             assertThat(toStringLines()).containsExactly(
@@ -180,7 +180,7 @@ class BoardTest {
 
         val result = board.play(5, 4)
 
-        assertThat(result.toString()).isEqualTo("atari, selfAtari, captured 1")
+        assertThat("$result").isEqualTo("atari, selfAtari, captured 1")
     }
 
     @Test
@@ -200,7 +200,7 @@ class BoardTest {
 
         val result = board.play(8, 0)
 
-        assertThat(result.toString()).isEqualTo("atari, selfAtari, captured 1")
+        assertThat("$result").isEqualTo("atari, selfAtari, captured 1")
     }
 
     @Test
@@ -220,15 +220,15 @@ class BoardTest {
 
         val result = board.play(3, 4)
 
-        assertThat(result.toString()).isEqualTo("selfAtari")
+        assertThat("$result").isEqualTo("selfAtari")
 
         val capture = board.play(4, 4)
 
-        assertThat(capture.toString()).isEqualTo("selfAtari, captured 1")
+        assertThat("$capture").isEqualTo("selfAtari, captured 1")
 
         val ko = board.play(3, 4)
 
-        assertThat(ko.toString()).isEqualTo("ko")
+        assertThat("$ko").isEqualTo("ko")
     }
 
     @Test
@@ -248,7 +248,7 @@ class BoardTest {
 
         val result = board.play(8, 1)
 
-        assertThat(result.toString()).isEqualTo("ok")
+        assertThat("$result").isEqualTo("ok")
     }
 
     @Test
@@ -296,7 +296,7 @@ class BoardTest {
 
         val result = board.play(0, 8)
 
-        assertThat(result.toString()).isEqualTo("selfAtari, captured 1")
+        assertThat("$result").isEqualTo("selfAtari, captured 1")
     }
 
     @Test
@@ -317,7 +317,7 @@ class BoardTest {
 
         val result = board.play(4, 4)
 
-        assertThat(result.toString()).isEqualTo("ok")
+        assertThat("$result").isEqualTo("ok")
         assertThat(board.toStringLines()).containsExactly(
             "+ + + + + + + + +",
             "+ + + + + + + + +",
