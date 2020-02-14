@@ -93,8 +93,9 @@ open class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.Ko
         }
 
+        data class UndoAction(val x: Int, val y: Int, val color: Player?)
+        val undo = mutableListOf(UndoAction(x, y, null))
         pieces[x][y] = turn
-        var undo = true
 
         try {
             if (!capturesSomething && getLiberties(x, y) == 0) {
@@ -109,7 +110,7 @@ open class Board(val size: Int) : java.io.Serializable {
 
             val selfAtari = atari(x, y, turn) && !selfAtariBefore
 
-            undo = false
+            undo.clear()
             captured[turn.ordinal] += stones.size
             prevMove = if (stones.size == 1 && selfAtari) Intersection(x, y) else nowhere
             this.turn = other
@@ -118,7 +119,7 @@ open class Board(val size: Int) : java.io.Serializable {
 
             return RefereeResult.Ok(atari, selfAtari, stones.toList())
         } finally {
-            if (undo) pieces[x][y] = null
+            undo.forEach { pieces[it.x][it.y] = it.color }
         }
     }
 
