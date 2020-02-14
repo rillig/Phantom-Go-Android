@@ -13,7 +13,7 @@ open class Board(val size: Int) : java.io.Serializable {
     private val pieces = Array(size) { Array<Player?>(size) { null } }
     private val captured = IntArray(2)
     var turn = Player.BLACK
-    private var prevMove = nowhere
+    private var koMove = nowhere
     private var passed = 0
     var gameOver = false; private set
     var empty = true; private set
@@ -78,42 +78,40 @@ open class Board(val size: Int) : java.io.Serializable {
         if (get(x, y) == turn) return RefereeResult.OwnStone
         if (get(x, y) == other) return RefereeResult.OtherStone
 
-        fun atari(x: Int, y: Int, color: Player): Boolean {
-            return x in 0 until size && y in 0 until size
-                    && get(x, y) == color && getLiberties(x, y) == 1
-        }
-
         val neighbors = neighbors(x, y)
-        val selfAtariBefore = neighbors.any { atari(it.x, it.y, turn) }
+        val atariBefore = neighbors.map { atari(it, other) }
+        val selfAtariBefore = neighbors.any { atari(it, turn) }
 
-        val before = neighbors.map { atari(it.x, it.y, other) }
-        val capturesSomething = before.any { it }
-
-        if (prevMove in neighbors && atari(prevMove.x, prevMove.y, other)) {
+        if (koMove in neighbors && atari(koMove, other)) {
             return RefereeResult.Ko
         }
 
         pieces[x][y] = turn
-        if (!capturesSomething && getLiberties(x, y) == 0) {
+        if (atariBefore.all { !it } && getLiberties(x, y) == 0) {
             pieces[x][y] = null
             return RefereeResult.Suicide
         }
 
-        val after = neighbors.map { atari(it.x, it.y, other) }
-        val atari = neighbors.indices.any { !before[it] && after[it] }
+        val atariAfter = neighbors.map { atari(it, other) }
+        val atari = neighbors.indices.any { !atariBefore[it] && atariAfter[it] }
 
         val captured = mutableListOf<Intersection>()
         for (n in neighbors) captureCount(n.x, n.y, other, captured)
 
-        val selfAtari = atari(x, y, turn) && !selfAtariBefore
+        val selfAtari = atari(Intersection(x, y), turn) && !selfAtariBefore
 
         this.captured[turn.ordinal] += captured.size
-        prevMove = if (captured.size == 1 && selfAtari) Intersection(x, y) else nowhere
+        koMove = if (captured.size == 1 && selfAtari) Intersection(x, y) else nowhere
         this.turn = other
         empty = false
         passed = 0
 
         return RefereeResult.Ok(atari, selfAtari, captured.toList())
+    }
+
+    private fun atari(i: Intersection, color: Player): Boolean {
+        return i.x in 0 until size && i.y in 0 until size
+                && get(i.x, i.y) == color && getLiberties(i.x, i.y) == 1
     }
 
     private fun captureCount(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
