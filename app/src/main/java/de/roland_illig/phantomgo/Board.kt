@@ -93,34 +93,27 @@ open class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.Ko
         }
 
-        data class UndoAction(val x: Int, val y: Int, val color: Player?)
-        val undo = mutableListOf(UndoAction(x, y, null))
         pieces[x][y] = turn
-
-        try {
-            if (!capturesSomething && getLiberties(x, y) == 0) {
-                return RefereeResult.Suicide
-            }
-
-            val after = neighbors.map { atari(it.x, it.y, other) }
-            val atari = neighbors.indices.any { !before[it] && after[it] }
-
-            val stones = mutableListOf<Intersection>()
-            for (n in neighbors) captureCount(n.x, n.y, other, stones)
-
-            val selfAtari = atari(x, y, turn) && !selfAtariBefore
-
-            undo.clear()
-            captured[turn.ordinal] += stones.size
-            prevMove = if (stones.size == 1 && selfAtari) Intersection(x, y) else nowhere
-            this.turn = other
-            empty = false
-            passed = 0
-
-            return RefereeResult.Ok(atari, selfAtari, stones.toList())
-        } finally {
-            undo.forEach { pieces[it.x][it.y] = it.color }
+        if (!capturesSomething && getLiberties(x, y) == 0) {
+            pieces[x][y] = null
+            return RefereeResult.Suicide
         }
+
+        val after = neighbors.map { atari(it.x, it.y, other) }
+        val atari = neighbors.indices.any { !before[it] && after[it] }
+
+        val stones = mutableListOf<Intersection>()
+        for (n in neighbors) captureCount(n.x, n.y, other, stones)
+
+        val selfAtari = atari(x, y, turn) && !selfAtariBefore
+
+        captured[turn.ordinal] += stones.size
+        prevMove = if (stones.size == 1 && selfAtari) Intersection(x, y) else nowhere
+        this.turn = other
+        empty = false
+        passed = 0
+
+        return RefereeResult.Ok(atari, selfAtari, stones.toList())
     }
 
     private fun captureCount(x: Int, y: Int, turn: Player, captured: MutableList<Intersection>) {
