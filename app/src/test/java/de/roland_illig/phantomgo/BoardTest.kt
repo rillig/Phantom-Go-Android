@@ -356,21 +356,70 @@ class BoardTest {
         // After that, all captured own groups (black) are removed
         // (none in this case, since the white group has been removed before).
 
-        // FIXME: capture 8 white stones
-        //  No self-atari for the large black chain since it already was in atari before.
-        //  Self-atari for the newly placed stone.
-        assertThat(result.toString()).isEqualTo("selfAtari")
+        assertThat("$result").isEqualTo("selfAtari, captured 8")
         assertThat(board.toStringLines()).containsExactly(
             "+ + + O X X X X X",
             "+ + + O X O O O X",
             "+ + + O X O + O X",
             "+ + + O X O + O X",
-            "+ + + + O X O X O",
-            "+ + + + + + + X O",
-            "+ + + + + + + X O",
-            "+ + + + + X X X O",
-            "+ + + + X O O O O"
+            "+ + + + O X O X +",
+            "+ + + + + + + X +",
+            "+ + + + + + + X +",
+            "+ + + + + X X X +",
+            "+ + + + X + + + +"
         )
+    }
+
+    @Test
+    fun `electric go, self-atari`() {
+        val board = Board(5)
+        board.rules = Rules.Electric
+        board.setup(
+            "+ + O + +",
+            "+ + + + +",
+            "+ + + + O",
+            "+ + + + +",
+            "+ + O + +"
+        )
+
+        val result = board.play(2, 2)
+
+        assertThat("$result").isEqualTo("selfAtari")
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + + +",
+            "+ + O + +",
+            "+ + X O +",
+            "+ + O + +",
+            "+ + + + +"
+        )
+    }
+
+    @Test
+    fun `electric go, self-capture`() {
+        val board = Board(5)
+        board.rules = Rules.Electric
+        board.setup(
+            "+ + O + +",
+            "+ + + + +",
+            "O + + + O",
+            "+ + + + +",
+            "+ + O + +"
+        )
+
+        val result = board.play(2, 2)
+
+        // If there should ever be someone who wants to play phantom electric go,
+        // the referee result should be extended to say "self-captured 1" here.
+        assertThat("$result").isEqualTo("captured 1")
+        assertThat(board.toStringLines()).containsExactly(
+            "+ + + + +",
+            "+ + O + +",
+            "+ O + O +",
+            "+ + O + +",
+            "+ + + + +"
+        )
+        assertThat(board.getCaptured(Player.BLACK)).isEqualTo(1)
+        assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
     }
 
     operator fun Board.get(x: Int, y: Int) = this[Intersection(x, y)]

@@ -104,6 +104,8 @@ open class Board(val size: Int) : java.io.Serializable {
         operator fun Intersection.minus(dir: Direction) =
             Intersection(this.x - dir.x, this.y - dir.y)
 
+        val placed = mutableListOf(pos)
+
         fun electric(dir: Direction) {
             var from = pos + dir
             while (from.ok() && this[from] == null) from += dir
@@ -120,6 +122,7 @@ open class Board(val size: Int) : java.io.Serializable {
             if (to == from) return
             this[to] = this[from]
             this[from] = null
+            placed += to
         }
 
         if (rules == Rules.Electric) {
@@ -129,12 +132,21 @@ open class Board(val size: Int) : java.io.Serializable {
             electric(Direction(0, +1))
         }
 
-        val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && isAtari(n, other) }
+        var atari = false
 
         val captured = mutableListOf<Intersection>()
-        for (n in neighbors) maybeCapture(n, other, captured)
+        for (p in placed) {
+            for ((i, n) in neighbors(p).withIndex()) {
+                maybeCapture(n, other, captured)
+                atari = atari || !atariBefore[i] && isAtari(n, other)
+            }
+        }
 
-        val selfAtari = isAtari(pos, turn) && !selfAtariBefore
+        var selfAtari = false
+        for (p in placed) {
+            maybeCapture(p, turn, captured)
+            selfAtari = selfAtari || !selfAtariBefore && isAtari(p, turn)
+        }
 
         this.captured[turn.ordinal] += captured.size
         this.koMove = if (captured.size == 1 && selfAtari) pos else null
@@ -150,12 +162,16 @@ open class Board(val size: Int) : java.io.Serializable {
                 && get(pos) == color && getLiberties(pos) == 1
     }
 
-    private fun maybeCapture(pos: Intersection, turn: Player, captured: MutableList<Intersection>) {
+    private fun maybeCapture(
+        pos: Intersection,
+        color: Player,
+        captured: MutableList<Intersection>
+    ) {
         if (!pos.ok()) return
-        if (!(get(pos) == turn && getLiberties(pos) == 0)) return
+        if (!(get(pos) == color && getLiberties(pos) == 0)) return
 
         fun takeOut(pos: Intersection) {
-            if (this[pos] != turn) return
+            if (this[pos] != color) return
 
             this[pos] = null
             captured += pos
