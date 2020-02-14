@@ -79,12 +79,12 @@ open class Board(val size: Int) : java.io.Serializable {
         if (get(x, y) == other) return RefereeResult.OtherStone
 
         val neighbors = neighbors(x, y)
-        val atariBefore = neighbors.map { atari(it, other) }
-        val selfAtariBefore = neighbors.any { atari(it, turn) }
-
         if (koMove in neighbors && atari(koMove, other)) {
             return RefereeResult.Ko
         }
+
+        val atariBefore = neighbors.map { atari(it, other) }
+        val selfAtariBefore = neighbors.any { atari(it, turn) }
 
         pieces[x][y] = turn
         if (atariBefore.all { !it } && getLiberties(x, y) == 0) {
@@ -92,8 +92,7 @@ open class Board(val size: Int) : java.io.Serializable {
             return RefereeResult.Suicide
         }
 
-        val atariAfter = neighbors.map { atari(it, other) }
-        val atari = neighbors.indices.any { !atariBefore[it] && atariAfter[it] }
+        val atari = neighbors.withIndex().any { (i, n) -> !atariBefore[i] && atari(n, other) }
 
         val captured = mutableListOf<Intersection>()
         for (n in neighbors) capture(n.x, n.y, other, captured)
