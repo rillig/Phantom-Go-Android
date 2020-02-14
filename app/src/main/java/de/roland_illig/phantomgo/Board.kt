@@ -63,8 +63,8 @@ open class Board(val size: Int) : java.io.Serializable {
         check(!gameOver) { "GameOver" }
 
         empty = false
-        passed ++
-        gameOver = passed>=2
+        passed++
+        gameOver = passed >= 2
         turn = turn.other()
         return RefereeResult.Pass
     }
