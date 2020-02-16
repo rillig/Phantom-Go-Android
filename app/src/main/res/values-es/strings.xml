@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">Go fantasma</string>
+    <string name="app_name">Go Fantasma</string>
 
-    <string name="welcome_message">Go fantasma y algos variaciones</string>
+    <string name="welcome_message">Go Fantasma y algos variaciones</string>
+    <string name="play_go_button">Jugar al Go</string>
+    <string name="play_toroidal_go_button">Jugar al Go Toro</string>
+    <string name="play_magnet_go_button">Jugar al Go Imán</string>
+    <string name="play_phantom_go_button">Jugar al Go Fantasma</string>
 
     <string name="play_title">Jugar</string>
     <string name="black_to_play">Negro juega</string>

@@ -17,13 +17,13 @@ class CentralActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         game = Persistence.loadPhantomGo(this)
-        onPlayClick()
+        onPlayPhantomGoClick()
         finish()
     }
 
-    fun onPlayClick(view: View) = onPlayClick()
+    fun onPlayPhantomGoClick(view: View) = onPlayPhantomGoClick()
 
-    private fun onPlayClick() {
+    private fun onPlayPhantomGoClick() {
         when {
             game.isGameOver -> CountingActivity.start(this)
             game.isInitial -> PlayerActivity.start(this)

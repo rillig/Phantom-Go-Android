@@ -19,12 +19,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/playButton"
+        android:id="@+id/play_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="onPlayClick"
-        android:text="@string/play_title"
+        android:text="@string/play_go_button"
+        app:layout_constraintEnd_toEndOf="@id/play_toroidal_go"
+        app:layout_constraintBottom_toTopOf="@id/play_toroidal_go" />
+
+    <Button
+        android:id="@+id/play_toroidal_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_toroidal_go_button"
+        app:layout_constraintEnd_toEndOf="@id/play_magnet_go"
+        app:layout_constraintBottom_toTopOf="@id/play_magnet_go" />
+
+    <Button
+        android:id="@+id/play_magnet_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_magnet_go_button"
+        app:layout_constraintEnd_toEndOf="@id/play_phantom_go"
+        app:layout_constraintBottom_toTopOf="@id/play_phantom_go" />
+
+    <Button
+        android:id="@+id/play_phantom_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="onPlayPhantomGoClick"
+        android:text="@string/play_phantom_go_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

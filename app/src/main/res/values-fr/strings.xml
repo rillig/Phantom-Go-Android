@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">Go fantôme</string>
+    <string name="app_name">Go Fantôme</string>
 
     <string name="welcome_message">Go fantôme et quelques variations</string>
+    <string name="play_go_button">Jouer au Go</string>
+    <string name="play_toroidal_go_button">Jouer au Go Tore</string>
+    <string name="play_magnet_go_button">Jouer au Go Aimant</string>
+    <string name="play_phantom_go_button">Jouer au Go Fantôme</string>
 
     <string name="play_title">Jouer</string>
     <string name="black_to_play">A Noir de jouer</string>

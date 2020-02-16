@@ -2,6 +2,10 @@
     <string name="app_name">Phantom-Go</string>
 
     <string name="welcome_message">Phantom-Go und andere Varianten</string>
+    <string name="play_go_button">Go spielen</string>
+    <string name="play_toroidal_go_button">Torus-Go spielen</string>
+    <string name="play_magnet_go_button">Magnet-Go spielen</string>
+    <string name="play_phantom_go_button">Phantom-Go spielen</string>
 
     <string name="play_title">Spielen</string>
     <string name="black_to_play">Schwarz am Zug</string>
