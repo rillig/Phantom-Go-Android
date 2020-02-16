@@ -15,7 +15,8 @@ open class Board(val size: Int) : java.io.Serializable {
     private var koMove: Intersection? = null
     private var passed = 0
     var gameOver = false; private set
-    var empty = true; private set
+    val started get() = lastMove != null || passed > 0
+    var lastMove: Intersection? = null; private set
 
     fun copy(): Board = ByteArrayOutputStream().let {
         ObjectOutputStream(it).writeObject(this)
@@ -61,7 +62,7 @@ open class Board(val size: Int) : java.io.Serializable {
     fun pass(): RefereeResult {
         check(!gameOver) { "GameOver" }
 
-        empty = false
+        lastMove = null
         passed++
         gameOver = passed >= 2
         turn = turn.other()
@@ -100,7 +101,7 @@ open class Board(val size: Int) : java.io.Serializable {
         this.captured[turn.ordinal] += captured.size
         this.koMove = if (captured.size == 1 && selfAtari) pos else null
         this.turn = other
-        empty = false
+        lastMove = pos
         passed = 0
 
         return RefereeResult.Ok(atari, selfAtari, captured.toList())

@@ -54,7 +54,7 @@ class PhantomState(val size: Int = 9) : java.io.Serializable {
     }
 
     val isGameOver get() = refereeBoard.gameOver
-    val isInitial get() = refereeBoard.empty
+    val isInitial get() = !refereeBoard.started
 
     fun getRefereeBoard(x: Int, y: Int) = refereeBoard[Intersection(x, y)]
 

@@ -31,7 +31,9 @@ class SimpleBoardView : AbstractBoardView {
     }
 
     override fun getBoard(x: Int, y: Int): Cell {
-        val marker: Marker? = null // TODO: Mark the last move
+        val marker = board.lastMove.let {
+            if (it == Intersection(x, y)) Marker.CIRCLE else null
+        }
         return Cell(board[Intersection(x, y)], null, false, marker)
     }
 
