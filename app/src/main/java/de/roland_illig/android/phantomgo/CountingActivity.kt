@@ -19,9 +19,9 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val game = Persistence.loadPhantomGo(this)
-        this.game = game
-        findViewById<CountingBoardView>(R.id.countingBoard).configure(game)
+        val boardView = findViewById<CountingBoardView>(R.id.countingBoard)
+        game = Persistence.loadPhantomGo(this)
+        boardView.configure(game)
     }
 
     override fun onPause() {
@@ -35,9 +35,6 @@ class CountingActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(ctx: Context) {
-            val intent = Intent(ctx, CountingActivity::class.java)
-            ctx.startActivity(intent)
-        }
+        fun start(ctx: Context) = ctx.startActivity(Intent(ctx, CountingActivity::class.java))
     }
 }
