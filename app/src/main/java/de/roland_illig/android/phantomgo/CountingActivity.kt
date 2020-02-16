@@ -19,14 +19,14 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val game = Persistence.load(this)
+        val game = Persistence.loadPhantomGo(this)
         this.game = game
         findViewById<CountingBoardView>(R.id.countingBoard).configure(game)
     }
 
     override fun onPause() {
         super.onPause()
-        Persistence.save(this, game)
+        Persistence.savePhantomGo(this, game)
     }
 
     fun onFinishClick(view: View) {

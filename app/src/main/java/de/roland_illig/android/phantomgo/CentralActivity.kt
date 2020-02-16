@@ -16,7 +16,7 @@ class CentralActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        game = Persistence.load(this)
+        game = Persistence.loadPhantomGo(this)
         onPlayClick()
         finish()
     }

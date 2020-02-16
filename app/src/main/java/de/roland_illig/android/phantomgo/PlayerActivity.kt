@@ -29,7 +29,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val game = Persistence.load(this)
+        val game = Persistence.loadPhantomGo(this)
         this.game = game
         setTitle(if (game.turn == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
         boardView().configure(game)
@@ -37,7 +37,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        Persistence.save(this, game)
+        Persistence.savePhantomGo(this, game)
     }
 
     fun onToolClick(view: View) {

@@ -25,7 +25,7 @@ class HandOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hand_over)
 
-        val game = Persistence.load(this)
+        val game = Persistence.loadPhantomGo(this)
         val playerName = getText(if (game.turn == Player.BLACK) R.string.referee_black else R.string.referee_white)
         (findViewById<TextView>(R.id.handOverText)).text = resources.getString(R.string.hand_over_text, playerName)
 
