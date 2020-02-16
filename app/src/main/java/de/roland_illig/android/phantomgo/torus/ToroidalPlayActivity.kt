@@ -27,8 +27,7 @@ class ToroidalPlayActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        state = Persistence.loadToroidalGo(this)
-        boardView.connect(board, this::boardUpdated)
+        updateState(Persistence.loadToroidalGo(this))
         maybeSwitchToCounting()
     }
 
@@ -44,11 +43,15 @@ class ToroidalPlayActivity : AppCompatActivity() {
     }
 
     fun onResignClick(view: View) {
-        ResignDialogFragment().show(supportFragmentManager, "")
+        ResignDialog().show(supportFragmentManager, "")
     }
 
-    internal fun resign() {
-        state = ToroidalState()
+    private fun resign() {
+        updateState(ToroidalState())
+    }
+
+    private fun updateState(state: ToroidalState) {
+        this.state = state
         boardView.connect(board, this::boardUpdated)
     }
 
@@ -63,21 +66,15 @@ class ToroidalPlayActivity : AppCompatActivity() {
         finish()
     }
 
-    class ResignDialogFragment : DialogFragment() {
-
-        private lateinit var ctx: ToroidalPlayActivity
-
-        override fun onAttach(context: Context) {
-            super.onAttach(context)
-            ctx = context as ToroidalPlayActivity
-        }
-
-        override fun onCreateDialog(savedInstanceState: Bundle?) =
-            AlertDialog.Builder(activity!!).run {
+    class ResignDialog : DialogFragment() {
+        override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
+            val ctx = activity as ToroidalPlayActivity
+            return AlertDialog.Builder(ctx).run {
                 setMessage(getString(R.string.resign_question))
                 setPositiveButton(R.string.resign_button) { _, _ -> ctx.resign() }
                 create()!!
             }
+        }
     }
 
     companion object {
