@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Go fantasma</string>
 
-    <string name="under_construction">Esta app está en construcción.</string>
+    <string name="welcome_message">Go fantasma y algos variaciones</string>
 
     <string name="play_title">Jugar</string>
     <string name="black_to_play">Negro juega</string>

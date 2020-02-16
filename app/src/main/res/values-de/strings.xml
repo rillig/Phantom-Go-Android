@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Phantom-Go</string>
 
-    <string name="under_construction">Diese App ist eine Baustelle.\nKinder haften für ihre Eltern.</string>
+    <string name="welcome_message">Phantom-Go und andere Varianten</string>
 
     <string name="play_title">Spielen</string>
     <string name="black_to_play">Schwarz am Zug</string>

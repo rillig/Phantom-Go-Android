@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Phantom Go</string>
 
-    <string name="under_construction">This app is under construction.</string>
+    <string name="welcome_message">Phantom Go and other variations</string>
 
     <string name="play_title">Play</string>
     <string name="black_to_play">Black to play</string>
