@@ -3,6 +3,7 @@ package de.roland_illig.android.phantomgo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import de.roland_illig.android.phantomgo.torus.ToroidalPlayActivity
 import de.roland_illig.phantomgo.Game
 
 class CentralActivity : AppCompatActivity() {
@@ -18,6 +19,8 @@ class CentralActivity : AppCompatActivity() {
         super.onResume()
         game = Persistence.loadPhantomGo(this)
     }
+
+    fun onPlayToroidalGoClick(view: View) = ToroidalPlayActivity.start(this)
 
     fun onPlayPhantomGoClick(view: View) = onPlayPhantomGoClick()
 

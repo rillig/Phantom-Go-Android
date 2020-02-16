@@ -30,6 +30,7 @@
         android:id="@+id/play_toroidal_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onPlayToroidalGoClick"
         android:text="@string/play_toroidal_go_button"
         app:layout_constraintEnd_toEndOf="@id/play_magnet_go"
         app:layout_constraintBottom_toTopOf="@id/play_magnet_go" />
