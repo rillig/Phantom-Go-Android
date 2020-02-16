@@ -35,25 +35,27 @@ class MagneticPlayActivity : AppCompatActivity() {
         setTitle(if (board.turn == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
         findViewById<View>(R.id.passButton).isEnabled = !board.gameOver
         findViewById<View>(R.id.resignButton).isEnabled = !board.gameOver
+        save()
     }
 
     override fun onPause() {
         super.onPause()
-        Persistence.saveMagneticGo(this, state)
+        save()
     }
 
-    fun onResignClick(view: View) {
-        ResignDialog().show(supportFragmentManager, "")
-    }
+    fun onResignClick(view: View) = ResignDialog().show(supportFragmentManager, "")
 
     private fun resign() {
         updateState(MagneticState())
+        save()
     }
 
     private fun updateState(state: MagneticState) {
         this.state = state
         boardView.connect(board, this::boardUpdated)
     }
+
+    private fun save() = Persistence.saveMagneticGo(this, state)
 
     fun onPassClick(view: View) {
         boardView.pass()

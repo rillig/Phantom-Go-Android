@@ -58,9 +58,8 @@ class PlayerActivity : AppCompatActivity() {
         ResignDialogFragment().show(supportFragmentManager, "")
     }
 
-    internal fun resign() {
+    private fun resign() {
         state = PhantomState()
-        start(this)
         finish()
     }
 

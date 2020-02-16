@@ -35,25 +35,27 @@ class PlainPlayActivity : AppCompatActivity() {
         setTitle(if (board.turn == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
         findViewById<View>(R.id.passButton).isEnabled = !board.gameOver
         findViewById<View>(R.id.resignButton).isEnabled = !board.gameOver
+        save()
     }
 
     override fun onPause() {
         super.onPause()
-        Persistence.savePlainGo(this, state)
+        save()
     }
 
-    fun onResignClick(view: View) {
-        ResignDialog().show(supportFragmentManager, "")
-    }
+    fun onResignClick(view: View) = ResignDialog().show(supportFragmentManager, "")
 
     private fun resign() {
         updateState(PlainState())
+        save()
     }
 
     private fun updateState(state: PlainState) {
         this.state = state
         boardView.connect(board, this::boardUpdated)
     }
+
+    private fun save() = Persistence.savePlainGo(this, state)
 
     fun onPassClick(view: View) {
         boardView.pass()
