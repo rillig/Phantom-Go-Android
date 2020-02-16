@@ -4,7 +4,7 @@ fun Board.setup(vararg rows: String) {
     fun parseChar(ch: Char) = when (ch) {
         'O' -> Player.WHITE
         'X' -> Player.BLACK
-        '+' -> null
+        '.' -> null
         else -> throw IllegalArgumentException("$ch")
     }
 

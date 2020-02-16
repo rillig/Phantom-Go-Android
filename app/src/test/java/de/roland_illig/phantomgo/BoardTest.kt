@@ -10,15 +10,15 @@ class BoardTest {
     fun atari() {
         val board = Board(9)
         board.setup(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + X + + + +",
-            "+ + + X O + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . X . . . .",
+            ". . . X O . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . ."
         )
 
         val result = board.play(5, 3)
@@ -30,15 +30,15 @@ class BoardTest {
     fun suicide() {
         val board = Board(9)
         board.setup(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + O + + + +",
-            "+ + + O + O + + +",
-            "+ + + + O + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . O . . . .",
+            ". . . O . O . . .",
+            ". . . . O . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . ."
         )
 
         val result = board.play(4, 3)
@@ -50,15 +50,15 @@ class BoardTest {
     fun getLiberties() {
         val board = Board(9)
         board.setup(
-            "X + + X + + X + +",
-            "+ + + + + X + + +",
-            "+ + + + + + + + +",
-            "+ + X X + X X X +",
-            "X + + + + X + X +",
-            "X X + + + X X X +",
-            "+ X X + + + + + +",
-            "+ + X X + + O + +",
-            "+ + + X + O X + +"
+            "X . . X . . X . .",
+            ". . . . . X . . .",
+            ". . . . . . . . .",
+            ". . X X . X X X .",
+            "X . . . . X . X .",
+            "X X . . . X X X .",
+            ". X X . . . . . .",
+            ". . X X . . O . .",
+            ". . . X . O X . ."
         )
 
         fun liberties(x: Int, y: Int) = board.getLiberties(Intersection(x, y))
@@ -79,15 +79,15 @@ class BoardTest {
     fun `capture one stone`() {
         val board = Board(9)
         board.setup(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + X + + + +",
-            "+ + + X O + + + +",
-            "+ + + + X + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . X . . . .",
+            ". . . X O . . . .",
+            ". . . . X . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . ."
         )
 
         val result = board.play(5, 4)
@@ -96,15 +96,15 @@ class BoardTest {
         assertThat(board.getCaptured(Player.BLACK)).isEqualTo(1)
         assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + X + + + +",
-            "+ + + X + X + + +",
-            "+ + + + X + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . X . . . .",
+            ". . . X . X . . .",
+            ". . . . X . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . ."
         )
     }
 
@@ -116,7 +116,7 @@ class BoardTest {
             "X X X X X X X X O",
             "O O O O O O O X O",
             "O X X X X X O X O",
-            "O X O O + X O X O",
+            "O X O O . X O X O",
             "O X O X X X O X O",
             "O X O O O O O X O",
             "O X X X X X X X O",
@@ -130,15 +130,15 @@ class BoardTest {
             assertThat(getCaptured(Player.BLACK)).isEqualTo(48)
             assertThat(getCaptured(Player.WHITE)).isEqualTo(0)
             assertThat(toStringLines()).containsExactly(
-                "+ + + + + + + + +",
-                "X X X X X X X X +",
-                "+ + + + + + + X +",
-                "+ X X X X X + X +",
-                "+ X + + X X + X +",
-                "+ X + X X X + X +",
-                "+ X + + + + + X +",
-                "+ X X X X X X X +",
-                "+ + + + + + + + +"
+                ". . . . . . . . .",
+                "X X X X X X X X .",
+                ". . . . . . . X .",
+                ". X X X X X . X .",
+                ". X . . X X . X .",
+                ". X . X X X . X .",
+                ". X . . . . . X .",
+                ". X X X X X X X .",
+                ". . . . . . . . ."
             )
         }
 
@@ -151,13 +151,13 @@ class BoardTest {
             assertThat(getCaptured(Player.WHITE)).isEqualTo(32)
             assertThat(toStringLines()).containsExactly(
                 "O O O O O O O O O",
-                "+ + + + + + + + O",
-                "O O O O O O O + O",
-                "O + + + + + O + O",
-                "O + O O O + O + O",
-                "O + O + + + O + O",
-                "O + O O O O O + O",
-                "O + + + + + + + O",
+                ". . . . . . . . O",
+                "O O O O O O O . O",
+                "O . . . . . O . O",
+                "O . O O O . O . O",
+                "O . O . . . O . O",
+                "O . O O O O O . O",
+                "O . . . . . . . O",
                 "O O O O O O O O O"
             )
         }
@@ -167,15 +167,15 @@ class BoardTest {
     fun `capture in ko`() {
         val board = Board(9)
         board.setup(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + X + + +",
-            "+ + + + X O + + +",
-            "+ + + X O + O + +",
-            "+ + + + X O + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . X . . .",
+            ". . . . X O . . .",
+            ". . . X O . O . .",
+            ". . . . X O . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . ."
         )
 
         val result = board.play(5, 4)
@@ -187,10 +187,10 @@ class BoardTest {
     fun `self-atari`() {
         val board = Board(4)
         board.setup(
-            "+ + O +",
-            "+ O X O",
-            "+ O X X",
-            "+ + O +"
+            ". . O .",
+            ". O X O",
+            ". O X X",
+            ". . O ."
         )
 
         val result = board.play(3, 0)
@@ -202,15 +202,15 @@ class BoardTest {
     fun ko() {
         val board = Board(9)
         board.setup(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + O X + + + +",
-            "+ + O + + X + + +",
-            "+ + + O X + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . O X . . . .",
+            ". . O . . X . . .",
+            ". . . O X . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . ."
         )
 
         val result = board.play(3, 4)
@@ -230,9 +230,9 @@ class BoardTest {
     fun `stay in atari`() {
         val board = Board(3)
         board.setup(
-            "+ O X",
-            "+ O +",
-            "+ O +"
+            ". O X",
+            ". O .",
+            ". O ."
         )
 
         val result = board.play(2, 1)
@@ -272,15 +272,15 @@ class BoardTest {
         val board = Board(9)
         board.rules = Rules.Toroidal
         board.setup(
-            "O + + + + + + + X",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "O + + + + + + + X",
-            "+ O + + + + + X O"
+            "O . . . . . . . X",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            "O . . . . . . . X",
+            ". O . . . . . X O"
         )
 
         val result = board.play(0, 8)
@@ -293,11 +293,11 @@ class BoardTest {
         val board = Board(5)
         board.rules = Rules.Magnetic
         board.setup(
-            "+ + + + +",
-            "+ + + X +",
-            "+ + X + +",
-            "+ X + + +",
-            "X + + + +"
+            ". . . . .",
+            ". . . X .",
+            ". . X . .",
+            ". X . . .",
+            "X . . . ."
         )
 
         fun playBlack(x: Int, y: Int) {
@@ -312,11 +312,11 @@ class BoardTest {
         playBlack(4, 4)
 
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + + X",
-            "X + + + X",
-            "X + + + X",
-            "X + + + X",
-            "X + + + X"
+            ". . . . X",
+            "X . . . X",
+            "X . . . X",
+            "X . . . X",
+            "X . . . X"
         )
     }
 
@@ -325,11 +325,11 @@ class BoardTest {
         val board = Board(5)
         board.rules = Rules.Magnetic
         board.setup(
-            "+ + + + +",
-            "+ + + O +",
-            "+ + O + +",
-            "+ O + + +",
-            "O + + + +"
+            ". . . . .",
+            ". . . O .",
+            ". . O . .",
+            ". O . . .",
+            "O . . . ."
         )
 
         fun playBlack(x: Int, y: Int) {
@@ -344,11 +344,11 @@ class BoardTest {
         playBlack(4, 4)
 
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + + X",
-            "+ + + O X",
-            "+ + + O X",
-            "+ + + O X",
-            "+ + + O X"
+            ". . . . X",
+            ". . . O X",
+            ". . . O X",
+            ". . . O X",
+            ". . . O X"
         )
     }
 
@@ -357,30 +357,30 @@ class BoardTest {
         val board = Board(9)
         board.rules = Rules.Magnetic
         board.setup(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + O + + + +",
-            "+ + + + + + + + +",
-            "+ + X + + + X X +",
-            "+ + + + + + + + +",
-            "+ + + + O + + + +",
-            "+ + + + + + + + +",
-            "+ + + + O + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . O . . . .",
+            ". . . . . . . . .",
+            ". . X . . . X X .",
+            ". . . . . . . . .",
+            ". . . . O . . . .",
+            ". . . . . . . . .",
+            ". . . . O . . . ."
         )
 
         val result = board.play(4, 4)
 
         assertThat("$result").isEqualTo("ok")
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + O + + + +",
-            "X + + + X + X X +",
-            "+ + + + O + + + +",
-            "+ + + + + + + + +",
-            "+ + + + + + + + +",
-            "+ + + + O + + + +"
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . O . . . .",
+            "X . . . X . X X .",
+            ". . . . O . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . O . . . ."
         )
     }
 
@@ -389,15 +389,15 @@ class BoardTest {
         val board = Board(9)
         board.rules = Rules.Magnetic
         board.setup(
-            "+ + + O X X X X X",
-            "+ + + O X O O O X",
-            "+ + + O X O + O X",
-            "+ + + O X O + O X",
-            "+ + + O + + O X O",
-            "+ + + + + X + X O",
-            "+ + + + + + + X O",
-            "+ + + + + + X X O",
-            "+ + + + X O O O O"
+            ". . . O X X X X X",
+            ". . . O X O O O X",
+            ". . . O X O . O X",
+            ". . . O X O . O X",
+            ". . . O . . O X O",
+            ". . . . . X . X O",
+            ". . . . . . . X O",
+            ". . . . . . X X O",
+            ". . . . X O O O O"
         )
 
         val result = board.play(5, 4)
@@ -411,15 +411,15 @@ class BoardTest {
 
         assertThat("$result").isEqualTo("selfAtari, captured 8")
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + O X X X X X",
-            "+ + + O X O O O X",
-            "+ + + O X O + O X",
-            "+ + + O X O + O X",
-            "+ + + + O X O X +",
-            "+ + + + + + + X +",
-            "+ + + + + + + X +",
-            "+ + + + + X X X +",
-            "+ + + + X + + + +"
+            ". . . O X X X X X",
+            ". . . O X O O O X",
+            ". . . O X O . O X",
+            ". . . O X O . O X",
+            ". . . . O X O X .",
+            ". . . . . . . X .",
+            ". . . . . . . X .",
+            ". . . . . X X X .",
+            ". . . . X . . . ."
         )
     }
 
@@ -428,22 +428,22 @@ class BoardTest {
         val board = Board(5)
         board.rules = Rules.Magnetic
         board.setup(
-            "+ + O + +",
-            "+ + + + +",
-            "+ + + + O",
-            "+ + + + +",
-            "+ + O + +"
+            ". . O . .",
+            ". . . . .",
+            ". . . . O",
+            ". . . . .",
+            ". . O . ."
         )
 
         val result = board.play(2, 2)
 
         assertThat("$result").isEqualTo("selfAtari")
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + + +",
-            "+ + O + +",
-            "+ + X O +",
-            "+ + O + +",
-            "+ + + + +"
+            ". . . . .",
+            ". . O . .",
+            ". . X O .",
+            ". . O . .",
+            ". . . . ."
         )
     }
 
@@ -452,11 +452,11 @@ class BoardTest {
         val board = Board(5)
         board.rules = Rules.Magnetic
         board.setup(
-            "+ + O + +",
-            "+ + + + +",
-            "O + + + O",
-            "+ + + + +",
-            "+ + O + +"
+            ". . O . .",
+            ". . . . .",
+            "O . . . O",
+            ". . . . .",
+            ". . O . ."
         )
 
         val result = board.play(2, 2)
@@ -465,11 +465,11 @@ class BoardTest {
         // the referee result should be extended to say "self-captured 1" here.
         assertThat("$result").isEqualTo("captured 1")
         assertThat(board.toStringLines()).containsExactly(
-            "+ + + + +",
-            "+ + O + +",
-            "+ O + O +",
-            "+ + O + +",
-            "+ + + + +"
+            ". . . . .",
+            ". . O . .",
+            ". O . O .",
+            ". . O . .",
+            ". . . . ."
         )
         assertThat(board.getCaptured(Player.BLACK)).isEqualTo(1)
         assertThat(board.getCaptured(Player.WHITE)).isEqualTo(0)

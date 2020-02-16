@@ -35,7 +35,7 @@ open class Board(val size: Int) : java.io.Serializable {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                sb.append("+XO"[1 + (pieces[x][y]?.ordinal ?: -1)])
+                sb.append(".XO"[1 + (pieces[x][y]?.ordinal ?: -1)])
                 if (x < size - 1) sb.append(" ")
             }
             lines += "$sb"

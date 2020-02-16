@@ -172,7 +172,7 @@ class CountingBoard(board: Board) : java.io.Serializable {
                         dead[x][y] -> '#'
                         territory[x][y] != null -> "xo"[territory[x][y]!!.ordinal]
                         color[x][y] != null -> "XO"[color[x][y]!!.ordinal]
-                        else -> '+'
+                        else -> '.'
                     }
                 )
                 sb.append(if (x == size - 1) "\n" else " ")

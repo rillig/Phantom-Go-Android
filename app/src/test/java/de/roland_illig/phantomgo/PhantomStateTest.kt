@@ -49,30 +49,32 @@ class PhantomStateTest {
         assertThat("$result").isEqualTo("captured 3")
 
         // White still thinks his stones are on the board.
-        assertThat(state.whiteBoard.toString()).isEqualTo(""
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "O + + + + + + + +\n"
-                + "O O + + + + + + +\n")
+        assertThat(state.whiteBoard.toStringLines()).containsExactly(
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            "O . . . . . . . .",
+            "O O . . . . . . ."
+        )
 
         // Since the referee said "Black captured 3 stones" and a referee
         // looking at Black's board would have said the same, it was
         // played there also, removing the 3 white stones.
-        assertThat(state.blackBoard.toString()).isEqualTo(""
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "+ + + + + + + + +\n"
-                + "X + + + + + + + +\n"
-                + "+ X X + + + + + +\n"
-                + "+ + X + + + + + +\n")
+        assertThat(state.blackBoard.toStringLines()).containsExactly(
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            ". . . . . . . . .",
+            "X . . . . . . . .",
+            ". X X . . . . . .",
+            ". . X . . . . . ."
+        )
     }
 
     private fun PhantomState.playMoves(moves: String): RefereeResult {
@@ -81,7 +83,9 @@ class PhantomStateTest {
             val x = "abcdefghijklmnopqrstuvwxyz".indexOf(move[0])
             val y = size - Integer.parseInt(move.substring(1))
             val result = play(x, y)
-            assertThat(result is RefereeResult.Ok).withFailMessage("invalid move %s: %s", move, result).isTrue()
+            assertThat(result is RefereeResult.Ok)
+                .withFailMessage("invalid move %s: %s", move, result)
+                .isTrue()
             finishMove()
             lastResult = result
         }
