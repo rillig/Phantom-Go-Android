@@ -44,7 +44,7 @@ class PhantomStateTest {
     @Test
     fun testCapture() {
         val state = PhantomState()
-        val result = playMoves(state, "c1 b1 b2 a1 c2 a2 a3")
+        val result = state.playMoves("c1 b1 b2 a1 c2 a2 a3")
 
         assertThat("$result").isEqualTo("captured 3")
 
@@ -75,14 +75,14 @@ class PhantomStateTest {
                 + "+ + X + + + + + +\n")
     }
 
-    private fun playMoves(state: PhantomState, moves: String): RefereeResult {
+    private fun PhantomState.playMoves(moves: String): RefereeResult {
         var lastResult: RefereeResult? = null
         for (move in moves.split(" ")) {
             val x = "abcdefghijklmnopqrstuvwxyz".indexOf(move[0])
-            val y = state.size - Integer.parseInt(move.substring(1))
-            val result = state.play(x, y)
+            val y = size - Integer.parseInt(move.substring(1))
+            val result = play(x, y)
             assertThat(result is RefereeResult.Ok).withFailMessage("invalid move %s: %s", move, result).isTrue()
-            state.finishMove()
+            finishMove()
             lastResult = result
         }
         return lastResult!!
