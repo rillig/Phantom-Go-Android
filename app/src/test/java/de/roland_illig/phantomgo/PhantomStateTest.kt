@@ -61,7 +61,7 @@ class PhantomStateTest {
                 + "O O + + + + + + +\n")
 
         // Since the referee said "Black captured 3 stones" and a referee
-        // looking at Black's board whould have said the same, it was
+        // looking at Black's board would have said the same, it was
         // played there also, removing the 3 white stones.
         assertThat(state.blackBoard.toString()).isEqualTo(""
                 + "+ + + + + + + + +\n"
