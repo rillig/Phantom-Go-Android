@@ -15,9 +15,7 @@ object Persistence {
 
     fun savePhantomGo(ctx: Context, state: PhantomState) = save(ctx, "state", state)
 
-    fun loadToroidalGo(ctx: Context) = load(ctx, "toroidal go") {
-        ToroidalState(Board(9).apply { rules = Rules.Toroidal })
-    }
+    fun loadToroidalGo(ctx: Context) = load(ctx, "toroidal go") { ToroidalState() }
 
     fun saveToroidalGo(ctx: Context, state: ToroidalState) =
         save(ctx, "toroidal go", state)

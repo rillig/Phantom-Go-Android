@@ -25,7 +25,8 @@
 
     <string name="counting_title">Counting</string>
     <string name="result_summary">Black: %d + %d = %d\nWhite: %d + %d = %d</string>
-    <string name="finish_button">New game</string>
+    <string name="new_game_button">New game</string>
+    <string name="finish_button">Finish</string>
 
     <string name="referee_black">Black</string>
     <string name="referee_white">White</string>

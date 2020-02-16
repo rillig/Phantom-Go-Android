@@ -33,10 +33,10 @@ class SimpleBoardView : AbstractBoardView {
     override fun getBoard(x: Int, y: Int) = Cell(board[Intersection(x, y)], null, false)
 
     override fun onBoardClicked(x: Int, y: Int) {
-        if (board.play(Intersection(x, y)) !is RefereeResult.Invalid) {
-            boardUpdated()
-            invalidate()
-        }
+        if (board.gameOver) return
+        if (board.play(Intersection(x, y)) is RefereeResult.Invalid) return
+        boardUpdated()
+        invalidate()
     }
 
     fun pass() {

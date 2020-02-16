@@ -25,7 +25,8 @@
 
     <string name="counting_title">Décompte</string>
     <string name="result_summary">Noir\u00A0: %d + %d = %d\nBlanc\u00A0: %d + %d = %d</string>
-    <string name="finish_button">Nouvelle partie</string>
+    <string name="new_game_button">Nouvelle partie</string>
+    <string name="finish_button">Terminer</string>
 
     <string name="referee_black">Noir</string>
     <string name="referee_white">Blanc</string>

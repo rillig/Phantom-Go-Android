@@ -12,7 +12,6 @@ import de.roland_illig.android.phantomgo.R
 import de.roland_illig.android.phantomgo.SimpleBoardView
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
-import de.roland_illig.phantomgo.Rules
 
 class ToroidalPlayActivity : AppCompatActivity() {
 
@@ -30,6 +29,7 @@ class ToroidalPlayActivity : AppCompatActivity() {
         super.onResume()
         state = Persistence.loadToroidalGo(this)
         boardView.connect(board, this::boardUpdated)
+        maybeSwitchToCounting()
     }
 
     private fun boardUpdated() {
@@ -48,15 +48,19 @@ class ToroidalPlayActivity : AppCompatActivity() {
     }
 
     internal fun resign() {
-        state = ToroidalState(Board(9).apply { rules = Rules.Toroidal })
+        state = ToroidalState()
         boardView.connect(board, this::boardUpdated)
     }
 
     fun onPassClick(view: View) {
         boardView.pass()
-        if (board.gameOver) {
-            // TODO: count the game
-        }
+        maybeSwitchToCounting()
+    }
+
+    private fun maybeSwitchToCounting() {
+        if (!board.gameOver) return
+        ToroidalCountingActivity.start(this)
+        finish()
     }
 
     class ResignDialogFragment : DialogFragment() {
