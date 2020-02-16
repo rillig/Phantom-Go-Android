@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
-import de.roland_illig.phantomgo.PhantomState
 import de.roland_illig.phantomgo.Intersection
+import de.roland_illig.phantomgo.PhantomState
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
 
@@ -26,7 +26,8 @@ class PlayerBoardView : AbstractBoardView {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
+            super(context, attrs, defStyleAttr)
 
     fun configure(state: PhantomState) {
         this.state = state
@@ -76,5 +77,6 @@ class PlayerBoardView : AbstractBoardView {
         findParentView<View>(R.id.handOverButton).isEnabled = done
     }
 
-    private fun <T : View> findParentView(resourceId: Int): T = (parent as View).findViewById(resourceId)
+    private fun <T : View> findParentView(resourceId: Int): T =
+        (parent as View).findViewById(resourceId)
 }

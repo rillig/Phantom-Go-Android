@@ -28,16 +28,39 @@ object Referee {
         val captured = result.capturedStones.size
 
         if (captured > 0 && selfAtari && atari) {
-            return resources.getQuantityString(R.plurals.referee_capture_atari_selfatari, captured, me, captured, other)
+            return resources.getQuantityString(
+                R.plurals.referee_capture_atari_selfatari,
+                captured,
+                me,
+                captured,
+                other
+            )
         }
         if (captured > 0 && selfAtari) {
-            return resources.getQuantityString(R.plurals.referee_capture_selfatari, captured, me, captured)
+            return resources.getQuantityString(
+                R.plurals.referee_capture_selfatari,
+                captured,
+                me,
+                captured
+            )
         }
         if (captured > 0 && atari) {
-            return resources.getQuantityString(R.plurals.referee_capture_atari, captured, me, captured, other)
+            return resources.getQuantityString(
+                R.plurals.referee_capture_atari,
+                captured,
+                me,
+                captured,
+                other
+            )
         }
         if (captured > 0) {
-            return resources.getQuantityString(R.plurals.referee_capture, captured, me, captured, other)
+            return resources.getQuantityString(
+                R.plurals.referee_capture,
+                captured,
+                me,
+                captured,
+                other
+            )
         }
 
         if (selfAtari && atari) {

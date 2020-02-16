@@ -13,7 +13,8 @@ class CountingBoardView : AbstractBoardView {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
+            super(context, attrs, defStyleAttr)
 
     fun configure(state: PhantomState) {
         this.state = state
@@ -41,9 +42,11 @@ class CountingBoardView : AbstractBoardView {
 
     private fun updateSummary() {
         val result = countingBoard.count()
-        val summary = resources.getString(R.string.result_summary,
-                result.blackTerritory, result.blackCaptured, result.blackScore,
-                result.whiteTerritory, result.whiteCaptured, result.whiteScore)
+        val summary = resources.getString(
+            R.string.result_summary,
+            result.blackTerritory, result.blackCaptured, result.blackScore,
+            result.whiteTerritory, result.whiteCaptured, result.whiteScore
+        )
         ((parent as View).findViewById<View>(R.id.countingSummary) as TextView).text = summary
     }
 }

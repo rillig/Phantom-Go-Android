@@ -49,7 +49,14 @@ class CountingBoard(board: Board) : java.io.Serializable {
         return pieces
     }
 
-    private fun floodFillStep(input: Array<Array<Player?>>, output: Array<BooleanArray>, done: Array<BooleanArray>, from: Player?, x: Int, y: Int) {
+    private fun floodFillStep(
+        input: Array<Array<Player?>>,
+        output: Array<BooleanArray>,
+        done: Array<BooleanArray>,
+        from: Player?,
+        x: Int,
+        y: Int
+    ) {
         if (x in output.indices && y in output.indices) {
             if (!done[x][y] && (output[x][y] || input[x][y] == from)) {
                 done[x][y] = true
@@ -135,8 +142,9 @@ class CountingBoard(board: Board) : java.io.Serializable {
         }
 
         countResult = CountResult(
-                blackTerritory, whiteTerritory,
-                blackCaptured + whiteDead, whiteCaptured + blackDead)
+            blackTerritory, whiteTerritory,
+            blackCaptured + whiteDead, whiteCaptured + blackDead
+        )
         return countResult!!
     }
 
@@ -159,12 +167,14 @@ class CountingBoard(board: Board) : java.io.Serializable {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                sb.append(when  {
-                    dead[x][y] -> '#'
-                    territory[x][y] != null -> "xo"[territory[x][y]!!.ordinal]
-                    color[x][y] != null -> "XO"[color[x][y]!!.ordinal]
-                    else -> '+'
-                })
+                sb.append(
+                    when {
+                        dead[x][y] -> '#'
+                        territory[x][y] != null -> "xo"[territory[x][y]!!.ordinal]
+                        color[x][y] != null -> "XO"[color[x][y]!!.ordinal]
+                        else -> '+'
+                    }
+                )
                 sb.append(if (x == size - 1) "\n" else " ")
             }
         }

@@ -2,9 +2,7 @@ package de.roland_illig.android.phantomgo
 
 import android.content.Context
 import de.roland_illig.android.phantomgo.torus.ToroidalState
-import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.PhantomState
-import de.roland_illig.phantomgo.Rules
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable

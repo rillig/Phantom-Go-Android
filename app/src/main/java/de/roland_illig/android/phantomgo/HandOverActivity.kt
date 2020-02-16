@@ -26,8 +26,10 @@ class HandOverActivity : AppCompatActivity() {
         setContentView(R.layout.activity_hand_over)
 
         val state = Persistence.loadPhantomGo(this)
-        val playerName = getText(if (state.turn == Player.BLACK) R.string.referee_black else R.string.referee_white)
-        (findViewById<TextView>(R.id.handOverText)).text = resources.getString(R.string.hand_over_text, playerName)
+        val id = if (state.turn == Player.BLACK) R.string.referee_black else R.string.referee_white
+        val playerName = getText(id)
+        (findViewById<TextView>(R.id.handOverText)).text =
+            resources.getString(R.string.hand_over_text, playerName)
 
         val refereeStrings = state.refereeHistory.map { result -> format(result) }
         val refereeResultsView = findViewById<ListView>(R.id.refereeHistory)
