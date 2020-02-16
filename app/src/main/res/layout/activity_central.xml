@@ -39,6 +39,7 @@
         android:id="@+id/play_magnet_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onPlayMagneticGoClick"
         android:text="@string/play_magnet_go_button"
         app:layout_constraintEnd_toEndOf="@id/play_phantom_go"
         app:layout_constraintBottom_toTopOf="@id/play_phantom_go" />

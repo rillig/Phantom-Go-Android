@@ -3,6 +3,7 @@ package de.roland_illig.android.phantomgo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import de.roland_illig.android.phantomgo.magnet.MagneticPlayActivity
 import de.roland_illig.android.phantomgo.torus.ToroidalPlayActivity
 import de.roland_illig.phantomgo.PhantomState
 
@@ -19,6 +20,8 @@ class CentralActivity : AppCompatActivity() {
         super.onResume()
         state = Persistence.loadPhantomGo(this)
     }
+
+    fun onPlayMagneticGoClick(view: View) = MagneticPlayActivity.start(this)
 
     fun onPlayToroidalGoClick(view: View) = ToroidalPlayActivity.start(this)
 

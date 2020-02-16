@@ -96,7 +96,7 @@ open class Board(val size: Int) : java.io.Serializable {
 
         val placed = mutableListOf(pos)
         val captured = mutableListOf<Intersection>()
-        moveElectric(pos, placed)
+        moveMagnetic(pos, placed)
         val atari = captureOther(placed, other, captured, prevBoard)
         val selfAtari = captureTurn(placed, turn, captured, prevBoard)
 
@@ -109,8 +109,8 @@ open class Board(val size: Int) : java.io.Serializable {
         return RefereeResult.Ok(atari, selfAtari, captured.toList())
     }
 
-    private fun moveElectric(pos: Intersection, placed: MutableList<Intersection>) {
-        if (rules != Rules.Electric) return
+    private fun moveMagnetic(pos: Intersection, placed: MutableList<Intersection>) {
+        if (rules != Rules.Magnetic) return
 
         data class Direction(val x: Int, val y: Int)
 

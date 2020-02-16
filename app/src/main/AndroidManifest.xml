@@ -24,6 +24,8 @@
         <activity
             android:name=".CountingActivity"
             android:label="@string/counting_title" />
+        <activity android:name=".magnet.MagneticPlayActivity" />
+        <activity android:name=".magnet.MagneticCountingActivity" />
         <activity android:name=".torus.ToroidalPlayActivity" />
         <activity android:name=".torus.ToroidalCountingActivity" />
     </application>

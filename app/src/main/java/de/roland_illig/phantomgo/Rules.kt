@@ -6,6 +6,6 @@ enum class Rules {
     /** See [toroidal go](https://senseis.xmp.net/?ToroidalGo). */
     Toroidal,
 
-    /** See [electric go](https://senseis.xmp.net/?ElectricGo). */
-    Electric
+    /** See [magnetic go](https://senseis.xmp.net/?ElectricGo). */
+    Magnetic
 }

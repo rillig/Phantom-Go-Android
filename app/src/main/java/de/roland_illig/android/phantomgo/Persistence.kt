@@ -1,6 +1,7 @@
 package de.roland_illig.android.phantomgo
 
 import android.content.Context
+import de.roland_illig.android.phantomgo.magnet.MagneticState
 import de.roland_illig.android.phantomgo.torus.ToroidalState
 import de.roland_illig.phantomgo.PhantomState
 import java.io.ObjectInputStream
@@ -12,6 +13,11 @@ object Persistence {
     fun loadPhantomGo(ctx: Context) = load(ctx, "state") { PhantomState() }
 
     fun savePhantomGo(ctx: Context, state: PhantomState) = save(ctx, "state", state)
+
+    fun loadMagneticGo(ctx: Context) = load(ctx, "magnetic go") { MagneticState() }
+
+    fun saveMagneticGo(ctx: Context, state: MagneticState) =
+        save(ctx, "magnetic go", state)
 
     fun loadToroidalGo(ctx: Context) = load(ctx, "toroidal go") { ToroidalState() }
 

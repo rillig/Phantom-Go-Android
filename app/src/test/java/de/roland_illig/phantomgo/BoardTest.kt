@@ -289,9 +289,9 @@ class BoardTest {
     }
 
     @Test
-    fun `electric go, equal stones get pushed away`() {
+    fun `magnetic go, equal stones get pushed away`() {
         val board = Board(5)
-        board.rules = Rules.Electric
+        board.rules = Rules.Magnetic
         board.setup(
             "+ + + + +",
             "+ + + X +",
@@ -321,9 +321,9 @@ class BoardTest {
     }
 
     @Test
-    fun `electric go, opponent stones get attracted`() {
+    fun `magnetic go, opponent stones get attracted`() {
         val board = Board(5)
-        board.rules = Rules.Electric
+        board.rules = Rules.Magnetic
         board.setup(
             "+ + + + +",
             "+ + + O +",
@@ -353,9 +353,9 @@ class BoardTest {
     }
 
     @Test
-    fun `electric go, basic moves`() {
+    fun `magnetic go, basic moves`() {
         val board = Board(9)
-        board.rules = Rules.Electric
+        board.rules = Rules.Magnetic
         board.setup(
             "+ + + + + + + + +",
             "+ + + + + + + + +",
@@ -385,9 +385,9 @@ class BoardTest {
     }
 
     @Test
-    fun `electric go, capturing order and other subtleties`() {
+    fun `magnetic go, capturing order and other subtleties`() {
         val board = Board(9)
-        board.rules = Rules.Electric
+        board.rules = Rules.Magnetic
         board.setup(
             "+ + + O X X X X X",
             "+ + + O X O O O X",
@@ -424,9 +424,9 @@ class BoardTest {
     }
 
     @Test
-    fun `electric go, self-atari`() {
+    fun `magnetic go, self-atari`() {
         val board = Board(5)
-        board.rules = Rules.Electric
+        board.rules = Rules.Magnetic
         board.setup(
             "+ + O + +",
             "+ + + + +",
@@ -448,9 +448,9 @@ class BoardTest {
     }
 
     @Test
-    fun `electric go, self-capture`() {
+    fun `magnetic go, self-capture`() {
         val board = Board(5)
-        board.rules = Rules.Electric
+        board.rules = Rules.Magnetic
         board.setup(
             "+ + O + +",
             "+ + + + +",
@@ -461,7 +461,7 @@ class BoardTest {
 
         val result = board.play(2, 2)
 
-        // If there should ever be someone who wants to play phantom electric go,
+        // If there should ever be someone who wants to play phantom magnetic go,
         // the referee result should be extended to say "self-captured 1" here.
         assertThat("$result").isEqualTo("captured 1")
         assertThat(board.toStringLines()).containsExactly(
