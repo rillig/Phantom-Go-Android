@@ -22,6 +22,7 @@
         android:id="@+id/play_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onPlayPlainGoClick"
         android:text="@string/play_go_button"
         app:layout_constraintEnd_toEndOf="@id/play_toroidal_go"
         app:layout_constraintBottom_toTopOf="@id/play_toroidal_go" />
