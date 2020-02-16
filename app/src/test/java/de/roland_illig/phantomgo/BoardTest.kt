@@ -227,6 +227,34 @@ class BoardTest {
     }
 
     @Test
+    fun `almost ko`() {
+        val board = Board(5)
+        board.setup(
+            ". . . . .",
+            ". O O X .",
+            "O X . O X",
+            ". O O X .",
+            ". . . . ."
+        )
+
+        val b1 = board.play(2, 2)
+
+        // No self-atari since the connected stone was in atari before.
+        assertThat("$b1").isEqualTo("captured 1")
+
+        val w2 = board.play(3, 2)
+
+        // Even though b1 is captured immediately, this is not a ko since
+        // b1 was part of a larger chain, and there was no repetition in
+        // the board position.
+        assertThat("$w2").isEqualTo("selfAtari, captured 2")
+
+        val b3 = board.play(2, 2)
+
+        assertThat("$b3").isEqualTo("captured 1")
+    }
+
+    @Test
     fun `stay in atari`() {
         val board = Board(3)
         board.setup(
