@@ -23,7 +23,7 @@ class HandOverActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hand_over)
+        setContentView(R.layout.activity_phantom_hand_over)
 
         val state = Persistence.loadPhantomGo(this)
         val id = if (state.turn == Player.BLACK) R.string.referee_black else R.string.referee_white

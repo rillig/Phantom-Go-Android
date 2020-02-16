@@ -14,7 +14,7 @@ class CountingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_counting)
+        setContentView(R.layout.activity_phantom_counting)
     }
 
     override fun onResume() {
