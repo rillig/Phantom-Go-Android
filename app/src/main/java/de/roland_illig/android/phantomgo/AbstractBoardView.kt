@@ -102,6 +102,8 @@ abstract class AbstractBoardView : View {
 
     protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
 
+    /** This class takes care of the actual drawing. It also keeps references
+     * to preallocated objects, to avoid creating them during the paint events. */
     private inner class Drawer {
 
         val board = fillPaint(0xFFD48E00)
