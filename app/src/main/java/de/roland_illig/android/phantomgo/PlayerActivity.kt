@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import de.roland_illig.phantomgo.Game
+import de.roland_illig.phantomgo.PhantomState
 import de.roland_illig.phantomgo.Player
 
 /**
@@ -18,7 +18,7 @@ import de.roland_illig.phantomgo.Player
  */
 class PlayerActivity : AppCompatActivity() {
 
-    private lateinit var game: Game
+    private lateinit var state: PhantomState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +29,15 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val game = Persistence.loadPhantomGo(this)
-        this.game = game
-        setTitle(if (game.turn == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
-        boardView().configure(game)
+        val state = Persistence.loadPhantomGo(this)
+        this.state = state
+        setTitle(if (state.turn == Player.BLACK) R.string.black_to_play else R.string.white_to_play)
+        boardView().configure(state)
     }
 
     override fun onPause() {
         super.onPause()
-        Persistence.savePhantomGo(this, game)
+        Persistence.savePhantomGo(this, state)
     }
 
     fun onToolClick(view: View) {
@@ -59,7 +59,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     internal fun resign() {
-        game = Game()
+        state = PhantomState()
         start(this)
         finish()
     }
@@ -70,10 +70,10 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     fun onContinueClick(view: View) {
-        if (game.isGameOver) {
+        if (state.isGameOver) {
             CountingActivity.start(this)
         } else {
-            game.finishMove()
+            state.finishMove()
             HandOverActivity.start(this)
         }
         finish()

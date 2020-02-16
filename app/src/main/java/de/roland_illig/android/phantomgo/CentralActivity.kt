@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.roland_illig.android.phantomgo.torus.ToroidalPlayActivity
-import de.roland_illig.phantomgo.Game
+import de.roland_illig.phantomgo.PhantomState
 
 class CentralActivity : AppCompatActivity() {
 
-    private lateinit var game: Game
+    private lateinit var state: PhantomState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class CentralActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        game = Persistence.loadPhantomGo(this)
+        state = Persistence.loadPhantomGo(this)
     }
 
     fun onPlayToroidalGoClick(view: View) = ToroidalPlayActivity.start(this)
@@ -26,8 +26,8 @@ class CentralActivity : AppCompatActivity() {
 
     private fun onPlayPhantomGoClick() {
         when {
-            game.isGameOver -> CountingActivity.start(this)
-            game.isInitial -> PlayerActivity.start(this)
+            state.isGameOver -> CountingActivity.start(this)
+            state.isInitial -> PlayerActivity.start(this)
             else -> HandOverActivity.start(this)
         }
     }

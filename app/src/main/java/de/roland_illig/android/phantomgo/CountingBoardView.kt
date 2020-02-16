@@ -4,35 +4,35 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
-import de.roland_illig.phantomgo.Game
+import de.roland_illig.phantomgo.PhantomState
 
 class CountingBoardView : AbstractBoardView {
 
-    private lateinit var game: Game
-    private val countingBoard get() = game.countingBoard()
+    private lateinit var state: PhantomState
+    private val countingBoard get() = state.countingBoard()
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun configure(game: Game) {
-        this.game = game
+    fun configure(state: PhantomState) {
+        this.state = state
         updateSummary()
     }
 
-    override val boardSize get() = game.size
+    override val boardSize get() = state.size
 
     override val highlightCross get() = false
 
     override fun getBoard(x: Int, y: Int): Cell {
-        val stone = game.getRefereeBoard(x, y)
+        val stone = state.getRefereeBoard(x, y)
         val territory = countingBoard.getTerritory(x, y)
         val dead = countingBoard.isDead(x, y)
         return Cell(stone, territory, dead)
     }
 
     override fun onBoardClicked(x: Int, y: Int) {
-        if (game.getRefereeBoard(x, y) != null) {
+        if (state.getRefereeBoard(x, y) != null) {
             countingBoard.toggleDead(x, y)
             updateSummary()
             invalidate()

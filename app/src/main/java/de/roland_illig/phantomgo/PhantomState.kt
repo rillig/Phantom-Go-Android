@@ -1,6 +1,6 @@
 package de.roland_illig.phantomgo
 
-class Game(val size: Int = 9) : java.io.Serializable {
+class PhantomState(val size: Int = 9) : java.io.Serializable {
     var turn = Player.BLACK; private set
     private val refereeBoard = Board(size)
     val refereeHistory = mutableListOf<RefereeHistoryEntry>()

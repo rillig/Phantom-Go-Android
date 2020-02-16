@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
-import de.roland_illig.phantomgo.Game
+import de.roland_illig.phantomgo.PhantomState
 import de.roland_illig.phantomgo.Intersection
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
@@ -12,24 +12,24 @@ import de.roland_illig.phantomgo.Referee
 class PlayerBoardView : AbstractBoardView {
 
     internal var mode = R.id.playButton
-    private lateinit var game: Game
+    private lateinit var state: PhantomState
 
-    private fun getBoard() = game.playerBoard()
+    private fun getBoard() = state.playerBoard()
 
     private fun setRefereeText(text: CharSequence) {
         findParentView<TextView>(R.id.referee).text = text
     }
 
-    override val boardSize get() = game.size
+    override val boardSize get() = state.size
 
-    override val highlightCross get() = !game.isReadyToHandOver()
+    override val highlightCross get() = !state.isReadyToHandOver()
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun configure(game: Game) {
-        this.game = game
+    fun configure(state: PhantomState) {
+        this.state = state
         updateViews()
     }
 
@@ -47,31 +47,31 @@ class PlayerBoardView : AbstractBoardView {
     }
 
     private fun onPlayModeClick(x: Int, y: Int) {
-        if (game.isReadyToHandOver()) {
+        if (state.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
 
-        game.play(x, y)
+        state.play(x, y)
         updateViews()
     }
 
     fun pass() {
-        if (game.isReadyToHandOver()) {
+        if (state.isReadyToHandOver()) {
             setRefereeText(resources.getText(R.string.not_your_turn))
             return
         }
 
-        game.pass()
+        state.pass()
         updateViews()
     }
 
     private fun updateViews() {
-        val last = game.refereeHistory.lastOrNull()
+        val last = state.refereeHistory.lastOrNull()
         if (last != null) {
             setRefereeText(Referee.comment(last.result, last.player, resources))
         }
-        val done = game.isReadyToHandOver()
+        val done = state.isReadyToHandOver()
         findParentView<View>(R.id.passButton).isEnabled = !done
         findParentView<View>(R.id.handOverButton).isEnabled = done
     }
