@@ -35,14 +35,11 @@ open class Board(val size: Int) : java.io.Serializable {
         val sb = StringBuilder()
         for (y in 0 until size) {
             for (x in 0 until size) {
-                val player = pieces[x][y]
-                sb.append(if (player != null) "XO"[player.ordinal] else '+')
+                sb.append("+XO"[1 + (pieces[x][y]?.ordinal ?: -1)])
                 if (x < size - 1) sb.append(" ")
-                else {
-                    lines += "$sb"
-                    sb.setLength(0)
-                }
             }
+            lines += "$sb"
+            sb.setLength(0)
         }
         return lines
     }
