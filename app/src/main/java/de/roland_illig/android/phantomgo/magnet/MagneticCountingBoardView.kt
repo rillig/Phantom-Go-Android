@@ -28,11 +28,11 @@ class MagneticCountingBoardView : AbstractBoardView {
     override val highlightCross get() = false
 
     override fun getBoard(x: Int, y: Int): Cell {
-        val countingBoard = state.countingBoard ?: return Cell(null, null, false)
+        val countingBoard = state.countingBoard ?: return Cell(null, null, false, null)
         val stone = state.board[Intersection(x, y)]
         val territory = countingBoard.getTerritory(x, y)
         val dead = countingBoard.isDead(x, y)
-        return Cell(stone, territory, dead)
+        return Cell(stone, territory, dead, null)
     }
 
     override fun onBoardClicked(x: Int, y: Int) {

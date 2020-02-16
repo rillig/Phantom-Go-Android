@@ -30,7 +30,10 @@ class SimpleBoardView : AbstractBoardView {
         invalidate()
     }
 
-    override fun getBoard(x: Int, y: Int) = Cell(board[Intersection(x, y)], null, false)
+    override fun getBoard(x: Int, y: Int): Cell {
+        val marker: Marker? = null // TODO: Mark the last move
+        return Cell(board[Intersection(x, y)], null, false, marker)
+    }
 
     override fun onBoardClicked(x: Int, y: Int) {
         if (board.gameOver) return

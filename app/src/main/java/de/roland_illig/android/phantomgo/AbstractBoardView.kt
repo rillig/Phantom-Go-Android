@@ -13,6 +13,7 @@ import de.roland_illig.phantomgo.Player
 import kotlin.math.floor
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 /**
  * Handles drawing of a Go board and translates click coordinates to board coordinates.
@@ -100,21 +101,34 @@ abstract class AbstractBoardView : View {
         drawer.draw(g)
     }
 
-    protected class Cell(val color: Player?, val territory: Player?, val dead: Boolean)
+    protected class Cell(
+        val color: Player?,
+        val territory: Player?,
+        val dead: Boolean,
+        val marker: Marker?
+    )
+
+    protected enum class Marker {
+        SQUARE, TRIANGLE, CIRCLE
+    }
 
     /** This class takes care of the actual drawing. It also keeps references
      * to preallocated objects, to avoid creating them during the paint events. */
     private inner class Drawer {
 
-        val board = fillPaint(0xFFD48E00)
-        val black = fillPaint(0xFF000000)
-        val white = fillPaint(0xFFFFFFFF)
-        val softBlack = fillPaint(0x55000000)
-        val softWhite = fillPaint(0x55FFFFFF)
+        private val board = fillPaint(0xFFD48E00)
+        private val black = fillPaint(0xFF000000)
+        private val white = fillPaint(0xFFFFFFFF)
+        private val softBlack = fillPaint(0x55000000)
+        private val softWhite = fillPaint(0x55FFFFFF)
 
-        var unit = 0
-        val line = linePaint(0xFF000000)
-        val currentLine = linePaint(0xFFFF9900)
+        private var unit = 0
+        private val line = linePaint(0xFF000000)
+        private val currentLine = linePaint(0xFFFF9900)
+
+        private val blackMarker = markerPaint(0xFF000000)
+        private val whiteMarker = markerPaint(0xFFFFFFFF)
+        private val halfSqrt3 = sqrt(0.75F)
 
         fun draw(g: Canvas) {
             g.save()
@@ -178,7 +192,7 @@ abstract class AbstractBoardView : View {
 
         /** [https://senseis.xmp.net/?Hoshi] */
         private fun drawHoshis(g: Canvas) {
-            fun drawHoshi(x: Int, y: Int) = fillCircle(g, x, y, 0.1F, black)
+            fun drawHoshi(x: Int, y: Int) = drawCircle(g, x, y, 0.1F, black)
 
             val small = if (boardSize < 13) 2 else 3
             val center = boardSize / 2
@@ -209,27 +223,71 @@ abstract class AbstractBoardView : View {
 
         private fun drawStone(g: Canvas, x: Int, y: Int) {
             val cell = getBoard(x, y)
+
             if (cell.dead || cell.territory != null) {
                 if (cell.dead) {
                     val paint = if (cell.color == Player.BLACK) softBlack else softWhite
-                    fillCircle(g, x, y, 0.48F, paint)
+                    drawCircle(g, x, y, 0.48F, paint)
                 }
                 if (cell.territory != null) {
                     val paint = if (cell.territory == Player.BLACK) black else white
-                    fillCircle(g, x, y, 0.16F, paint)
+                    drawCircle(g, x, y, 0.16F, paint)
                 }
-            } else if (cell.color != null) {
+                return
+            }
+
+            if (cell.color != null) {
                 val paint = if (cell.color == Player.BLACK) black else white
-                fillCircle(g, x, y, 0.48F, paint)
+                drawCircle(g, x, y, 0.48F, paint)
+            }
+
+            drawMarker(g, x, y, cell.color, cell.marker)
+        }
+
+        private fun drawMarker(
+            g: Canvas,
+            x: Int,
+            y: Int,
+            color: Player?,
+            marker: Marker?
+        ) {
+            if (marker == null) return
+            val paint = if (color == Player.WHITE) blackMarker else whiteMarker
+            paint.strokeWidth = unit / 24.0F
+            when (marker) {
+                Marker.TRIANGLE -> drawTriangle(g, x, y, paint)
+                Marker.CIRCLE -> drawCircle(g, x, y, 0.30F, paint)
+                Marker.SQUARE -> drawSquare(g, x, y, paint)
             }
         }
 
-        private fun fillCircle(g: Canvas, x: Int, y: Int, radius: Float, paint: Paint) {
+        private fun drawTriangle(g: Canvas, x: Int, y: Int, paint: Paint) {
+            val radius = 0.33F
+            val top = boardToScreenF(y - radius)
+            val left = boardToScreenF(x - halfSqrt3 * radius)
+            val bottom = boardToScreenF(y + 0.5F * radius)
+            val right = boardToScreenF(x + halfSqrt3 * radius)
+            val center = boardToScreen(x)
+            g.drawLine(center, top, right, bottom, paint)
+            g.drawLine(right, bottom, left, bottom, paint)
+            g.drawLine(left, bottom, center, top, paint)
+        }
+
+        private fun drawCircle(g: Canvas, x: Int, y: Int, radius: Float, paint: Paint) {
             val top = boardToScreenF(y - radius)
             val left = boardToScreenF(x - radius)
             val bottom = boardToScreenF(y + radius)
             val right = boardToScreenF(x + radius)
             g.drawOval(RectF(left, top, right, bottom), paint)
+        }
+
+        private fun drawSquare(g: Canvas, x: Int, y: Int, paint: Paint) {
+            val radius = 0.24F
+            val top = boardToScreenF(y - radius)
+            val left = boardToScreenF(x - radius)
+            val bottom = boardToScreenF(y + radius)
+            val right = boardToScreenF(x + radius)
+            g.drawRect(RectF(left, top, right, bottom), paint)
         }
 
         private fun boardToScreen(bc: Int) = (unit * (bc + 1)).toFloat()
@@ -244,6 +302,12 @@ abstract class AbstractBoardView : View {
         private fun linePaint(argb: Long) = Paint().apply {
             color = argb.toInt()
             style = Paint.Style.STROKE
+        }
+
+        private fun markerPaint(argb: Long) = Paint().apply {
+            color = argb.toInt()
+            style = Paint.Style.STROKE
+            isAntiAlias = true
         }
     }
 }

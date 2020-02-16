@@ -34,7 +34,8 @@ class PlayerBoardView : AbstractBoardView {
         updateViews()
     }
 
-    override fun getBoard(x: Int, y: Int) = Cell(getBoard()[Intersection(x, y)], null, false)
+    override fun getBoard(x: Int, y: Int) =
+        Cell(getBoard()[Intersection(x, y)], null, false, null)
 
     override fun onBoardClicked(x: Int, y: Int) {
         val board = this.getBoard()

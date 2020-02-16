@@ -29,7 +29,7 @@ class CountingBoardView : AbstractBoardView {
         val stone = state.getRefereeBoard(x, y)
         val territory = countingBoard.getTerritory(x, y)
         val dead = countingBoard.isDead(x, y)
-        return Cell(stone, territory, dead)
+        return Cell(stone, territory, dead, null)
     }
 
     override fun onBoardClicked(x: Int, y: Int) {
