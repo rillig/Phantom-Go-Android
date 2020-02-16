@@ -8,7 +8,7 @@ import de.roland_illig.phantomgo.PhantomState
 
 class CountingBoardView : AbstractBoardView {
 
-    private lateinit var state: PhantomState
+    private var state = PhantomState(9) // Just for the preview during development
     private val countingBoard get() = state.countingBoard()
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
