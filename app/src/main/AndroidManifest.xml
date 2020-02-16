@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="de.roland_illig.android.phantomgo">
 
@@ -12,18 +13,17 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".CentralActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PlayerActivity"/>
+        <activity android:name=".PlayerActivity" />
         <activity
             android:name=".HandOverActivity"
-            android:label="@string/hand_over_title"/>
+            android:label="@string/hand_over_title" />
         <activity
             android:name=".CountingActivity"
-            android:label="@string/counting_title"/>
+            android:label="@string/counting_title" />
     </application>
 
 </manifest>
