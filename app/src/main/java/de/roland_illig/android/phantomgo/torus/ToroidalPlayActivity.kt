@@ -10,18 +10,21 @@ import androidx.fragment.app.DialogFragment
 import de.roland_illig.android.phantomgo.Persistence
 import de.roland_illig.android.phantomgo.R
 import de.roland_illig.android.phantomgo.SimpleBoardView
+import de.roland_illig.android.phantomgo.databinding.ActivityToroidalPlayBinding
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
 
 class ToroidalPlayActivity : AppCompatActivity() {
 
     private lateinit var state: ToroidalState
+    private lateinit var binding: ActivityToroidalPlayBinding
     private val board: Board get() = state.board
 
     private val boardView get() = findViewById<SimpleBoardView>(R.id.simple_board_view)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityToroidalPlayBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_toroidal_play)
     }
 

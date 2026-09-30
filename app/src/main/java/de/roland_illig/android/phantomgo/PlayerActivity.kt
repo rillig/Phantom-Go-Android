@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import de.roland_illig.android.phantomgo.databinding.ActivityPhantomPlayerBinding
 import de.roland_illig.phantomgo.PhantomState
 import de.roland_illig.phantomgo.Player
 
@@ -19,9 +20,11 @@ import de.roland_illig.phantomgo.Player
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var state: PhantomState
+    private lateinit var binding: ActivityPhantomPlayerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPhantomPlayerBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_phantom_player)
 
         onToolClick(findViewById(R.id.playButton))

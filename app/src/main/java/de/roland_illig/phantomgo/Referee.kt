@@ -10,6 +10,7 @@ object Referee {
             is RefereeResult.OwnStone -> return resources.getString(R.string.referee_own_stone)
             is RefereeResult.Suicide -> return resources.getString(R.string.referee_suicide)
             is RefereeResult.Ko -> return resources.getString(R.string.referee_ko)
+            else -> {}
         }
 
         val black = resources.getString(R.string.referee_black)

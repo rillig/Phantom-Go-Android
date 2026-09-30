@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.roland_illig.android.phantomgo.Persistence
 import de.roland_illig.android.phantomgo.R
+import de.roland_illig.android.phantomgo.databinding.ActivityPlainCountingBinding
 
 /**
  * After a game of Go has ended,
@@ -15,9 +16,11 @@ import de.roland_illig.android.phantomgo.R
 class PlainCountingActivity : AppCompatActivity() {
 
     private lateinit var state: PlainState
+    private lateinit var binding: ActivityPlainCountingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPlainCountingBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_plain_counting)
     }
 

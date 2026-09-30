@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import de.roland_illig.android.phantomgo.databinding.ActivityPhantomHandOverBinding
 import de.roland_illig.phantomgo.PhantomState
 import de.roland_illig.phantomgo.Player
 import de.roland_illig.phantomgo.Referee
@@ -21,8 +22,11 @@ import de.roland_illig.phantomgo.Referee
  */
 class HandOverActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityPhantomHandOverBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPhantomHandOverBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_phantom_hand_over)
 
         val state = Persistence.loadPhantomGo(this)

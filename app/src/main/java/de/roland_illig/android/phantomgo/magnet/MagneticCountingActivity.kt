@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.roland_illig.android.phantomgo.Persistence
 import de.roland_illig.android.phantomgo.R
+import de.roland_illig.android.phantomgo.databinding.ActivityMagneticCountingBinding
 
 /**
  * After a game of Magnetic Go has ended,
@@ -15,9 +16,11 @@ import de.roland_illig.android.phantomgo.R
 class MagneticCountingActivity : AppCompatActivity() {
 
     private lateinit var state: MagneticState
+    private lateinit var binding: ActivityMagneticCountingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMagneticCountingBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_magnetic_counting)
     }
 

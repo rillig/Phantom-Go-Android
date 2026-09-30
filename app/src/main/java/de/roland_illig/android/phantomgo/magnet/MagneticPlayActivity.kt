@@ -10,18 +10,21 @@ import androidx.fragment.app.DialogFragment
 import de.roland_illig.android.phantomgo.Persistence
 import de.roland_illig.android.phantomgo.R
 import de.roland_illig.android.phantomgo.SimpleBoardView
+import de.roland_illig.android.phantomgo.databinding.ActivityMagneticPlayBinding
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
 
 class MagneticPlayActivity : AppCompatActivity() {
 
     private lateinit var state: MagneticState
+    private lateinit var binding: ActivityMagneticPlayBinding
     private val board: Board get() = state.board
 
     private val boardView get() = findViewById<SimpleBoardView>(R.id.simple_board_view)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMagneticPlayBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_magnetic_play)
     }
 

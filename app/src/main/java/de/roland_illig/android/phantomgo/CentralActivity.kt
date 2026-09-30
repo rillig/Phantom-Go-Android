@@ -3,6 +3,7 @@ package de.roland_illig.android.phantomgo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import de.roland_illig.android.phantomgo.databinding.ActivityCentralBinding
 import de.roland_illig.android.phantomgo.magnet.MagneticPlayActivity
 import de.roland_illig.android.phantomgo.plain.PlainPlayActivity
 import de.roland_illig.android.phantomgo.torus.ToroidalPlayActivity
@@ -11,9 +12,11 @@ import de.roland_illig.phantomgo.PhantomState
 class CentralActivity : AppCompatActivity() {
 
     private lateinit var state: PhantomState
+    private lateinit var binding: ActivityCentralBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCentralBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_central)
     }
 

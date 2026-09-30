@@ -10,18 +10,21 @@ import androidx.fragment.app.DialogFragment
 import de.roland_illig.android.phantomgo.Persistence
 import de.roland_illig.android.phantomgo.R
 import de.roland_illig.android.phantomgo.SimpleBoardView
+import de.roland_illig.android.phantomgo.databinding.ActivityPlainPlayBinding
 import de.roland_illig.phantomgo.Board
 import de.roland_illig.phantomgo.Player
 
 class PlainPlayActivity : AppCompatActivity() {
 
     private lateinit var state: PlainState
+    private lateinit var binding: ActivityPlainPlayBinding
     private val board: Board get() = state.board
 
     private val boardView get() = findViewById<SimpleBoardView>(R.id.simple_board_view)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPlainPlayBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_plain_play)
     }
 

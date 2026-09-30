@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.roland_illig.android.phantomgo.Persistence
 import de.roland_illig.android.phantomgo.R
+import de.roland_illig.android.phantomgo.databinding.ActivityToroidalCountingBinding
 
 /**
  * After a game of Toroidal Go has ended,
@@ -15,9 +16,11 @@ import de.roland_illig.android.phantomgo.R
 class ToroidalCountingActivity : AppCompatActivity() {
 
     private lateinit var state: ToroidalState
+    private lateinit var binding: ActivityToroidalCountingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityToroidalCountingBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_toroidal_counting)
     }
 

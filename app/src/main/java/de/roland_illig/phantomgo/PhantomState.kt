@@ -43,6 +43,7 @@ class PhantomState(val size: Int = 9) : java.io.Serializable {
                     board[x, y] = turn
                 }
             }
+            else -> {}
         }
 
         return result
