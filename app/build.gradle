@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId 'de.roland_illig.android.phantomgo'
         minSdkVersion 14
-        targetSdkVersion 33
+        targetSdkVersion 36
         versionCode 11
         versionName '20.1'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
