@@ -9,6 +9,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.graphics.withSave
 import de.roland_illig.phantomgo.Player
 import kotlin.math.floor
 import kotlin.math.min
@@ -130,20 +131,16 @@ abstract class AbstractBoardView : View {
         private val whiteMarker = markerPaint(0xFFFFFFFF)
         private val halfSqrt3 = sqrt(0.75F)
 
-        fun draw(g: Canvas) {
-            g.save()
-
+        fun draw(g: Canvas) = g.withSave {
             unit = min(width, height) / (boardSize + 1)
             val size = unit * (boardSize + 1)
 
-            drawBackground(g)
+            drawBackground(this)
 
-            g.translate(((width - size) / 2).toFloat(), ((height - size) / 2).toFloat())
+            translate(((width - size) / 2).toFloat(), ((height - size) / 2).toFloat())
 
-            drawLines(g)
-            drawStones(g)
-
-            g.restore()
+            drawLines(this)
+            drawStones(this)
         }
 
         private fun drawBackground(g: Canvas) {
