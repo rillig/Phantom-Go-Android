@@ -11,9 +11,9 @@ import java.io.Serializable
 
 object Persistence {
 
-    fun loadPhantomGo(ctx: Context) = load(ctx, "state") { PhantomState() }
+    fun loadPhantomGo(ctx: Context) = load(ctx, "phantom go") { PhantomState() }
 
-    fun savePhantomGo(ctx: Context, state: PhantomState) = save(ctx, "state", state)
+    fun savePhantomGo(ctx: Context, state: PhantomState) = save(ctx, "phantom go", state)
 
     fun loadMagneticGo(ctx: Context) = load(ctx, "magnetic go") { MagneticState() }
 
